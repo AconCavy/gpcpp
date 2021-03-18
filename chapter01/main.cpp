@@ -1,6 +1,15 @@
-#include <iostream>
+#include "game.hpp"
 
-int main(int argc, char* argv[]) {
-  std::cout << "Hello, World!" << std::endl;
-  return 0;
+int main(int argc, char* argv[])
+{
+	Game game;
+	bool success = game.Initialize();
+	if (success)
+	{
+		game.RunLoop();
+	}
+
+	game.Shutdown();
+
+	return 0;
 }
