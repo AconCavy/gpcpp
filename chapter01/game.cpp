@@ -1,5 +1,8 @@
 #include <algorithm>
+#include <random>
+
 #include "game.hpp"
+
 using namespace std;
 
 #define HEIGHT 768
@@ -8,17 +11,23 @@ using namespace std;
 const int thickness = 15;
 const int paddleHeight = 100;
 const int speedLimit = 3;
+const int ballCount = 5;
+const int velocityLimit = 300;
 
 Game::Game() : _window(nullptr), _renderer(nullptr), _isRunning(true)
 {
-	_paddlePosition.x = 0;
-	_paddlePosition.y = HEIGHT / 2;
-	_paddleDirection = 0;
+	_players.push_back({{ 0, HEIGHT / 2 }, 0 });
+	_players.push_back({{ WIDTH - thickness, HEIGHT / 2 }, 0 });
 
-	_ballPosition.x = WIDTH / 2;
-	_ballPosition.y = HEIGHT / 2;
-	_ballVelocity.x = -200;
-	_ballVelocity.y = -235;
+	std::random_device rnd;
+	std::mt19937 mt32(rnd());
+	std::uniform_int_distribution<int> rnd_range(-velocityLimit, velocityLimit);
+	for (int i = 0; i < ballCount; ++i)
+	{
+		float vx = rnd_range(mt32);
+		float vy = rnd_range(mt32);
+		_balls.push_back({{ WIDTH / 2, HEIGHT / 2 }, { vx, vy }});
+	}
 }
 
 bool Game::Initialize()
@@ -78,10 +87,14 @@ void Game::ProcessInput()
 	const Uint8* state = SDL_GetKeyboardState(nullptr);
 	if (state[SDL_SCANCODE_ESCAPE]) _isRunning = false;
 
-	if (state[SDL_SCANCODE_W]) _paddleDirection--;
-	if (state[SDL_SCANCODE_S]) _paddleDirection++;
+	if (state[SDL_SCANCODE_W]) _players[0].direction--;
+	if (state[SDL_SCANCODE_S]) _players[0].direction++;
 
-	_paddleDirection = max(-speedLimit, min(speedLimit, _paddleDirection));
+	if (state[SDL_SCANCODE_I]) _players[1].direction--;
+	if (state[SDL_SCANCODE_K]) _players[1].direction++;
+
+	_players[0].direction = max(-speedLimit, min(speedLimit, _players[0].direction));
+	_players[1].direction = max(-speedLimit, min(speedLimit, _players[1].direction));
 }
 
 void Game::UpdateGame()
@@ -94,30 +107,40 @@ void Game::UpdateGame()
 
 	dt = std::min(dt, 0.05f);
 
-	if (_paddleDirection != 0)
+	for (Paddle& player : _players)
 	{
-		float y = _paddlePosition.y + _paddleDirection * 300.0f * dt;
+		if (player.direction == 0) continue;
+		float y = player.position.y + player.direction * 300.0f * dt;
 		float h = paddleHeight / 2 + thickness;
 		y = max((float)h, y);
 		y = min((float)HEIGHT - h, y);
-		_paddlePosition.y = y;
+		player.position.y = y;
 	}
 
-	_ballPosition += _ballVelocity * dt;
+	for (Ball& ball : _balls)
+	{
+		ball.position += ball.velocity * dt;
 
-	if (_ballPosition.x >= WIDTH - thickness && _ballVelocity.x > 0)
-		_ballVelocity.x *= -1;
+		if (ball.position.x >= WIDTH - thickness && ball.velocity.x > 0)
+			ball.velocity.x *= -1;
 
-	if (_ballPosition.y <= thickness && _ballVelocity.y < 0 ||
-		_ballPosition.y >= HEIGHT - thickness && _ballVelocity.y > 0)
-		_ballVelocity.y *= -1;
+		if (ball.position.y <= thickness && ball.velocity.y < 0 ||
+			ball.position.y >= HEIGHT - thickness && ball.velocity.y > 0)
+			ball.velocity.y *= -1;
 
-	float diff = abs(_paddlePosition.y - _ballPosition.y);
-	if (diff <= paddleHeight / 2 &&
-		_ballPosition.x <= 25 && _ballPosition.x >= 20 &&
-		_ballVelocity.x < 0)
-		_ballVelocity.x *= -1;
+		for (Paddle player : _players)
+		{
+			float dx = abs(player.position.x - ball.position.x);
+			float dy = abs(player.position.y - ball.position.y);
+			if (dx <= thickness && dy <= paddleHeight / 2) ball.velocity.x *= -1;
+		}
 
+		if (ball.position.x <= 0 || WIDTH <= ball.position.x)
+		{
+			ball.position.x = WIDTH / 2;
+			ball.position.y = HEIGHT / 2;
+		}
+	}
 }
 
 void Game::GenerateOutput()
@@ -132,30 +155,30 @@ void Game::GenerateOutput()
 	SDL_Rect wall{ 0, 0, WIDTH, thickness };
 	SDL_RenderFillRect(_renderer, &wall);
 	// bottom
-	wall.y = 768 - thickness;
-	SDL_RenderFillRect(_renderer, &wall);
-	// right
-	wall.x = WIDTH - thickness;
-	wall.y = 0;
-	wall.w = thickness;
-	wall.h = HEIGHT;
+	wall.y = HEIGHT - thickness;
 	SDL_RenderFillRect(_renderer, &wall);
 
-	// paddle
-	SDL_Rect paddle{
-		static_cast<int>(_paddlePosition.x - thickness / 2),
-		static_cast<int>(_paddlePosition.y - paddleHeight / 2),
-		thickness,
-		paddleHeight };
-	SDL_RenderFillRect(_renderer, &paddle);
+	// players
+	for (Paddle player : _players)
+	{
+		SDL_Rect rect{
+			static_cast<int>(player.position.x - thickness / 2),
+			static_cast<int>(player.position.y - paddleHeight / 2),
+			thickness,
+			paddleHeight };
+		SDL_RenderFillRect(_renderer, &rect);
+	}
 
-	// ball
-	SDL_Rect ball{
-		(int)(_ballPosition.x - thickness / 2),
-		(int)(_ballPosition.y - thickness / 2),
-		thickness,
-		thickness };
-	SDL_RenderFillRect(_renderer, &ball);
+	// balls
+	for (Ball ball : _balls)
+	{
+		SDL_Rect rect{
+			(int)(ball.position.x - thickness / 2),
+			(int)(ball.position.y - thickness / 2),
+			thickness,
+			thickness };
+		SDL_RenderFillRect(_renderer, &rect);
+	}
 
 	SDL_RenderPresent(_renderer);
 }

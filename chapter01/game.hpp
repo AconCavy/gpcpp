@@ -2,7 +2,20 @@
 #define GPCPP_CHAPTER01_GAME_HPP_
 
 #include <SDL2/SDL.h>
-#include "vector.hpp"
+#include <vector>
+#include "Vector2.hpp"
+
+struct Paddle
+{
+	Vector2 position;
+	int direction;
+};
+
+struct Ball
+{
+	Vector2 position;
+	Vector2 velocity;
+};
 
 class Game
 {
@@ -21,12 +34,10 @@ class Game
 	SDL_Renderer* _renderer;
 	bool _isRunning;
 
-	Vector2 _paddlePosition;
-	Vector2 _ballPosition;
-	Vector2 _ballVelocity;
+	std::vector<Paddle> _players;
+	std::vector<Ball> _balls;
 
 	Uint32 _ticksCount;
-	int _paddleDirection;
 
 };
 
