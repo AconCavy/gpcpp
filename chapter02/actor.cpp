@@ -32,11 +32,10 @@ void Actor::UpdateActor(float deltaTime) {
 void Actor::AddComponent(struct Component *component) {
   auto order = component->GetUpdateOrder();
   auto iter = _components.begin();
-  while (iter != _components.end()) {
+  for (; iter != _components.end(); iter++) {
 	if (order < (*iter)->GetUpdateOrder())
 	  break;
   }
-
   _components.insert(iter, component);
 }
 void Actor::RemoveComponent(struct Component *component) {

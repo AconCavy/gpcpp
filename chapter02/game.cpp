@@ -1,6 +1,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "game.hpp"
+#include "backgroundSpriteComponent.hpp"
 
 using namespace gpcpp::utils;
 
@@ -21,12 +22,6 @@ bool Game::Initialize() {
 	return false;
   }
 
-  int imgResult = IMG_Init(IMG_INIT_PNG);
-  if (imgResult == 0) {
-	SDL_Log("Failed to initialize SDL_Image: %s", IMG_GetError());
-	return false;
-  }
-
   _window = SDL_CreateWindow("Game Programming in C++ (Chapter 01)", 100, 100, Width, Height, 0);
   if (!_window) {
 	SDL_Log("Failed to create window: %s", SDL_GetError());
@@ -36,6 +31,12 @@ bool Game::Initialize() {
   _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (!_renderer) {
 	SDL_Log("Failed to create renderer: %s", SDL_GetError());
+	return false;
+  }
+
+  int imgResult = IMG_Init(IMG_INIT_PNG);
+  if (imgResult == 0) {
+	SDL_Log("Failed to initialize SDL_Image: %s", IMG_GetError());
 	return false;
   }
 
@@ -77,14 +78,13 @@ void Game::RemoveActor(Actor *actor) {
 }
 
 void Game::AddSprite(SpriteComponent *sprite) {
-  auto myDrawOrder = sprite->GetDrawOrder();
+  auto order = sprite->GetDrawOrder();
   auto iter = _sprites.begin();
-  while (iter != _sprites.end()) {
-	if (myDrawOrder < (*iter)->GetDrawOrder())
+  for (; iter != _sprites.end(); iter++) {
+	if (order < (*iter)->GetDrawOrder()) {
 	  break;
-	iter++;
+	}
   }
-
   _sprites.insert(iter, sprite);
 }
 
@@ -143,7 +143,7 @@ void Game::UpdateGame() {
   // Update actors
   _updatingActors = true;
   for (auto actor : _actors) {
-	actor.Update(dt);
+	actor->Update(dt);
   }
   _updatingActors = false;
 
@@ -165,12 +165,43 @@ void Game::UpdateGame() {
 }
 
 void Game::GenerateOutput() {
+  SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+  SDL_RenderClear(_renderer);
+
   for (auto sprite : _sprites)
 	sprite->Draw(_renderer);
+
+  SDL_RenderPresent(_renderer);
 }
 
 void Game::LoadData() {
+  // ship
+  _ship = new Ship(this);
+  _ship->SetPosition({100, 384});
+  _ship->SetScale(1.5f);
 
+  Actor *tmp = new Actor(this);
+  tmp->SetPosition({512, 384});
+
+  // background
+  auto background = new BackgroundSpriteComponent(tmp);
+  background->SetScreenSize({Width, Height});
+  std::vector<SDL_Texture *> textures = {
+	  GetTexture("assets/Farback01.png"),
+	  GetTexture("assets/Farback02.png")
+  };
+  background->SetBackgroundTextures(textures);
+  background->SetScrollSpeed(-100);
+
+  // stars
+  background = new BackgroundSpriteComponent(tmp, 50);
+  background->SetScreenSize({Width, Height});
+  textures = {
+	  GetTexture("assets/Stars.png"),
+	  GetTexture("assets/Stars.png")
+  };
+  background->SetBackgroundTextures(textures);
+  background->SetScrollSpeed(-200);
 }
 
 void Game::UnloadData() {

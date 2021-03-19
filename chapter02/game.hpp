@@ -9,6 +9,7 @@
 
 #include "actor.hpp"
 #include "spriteComponent.hpp"
+#include "ship.hpp"
 
 namespace gpcpp::c02 {
 
@@ -42,6 +43,7 @@ private:
   std::vector<class SpriteComponent *> _sprites;
   std::unordered_map<std::string, SDL_Texture *> _textures;
 
+  class Ship *_ship;
 };
 
 } // namespace gpcpp::c02
