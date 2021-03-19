@@ -71,10 +71,16 @@ void Game::AddActor(Actor *actor) {
 
 void Game::RemoveActor(Actor *actor) {
   auto iter = std::find(_pendingActors.begin(), _pendingActors.end(), actor);
-  _pendingActors.erase(iter);
+  if (iter != _pendingActors.end()) {
+	std::iter_swap(iter, _pendingActors.end() - 1);
+	_pendingActors.pop_back();
+  }
 
   iter = std::find(_actors.begin(), _actors.end(), actor);
-  _actors.erase(iter);
+  if (iter != _actors.end()) {
+	std::iter_swap(iter, _actors.end() - 1);
+	_actors.pop_back();
+  }
 }
 
 void Game::AddSprite(SpriteComponent *sprite) {
@@ -148,7 +154,7 @@ void Game::UpdateGame() {
   _updatingActors = false;
 
   // Resolve pending
-  for (auto &actor : _pendingActors) {
+  for (auto actor : _pendingActors) {
 	_actors.emplace_back(actor);
   }
   _pendingActors.clear();
