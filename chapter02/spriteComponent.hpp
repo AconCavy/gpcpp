@@ -8,13 +8,13 @@ namespace gpcpp::c02 {
 
 class SpriteComponent : public Component {
 public:
-  SpriteComponent(class Actor *owner, int drawColor = 100);
+  SpriteComponent(class Actor *owner, int drawOrder = 100);
   ~SpriteComponent();
   virtual void Draw(SDL_Renderer *renderer);
   virtual void SetTexture(SDL_Texture *texture);
-  int GetDrawOrder() const;
-  int GetTextureWidth() const;
-  int GetTextureHeight() const;
+  int GetDrawOrder() const { return _drawOrder; }
+  int GetTextureWidth() const { return _textureWidth; }
+  int GetTextureHeight() const { return _textureHeight; }
 
 protected:
   SDL_Texture *_texture;
