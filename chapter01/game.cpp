@@ -4,9 +4,12 @@
 #include "game.hpp"
 
 using namespace std;
+using namespace gpcpp::utils;
 
-#define HEIGHT 768
-#define WIDTH 1024
+namespace gpcpp::c01 {
+
+const int Height = 768;
+const int Width = 1024;
 
 const int thickness = 15;
 const int paddleHeight = 100;
@@ -15,8 +18,8 @@ const int ballCount = 5;
 const int velocityLimit = 300;
 
 Game::Game() : _window(nullptr), _renderer(nullptr), _isRunning(true) {
-  _players.push_back({{0, HEIGHT / 2}, 0});
-  _players.push_back({{WIDTH - thickness, HEIGHT / 2}, 0});
+  _players.push_back({{0, Height / 2}, 0});
+  _players.push_back({{Width - thickness, Height / 2}, 0});
 
   std::random_device rnd;
   std::mt19937 mt32(rnd());
@@ -24,7 +27,7 @@ Game::Game() : _window(nullptr), _renderer(nullptr), _isRunning(true) {
   for (int i = 0; i < ballCount; ++i) {
 	float vx = rnd_range(mt32);
 	float vy = rnd_range(mt32);
-	_balls.push_back({{WIDTH / 2, HEIGHT / 2}, {vx, vy}});
+	_balls.push_back({{Width / 2, Height / 2}, {vx, vy}});
   }
 }
 
@@ -35,7 +38,7 @@ bool Game::Initialize() {
 	return false;
   }
 
-  _window = SDL_CreateWindow("Game Programming in C++ (Chapter 01)", 100, 100, WIDTH, HEIGHT, 0);
+  _window = SDL_CreateWindow("Game Programming in C++ (Chapter 01)", 100, 100, Width, Height, 0);
   if (!_window) {
 	SDL_Log("Failed to create window: %s", SDL_GetError());
 	return false;
@@ -104,18 +107,18 @@ void Game::UpdateGame() {
 	float y = player.position.y + player.direction * 300.0f * dt;
 	float h = paddleHeight / 2 + thickness;
 	y = max((float)h, y);
-	y = min((float)HEIGHT - h, y);
+	y = min((float)Height - h, y);
 	player.position.y = y;
   }
 
   for (Ball &ball : _balls) {
 	ball.position += ball.velocity * dt;
 
-	if (ball.position.x >= WIDTH - thickness && ball.velocity.x > 0)
+	if (ball.position.x >= Width - thickness && ball.velocity.x > 0)
 	  ball.velocity.x *= -1;
 
 	if (ball.position.y <= thickness && ball.velocity.y < 0 ||
-		ball.position.y >= HEIGHT - thickness && ball.velocity.y > 0)
+		ball.position.y >= Height - thickness && ball.velocity.y > 0)
 	  ball.velocity.y *= -1;
 
 	for (Paddle player : _players) {
@@ -125,9 +128,9 @@ void Game::UpdateGame() {
 		ball.velocity.x *= -1;
 	}
 
-	if (ball.position.x <= 0 || WIDTH <= ball.position.x) {
-	  ball.position.x = WIDTH / 2;
-	  ball.position.y = HEIGHT / 2;
+	if (ball.position.x <= 0 || Width <= ball.position.x) {
+	  ball.position.x = Width / 2;
+	  ball.position.y = Height / 2;
 	}
   }
 }
@@ -140,10 +143,10 @@ void Game::GenerateOutput() {
   // walls
   // top
   SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-  SDL_Rect wall{0, 0, WIDTH, thickness};
+  SDL_Rect wall{0, 0, Width, thickness};
   SDL_RenderFillRect(_renderer, &wall);
   // bottom
-  wall.y = HEIGHT - thickness;
+  wall.y = Height - thickness;
   SDL_RenderFillRect(_renderer, &wall);
 
   // players
@@ -167,4 +170,6 @@ void Game::GenerateOutput() {
   }
 
   SDL_RenderPresent(_renderer);
+}
+
 }

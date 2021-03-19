@@ -1,5 +1,7 @@
 #include "game.hpp"
 
+using namespace gpcpp::c01;
+
 int main(int argc, char *argv[]) {
   Game game;
   bool success = game.Initialize();

@@ -1,3 +1,5 @@
+namespace gpcpp::utils {
+
 struct Vector2 {
   float x;
   float y;
@@ -24,3 +26,5 @@ struct Vector2 {
 	return ret;
   }
 };
+
+}

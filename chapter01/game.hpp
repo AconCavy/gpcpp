@@ -5,14 +5,16 @@
 #include <vector>
 #include "vector2.hpp"
 
+namespace gpcpp::c01 {
+
 struct Paddle {
-  Vector2 position;
+  gpcpp::utils::Vector2 position;
   int direction;
 };
 
 struct Ball {
-  Vector2 position;
-  Vector2 velocity;
+  gpcpp::utils::Vector2 position;
+  gpcpp::utils::Vector2 velocity;
 };
 
 class Game {
@@ -37,5 +39,7 @@ private:
   Uint32 _ticksCount;
 
 };
+
+}
 
 #endif //GPCPP_CHAPTER01_GAME_HPP_
