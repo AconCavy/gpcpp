@@ -5,7 +5,8 @@ add_executable(c02
         component.cpp component.hpp
         spriteComponent.cpp spriteComponent.hpp
         animationSpriteComponent.cpp animationSpriteComponent.hpp
-        backgroundSpriteComponent.cpp backgroundSpriteComponent.hpp)
+        backgroundSpriteComponent.cpp backgroundSpriteComponent.hpp
+        ship.cpp ship.hpp)
 
 # include utils
 target_include_directories(c02 PRIVATE ../utils)
