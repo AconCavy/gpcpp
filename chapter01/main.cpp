@@ -1,15 +1,13 @@
 #include "game.hpp"
 
-int main(int argc, char* argv[])
-{
-	Game game;
-	bool success = game.Initialize();
-	if (success)
-	{
-		game.RunLoop();
-	}
+int main(int argc, char *argv[]) {
+  Game game;
+  bool success = game.Initialize();
+  if (success) {
+	game.RunLoop();
+  }
 
-	game.Shutdown();
+  game.Shutdown();
 
-	return 0;
+  return 0;
 }
