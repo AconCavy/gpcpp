@@ -18,12 +18,17 @@ public:
   virtual ~Actor();
 
   State GetState() const { return _state; }
+  void SetState(State state) { _state = state; }
   const gpcpp::utils::Vector2 &GetPosition() const { return _position; }
+  void SetPosition(gpcpp::utils::Vector2 &position) { _position = position; }
   float GetRotation() const { return _rotation; }
+  void SetRotation(float rotation) { _rotation = rotation; }
   float GetScale() const { return _scale; }
+  void SetScale(float scale) { _scale = scale; }
+  class Game *GetGame() { return _game; }
 
   void Update(float deltaTime);
-  void Draw();
+  void UpdateComponents(float deltaTime);
   virtual void UpdateActor(float deltaTime);
   void AddComponent(class Component *component);
   void RemoveComponent(class Component *component);
