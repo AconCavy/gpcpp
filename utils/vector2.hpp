@@ -1,3 +1,6 @@
+#ifndef GPCPP_UTILS_VECTOR2_HPP
+#define GPCPP_UTILS_VECTOR2_HPP
+
 namespace gpcpp::utils {
 
 struct Vector2 {
@@ -28,3 +31,5 @@ struct Vector2 {
 };
 
 }
+
+#endif //GPCPP_UTILS_VECTOR2_HPP
