@@ -20,7 +20,7 @@ public:
   State GetState() const { return _state; }
   void SetState(State state) { _state = state; }
   const gpcpp::utils::Vector2 &GetPosition() const { return _position; }
-  void SetPosition(gpcpp::utils::Vector2 &position) { _position = position; }
+  void SetPosition(const gpcpp::utils::Vector2 &position) { _position = position; }
   float GetRotation() const { return _rotation; }
   void SetRotation(float rotation) { _rotation = rotation; }
   float GetScale() const { return _scale; }
