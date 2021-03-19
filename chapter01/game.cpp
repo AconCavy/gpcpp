@@ -63,6 +63,8 @@ void Game::RunLoop() {
 
 void Game::Shutdown() {
   SDL_DestroyRenderer(_renderer);
+  SDL_DestroyWindow(_window);
+  SDL_Quit();
 }
 
 void Game::ProcessInput() {
