@@ -1,4 +1,11 @@
-add_executable(c02 main.cpp game.cpp game.hpp actor.hpp component.hpp spriteComponent.cpp spriteComponent.hpp animationSpriteComponent.hpp animationSpriteComponent.cpp backgroundSpriteComponent.cpp backgroundSpriteComponent.hpp)
+add_executable(c02
+        main.cpp
+        game.cpp game.hpp
+        actor.cpp actor.hpp
+        component.cpp component.hpp
+        spriteComponent.cpp spriteComponent.hpp
+        animationSpriteComponent.cpp animationSpriteComponent.hpp
+        backgroundSpriteComponent.cpp backgroundSpriteComponent.hpp)
 
 # include utils
 target_include_directories(c02 PRIVATE ../utils)

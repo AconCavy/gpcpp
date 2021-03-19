@@ -2,7 +2,6 @@
 
 #include "game.hpp"
 
-using namespace std;
 using namespace gpcpp::utils;
 
 namespace gpcpp::c02 {
@@ -40,6 +39,9 @@ bool Game::Initialize() {
 	return false;
   }
 
+  LoadData();
+  _ticksCount = SDL_GetTicks();
+
   return true;
 }
 
@@ -52,7 +54,68 @@ void Game::RunLoop() {
 }
 
 void Game::Shutdown() {
+  UnloadData();
+  IMG_Quit();
   SDL_DestroyRenderer(_renderer);
+  SDL_DestroyWindow(_window);
+  SDL_Quit();
+}
+
+void Game::AddActor(Actor *actor) {
+  if (_updatingActors)
+	_pendingActors.emplace_back(actor);
+  else
+	_actors.emplace_back(actor);
+}
+
+void Game::RemoveActor(Actor *actor) {
+  auto iter = std::find(_pendingActors.begin(), _pendingActors.end(), actor);
+  _pendingActors.erase(iter);
+
+  iter = std::find(_actors.begin(), _actors.end(), actor);
+  _actors.erase(iter);
+}
+
+void Game::AddSprite(SpriteComponent *sprite) {
+  auto myDrawOrder = sprite->GetDrawOrder();
+  auto iter = _sprites.begin();
+  while (iter != _sprites.end()) {
+	if (myDrawOrder < (*iter)->GetDrawOrder())
+	  break;
+	iter++;
+  }
+
+  _sprites.insert(iter, sprite);
+}
+
+void Game::RemoveSprite(SpriteComponent *sprite) {
+  auto iter = std::find(_sprites.begin(), _sprites.end(), sprite);
+  _sprites.erase(iter);
+}
+
+SDL_Texture *Game::GetTexture(const std::string &fileName) {
+  SDL_Texture *texture = nullptr;
+  auto iter = _textures.find(fileName);
+  if (iter != _textures.end()) {
+	texture = iter->second;
+	return texture;
+  }
+
+  SDL_Surface *surface = IMG_Load(fileName.c_str());
+  if (!surface) {
+	SDL_Log("Failed to load texture file %s", fileName.c_str());
+	return nullptr;
+  }
+
+  texture = SDL_CreateTextureFromSurface(_renderer, surface);
+  SDL_FreeSurface(surface);
+  if (!texture) {
+	SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
+	return nullptr;
+  }
+
+  _textures.emplace(fileName.c_str(), texture);
+  return texture;
 }
 
 void Game::ProcessInput() {
@@ -74,7 +137,7 @@ void Game::UpdateGame() {
   // Calculate delta time
   while (!SDL_TICKS_PASSED(SDL_GetTicks(), _ticksCount + DeltaCount));
   Uint32 ct = SDL_GetTicks();
-  float dt = min((float)(ct - _ticksCount) / 1000, 0.05f);
+  float dt = std::min((float)(ct - _ticksCount) / 1000, 0.05f);
   _ticksCount = ct;
 
   // Update actors
@@ -90,9 +153,9 @@ void Game::UpdateGame() {
   }
   _pendingActors.clear();
 
-  vector<Actor *> deadActors;
+  std::vector<Actor *> deadActors;
   for (auto actor: _actors) {
-	if (actor.GetState() == Actor::Dead)
+	if (actor->GetState() == Actor::Dead)
 	  deadActors.emplace_back(actor);
   }
 
@@ -106,27 +169,17 @@ void Game::GenerateOutput() {
 	sprite->Draw(_renderer);
 }
 
-void Game::AddActor(Actor *actor) {
-  if (_updatingActors)
-	_pendingActors.emplace_back(actor);
-  else
-	_actors.emplace_back(actor);
-}
-
-void Game::RemoveActor(Actor *actor) {
+void Game::LoadData() {
 
 }
 
-void Game::AddSprite(SpriteComponent *sprite) {
-  auto myDrawOrder = sprite->GetDrawOrder();
-  auto iter = _sprites.begin();
-  while (iter != _sprites.end()) {
-	if (myDrawOrder < (*iter)->GetDrawOrder())
-	  break;
-	iter++;
-  }
+void Game::UnloadData() {
+  while (!_actors.empty())
+	delete _actors.back();
 
-  _sprites.insert(iter, sprite);
+  for (const auto &x : _textures)
+	SDL_DestroyTexture(x.second);
+  _textures.clear();
 }
 
 } // namespace gpcpp::c02

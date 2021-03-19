@@ -2,6 +2,8 @@
 #define GPCPP_CHAPTER02_GAME_HPP
 
 #include <algorithm>
+#include <unordered_map>
+#include <string>
 #include <vector>
 #include <SDL2/SDL.h>
 
@@ -19,11 +21,15 @@ public:
   void AddActor(Actor *actor);
   void RemoveActor(Actor *actor);
   void AddSprite(SpriteComponent *sprite);
+  void RemoveSprite(SpriteComponent *sprite);
+  SDL_Texture *GetTexture(const std::string &fileName);
 
 private:
   void ProcessInput();
   void UpdateGame();
   void GenerateOutput();
+  void LoadData();
+  void UnloadData();
 
   SDL_Window *_window;
   SDL_Renderer *_renderer;
@@ -34,6 +40,7 @@ private:
   std::vector<class Actor *> _actors;
   std::vector<class Actor *> _pendingActors;
   std::vector<class SpriteComponent *> _sprites;
+  std::unordered_map<std::string, SDL_Texture *> _textures;
 
 };
 
