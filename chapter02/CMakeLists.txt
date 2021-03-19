@@ -8,6 +8,9 @@ add_executable(c02
         backgroundSpriteComponent.cpp backgroundSpriteComponent.hpp
         ship.cpp ship.hpp)
 
+# copy assets
+file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
+
 # include utils
 target_include_directories(c02 PRIVATE ../utils)
 
