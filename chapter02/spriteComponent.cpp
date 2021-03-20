@@ -24,8 +24,8 @@ void SpriteComponent::draw(SDL_Renderer *R) {
   SDL_Rect Rect;
   Rect.w = static_cast<int>(static_cast<float>(TextureWidth) * Owner->getScale());
   Rect.h = static_cast<int>(static_cast<float>(TextureHeight) * Owner->getScale());
-  Rect.x = static_cast<int>(Owner->getPosition().X - static_cast<float>(Rect.w) / 2);
-  Rect.y = static_cast<int>(Owner->getPosition().Y - static_cast<float>(Rect.h) / 2);
+  Rect.x = static_cast<int>(Owner->getPosition().x - static_cast<float>(Rect.w) / 2);
+  Rect.y = static_cast<int>(Owner->getPosition().y - static_cast<float>(Rect.h) / 2);
 
   float Degree = -toDegree(Owner->getRotation());
   SDL_RenderCopyEx(R, Texture, nullptr, &Rect, Degree, nullptr, SDL_FLIP_NONE);

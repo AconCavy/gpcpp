@@ -2,7 +2,7 @@
 #define GPCPP_CHAPTER02_ACTOR_HPP_
 
 #include <vector>
-#include "vector2.hpp"
+#include <glm/glm.hpp>
 
 namespace gpcpp::c02 {
 
@@ -19,8 +19,8 @@ public:
 
   [[nodiscard]] State getState() const { return State; }
   void setState(State S) { State = S; }
-  [[nodiscard]] const gpcpp::Vector2 &getPosition() const { return Position; }
-  void setPosition(const gpcpp::Vector2 &P) { Position = P; }
+  [[nodiscard]] const glm::vec2 &getPosition() const { return Position; }
+  void setPosition(const glm::vec2 &P) { Position = P; }
   [[nodiscard]] float getRotation() const { return Rotation; }
   void setRotation(float R) { Rotation = R; }
   [[nodiscard]] float getScale() const { return Scale; }
@@ -35,7 +35,7 @@ public:
 
 private:
   State State;
-  gpcpp::Vector2 Position;
+  glm::vec2 Position;
   float Rotation;
   float Scale;
   std::vector<class Component *> Component;

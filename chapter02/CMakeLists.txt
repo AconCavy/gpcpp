@@ -20,3 +20,6 @@ target_link_libraries(c02 PRIVATE SDL2::SDL2 SDL2::SDL2main)
 
 find_package(sdl2-image CONFIG REQUIRED)
 target_link_libraries(c02 PRIVATE SDL2::SDL2_image)
+
+find_package(glm CONFIG REQUIRED)
+target_link_libraries(c02 PRIVATE glm::glm)

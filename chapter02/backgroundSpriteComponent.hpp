@@ -3,7 +3,7 @@
 
 #include "spriteComponent.hpp"
 #include <vector>
-#include "vector2.hpp"
+#include <glm/glm.hpp>
 
 namespace gpcpp::c02 {
 
@@ -14,18 +14,18 @@ public:
   void update(float DeltaTime) override;
   void draw(SDL_Renderer *R) override;
   void setBackgroundTextures(std::vector<SDL_Texture *> &Textures);
-  void setScreenSize(const Vector2 &Size) { ScreenSize = Size; }
+  void setScreenSize(const glm::vec2 &Size) { ScreenSize = Size; }
   void setScrollSpeed(float Speed) { ScrollSpeed = Speed; }
   [[nodiscard]] float getScrollSpeed() const { return ScrollSpeed; }
 
 private:
   struct BackgroundTexture {
 	SDL_Texture *Texture;
-	Vector2 Offset;
+	glm::vec2 Offset;
   };
 
   std::vector<BackgroundTexture> BackgroundTextures;
-  Vector2 ScreenSize;
+  glm::vec2 ScreenSize;
   float ScrollSpeed;
 };
 

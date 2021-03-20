@@ -3,18 +3,18 @@
 
 #include <SDL2/SDL.h>
 #include <vector>
-#include "vector2.hpp"
+#include <glm/glm.hpp>
 
 namespace gpcpp::c01 {
 
 struct Paddle {
-  gpcpp::Vector2 Position;
+  glm::vec2 Position;
   int Direction;
 };
 
 struct Ball {
-  gpcpp::Vector2 Position;
-  gpcpp::Vector2 Velocity;
+  glm::vec2 Position;
+  glm::vec2 Velocity;
 };
 
 class Game {

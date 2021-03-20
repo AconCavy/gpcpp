@@ -1,7 +1,6 @@
 #include "ship.hpp"
 #include "animationSpriteComponent.hpp"
 #include "game.hpp"
-#include "vector2.hpp"
 
 using namespace gpcpp::c02;
 
@@ -27,10 +26,8 @@ Ship::Ship(class Game *Game) : Actor(Game), RightSpeed(0), DownSpeed(0) {
 void Ship::updateActor(float DeltaTime) {
   Actor::updateActor(DeltaTime);
   auto Position = getPosition();
-  Vector2 V{RightSpeed, DownSpeed};
-  Position += V * DeltaTime;
-  Position.X = std::min(MaxX, std::max(Position.X, MinX));
-  Position.Y = std::min(MaxY, std::max(Position.Y, MinY));
+  Position.x = std::min(MaxX, std::max(Position.x + RightSpeed * DeltaTime, MinX));
+  Position.y = std::min(MaxY, std::max(Position.y + DownSpeed * DeltaTime, MinY));
   setPosition(Position);
 }
 
