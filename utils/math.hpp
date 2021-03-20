@@ -5,7 +5,7 @@
 
 namespace gpcpp {
 
-inline float ToDegree(float Radian) {
+static inline float toDegree(float Radian) {
   return static_cast<float>(Radian * 180.0f / std::numbers::pi);
 }
 
