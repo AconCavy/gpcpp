@@ -8,38 +8,37 @@
 namespace gpcpp::c01 {
 
 struct Paddle {
-  gpcpp::utils::Vector2 position;
-  int direction;
+  gpcpp::Vector2 Position;
+  int Direction;
 };
 
 struct Ball {
-  gpcpp::utils::Vector2 position;
-  gpcpp::utils::Vector2 velocity;
+  gpcpp::Vector2 Position;
+  gpcpp::Vector2 Velocity;
 };
 
 class Game {
 public:
   Game();
-  bool Initialize();
-  void RunLoop();
-  void Shutdown();
+  bool initialize();
+  void runLoop();
+  void shutdown();
 
 private:
-  void ProcessInput();
-  void UpdateGame();
-  void GenerateOutput();
+  void processInput();
+  void updateGame();
+  void generateOutput();
 
-  SDL_Window *_window;
-  SDL_Renderer *_renderer;
-  bool _isRunning;
+  SDL_Window *Window;
+  SDL_Renderer *Renderer;
+  bool IsRunning;
 
-  std::vector<Paddle> _players;
-  std::vector<Ball> _balls;
+  std::vector<Paddle> Players;
+  std::vector<Ball> Balls;
 
-  Uint32 _ticksCount;
-
+  Uint32 TicksCount;
 };
 
-}
+} // namespace gpcpp::c01
 
 #endif //GPCPP_CHAPTER01_GAME_HPP_

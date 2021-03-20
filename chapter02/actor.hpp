@@ -14,32 +14,32 @@ public:
 	Dead
   };
 
-  Actor(class Game *game);
+  explicit Actor(class Game *Game);
   virtual ~Actor();
 
-  State GetState() const { return _state; }
-  void SetState(State state) { _state = state; }
-  const gpcpp::utils::Vector2 &GetPosition() const { return _position; }
-  void SetPosition(const gpcpp::utils::Vector2 &position) { _position = position; }
-  float GetRotation() const { return _rotation; }
-  void SetRotation(float rotation) { _rotation = rotation; }
-  float GetScale() const { return _scale; }
-  void SetScale(float scale) { _scale = scale; }
-  class Game *GetGame() { return _game; }
+  [[nodiscard]] State getState() const { return State; }
+  void setState(State S) { State = S; }
+  [[nodiscard]] const gpcpp::Vector2 &getPosition() const { return Position; }
+  void setPosition(const gpcpp::Vector2 &P) { Position = P; }
+  [[nodiscard]] float getRotation() const { return Rotation; }
+  void setRotation(float R) { Rotation = R; }
+  [[nodiscard]] float getScale() const { return Scale; }
+  void setScale(float S) { Scale = S; }
+  class Game *getGame() { return Game; }
 
-  void Update(float deltaTime);
-  void UpdateComponents(float deltaTime);
-  virtual void UpdateActor(float deltaTime);
-  void AddComponent(class Component *component);
-  void RemoveComponent(class Component *component);
+  void update(float DeltaTime);
+  void updateComponents(float DeltaTime);
+  virtual void updateActor(float DeltaTime);
+  void addComponent(class Component *C);
+  void removeComponent(class Component *C);
 
 private:
-  State _state;
-  gpcpp::utils::Vector2 _position;
-  float _rotation;
-  float _scale;
-  std::vector<class Component *> _components;
-  class Game *_game;
+  State State;
+  gpcpp::Vector2 Position;
+  float Rotation;
+  float Scale;
+  std::vector<class Component *> Component;
+  class Game *Game;
 };
 
 } // namespace gpcpp::c02

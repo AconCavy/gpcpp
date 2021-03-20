@@ -1,30 +1,28 @@
 #include "animationSpriteComponent.hpp"
 #include <cmath>
 
-namespace gpcpp::c02 {
+using namespace gpcpp::c02;
 
-AnimationSpriteComponent::AnimationSpriteComponent(class Actor *owner, int drawOrder)
-	: SpriteComponent(owner, drawOrder),
-	  _currentFrame(0),
-	  _animationFps(24) {
+AnimationSpriteComponent::AnimationSpriteComponent(class Actor *Owner, int DrawOrder)
+	: SpriteComponent(Owner, DrawOrder),
+	  CurrentFrame(0),
+	  AnimationFPS(24) {
 }
 
-void AnimationSpriteComponent::Update(float deltaTime) {
-  SpriteComponent::Update(deltaTime);
+void AnimationSpriteComponent::update(float DeltaTime) {
+  SpriteComponent::update(DeltaTime);
 
-  int size = _animationTextures.size();
-  if (size > 0) {
-	_currentFrame = std::fmod(_currentFrame + _animationFps * deltaTime, size);
-	SetTexture(_animationTextures[static_cast<int>(_currentFrame)]);
+  int Size = AnimationTextures.size();
+  if (Size > 0) {
+	CurrentFrame = std::fmod(CurrentFrame + AnimationFPS * DeltaTime, Size);
+	setTexture(AnimationTextures[static_cast<int>(CurrentFrame)]);
   }
 }
 
-void AnimationSpriteComponent::SetAnimationTextures(const std::vector<SDL_Texture *> &textures) {
-  _animationTextures = textures;
-  if (!_animationTextures.empty()) {
-	_currentFrame = 0;
-	SetTexture(_animationTextures[0]);
+void AnimationSpriteComponent::setAnimationTextures(const std::vector<SDL_Texture *> &Textures) {
+  AnimationTextures = Textures;
+  if (!AnimationTextures.empty()) {
+	CurrentFrame = 0;
+	setTexture(AnimationTextures[0]);
   }
 }
-
-} // namespace gpcpp::c02

@@ -8,16 +8,16 @@ namespace gpcpp::c02 {
 
 class AnimationSpriteComponent : public SpriteComponent {
 public:
-  AnimationSpriteComponent(class Actor *owner, int drawOrder = 100);
+  explicit AnimationSpriteComponent(class Actor *Owner, int DrawOrder = 100);
 
-  void Update(float deltaTime) override;
-  void SetAnimationTextures(const std::vector<SDL_Texture *> &textures);
-  float GetAnimationFps() const { return _animationFps; }
+  void update(float DeltaTime) override;
+  void setAnimationTextures(const std::vector<SDL_Texture *> &Textures);
+  [[nodiscard]] float getAnimationFPS() const { return AnimationFPS; }
 
 private:
-  std::vector<SDL_Texture *> _animationTextures;
-  float _currentFrame;
-  float _animationFps;
+  std::vector<SDL_Texture *> AnimationTextures;
+  float CurrentFrame;
+  float AnimationFPS;
 };
 
 } // namespace gpcpp::c02

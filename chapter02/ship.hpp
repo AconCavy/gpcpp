@@ -7,16 +7,16 @@ namespace gpcpp::c02 {
 
 class Ship : public Actor {
 public:
-  Ship(class Game *game);
-  void UpdateActor(float deltaTime) override;
-  void ProcessKeyboard(const uint8_t *state);
+  explicit Ship(class Game *Game);
+  void updateActor(float DeltaTime) override;
+  void processKeyboard(const uint8_t *State);
 
-  float GetRightSpeed() const { return _rightSpeed; }
-  float GetDownSpeed() const { return _downSpeed; }
+  [[nodiscard]] float getRightSpeed() const { return RightSpeed; }
+  [[nodiscard]] float getDownSpeed() const { return DownSpeed; }
 
 private:
-  float _rightSpeed;
-  float _downSpeed;
+  float RightSpeed;
+  float DownSpeed;
 };
 
 } // namespace gpcpp::c02

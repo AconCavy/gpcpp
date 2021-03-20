@@ -2,14 +2,14 @@
 
 using namespace gpcpp::c01;
 
-int main(int argc, char *argv[]) {
-  Game game;
-  bool success = game.Initialize();
-  if (success) {
-	game.RunLoop();
+int main(int Argc, char *Argv[]) {
+  Game Game;
+  bool Success = Game.initialize();
+  if (Success) {
+	Game.runLoop();
   }
 
-  game.Shutdown();
+  Game.shutdown();
 
   return 0;
 }

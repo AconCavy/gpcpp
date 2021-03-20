@@ -1,35 +1,35 @@
 #ifndef GPCPP_UTILS_VECTOR2_HPP
 #define GPCPP_UTILS_VECTOR2_HPP
 
-namespace gpcpp::utils {
+namespace gpcpp {
 
 struct Vector2 {
-  float x;
-  float y;
+  float X;
+  float Y;
 
-  Vector2 &operator+=(const Vector2 &rhs) {
-	x += rhs.x;
-	y += rhs.y;
+  Vector2 &operator+=(const Vector2 &RHS) {
+	X += RHS.X;
+	Y += RHS.Y;
 	return *this;
   }
 
-  Vector2 &operator*=(const float &rhs) {
-	x *= rhs;
-	y *= rhs;
+  Vector2 &operator*=(const float &RHS) {
+	X *= RHS;
+	Y *= RHS;
 	return *this;
   }
 
-  Vector2 operator+(const Vector2 &rhs) const {
-	Vector2 ret{x + rhs.x, y + rhs.y};
-	return ret;
+  Vector2 operator+(const Vector2 &RHS) const {
+	Vector2 Ret{X + RHS.X, Y + RHS.Y};
+	return Ret;
   }
 
-  Vector2 operator*(const float &rhs) const {
-	Vector2 ret{x * rhs, y * rhs};
-	return ret;
+  Vector2 operator*(const float &RHS) const {
+	Vector2 Ret{X * RHS, Y * RHS};
+	return Ret;
   }
 };
 
-}
+} // namespace gpcpp
 
 #endif //GPCPP_UTILS_VECTOR2_HPP

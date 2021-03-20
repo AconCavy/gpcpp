@@ -9,24 +9,24 @@ namespace gpcpp::c02 {
 
 class BackgroundSpriteComponent : public SpriteComponent {
 public:
-  BackgroundSpriteComponent(class Actor *owner, int drawOrder = 10);
+  explicit BackgroundSpriteComponent(class Actor *Owner, int DrawOrder = 10);
 
-  void Update(float deltaTime) override;
-  void Draw(SDL_Renderer *renderer) override;
-  void SetBackgroundTextures(std::vector<SDL_Texture *> &textures);
-  void SetScreenSize(const utils::Vector2 &screenSize) { _screenSize = screenSize; }
-  void SetScrollSpeed(float scrollSpeed) { _scrollSpeed = scrollSpeed; }
-  float GetScrollSpeed() const { return _scrollSpeed; }
+  void update(float DeltaTime) override;
+  void draw(SDL_Renderer *R) override;
+  void setBackgroundTextures(std::vector<SDL_Texture *> &Textures);
+  void setScreenSize(const Vector2 &Size) { ScreenSize = Size; }
+  void setScrollSpeed(float Speed) { ScrollSpeed = Speed; }
+  [[nodiscard]] float getScrollSpeed() const { return ScrollSpeed; }
 
 private:
   struct BackgroundTexture {
-	SDL_Texture *_texture;
-	utils::Vector2 _offset;
+	SDL_Texture *Texture;
+	Vector2 Offset;
   };
 
-  std::vector<BackgroundTexture> _textures;
-  utils::Vector2 _screenSize;
-  float _scrollSpeed;
+  std::vector<BackgroundTexture> BackgroundTextures;
+  Vector2 ScreenSize;
+  float ScrollSpeed;
 };
 
 } // namespace gpcpp::c02

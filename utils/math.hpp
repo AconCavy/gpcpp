@@ -3,12 +3,12 @@
 
 #include "numbers"
 
-namespace gpcpp::utils {
+namespace gpcpp {
 
-inline float ToDegree(float radian) {
-  return radian * 180.0f / std::numbers::pi;
+inline float ToDegree(float Radian) {
+  return static_cast<float>(Radian * 180.0f / std::numbers::pi);
 }
 
-} // namespace gpcpp::utils
+} // namespace gpcpp
 
 #endif //GPCPP_UTILS_MATH_HPP

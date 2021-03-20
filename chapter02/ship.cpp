@@ -3,51 +3,47 @@
 #include "game.hpp"
 #include "vector2.hpp"
 
-using namespace gpcpp::utils;
+using namespace gpcpp::c02;
 
-namespace gpcpp::c02 {
+const float MinX = 25;
+const float MinY = 25;
+const float MaxX = 500;
+const float MaxY = 768 - MinY;
+const float RightVelocity = 250.0f;
+const float DownVelocity = 300.0f;
 
-const float minX = 25;
-const float minY = 25;
-const float maxX = 500;
-const float maxY = 768 - minY;
-const float rightVelocity = 250.0f;
-const float downVelocity = 300.0f;
-
-Ship::Ship(class Game *game) : Actor(game), _rightSpeed(0), _downSpeed(0) {
-  auto animation = new AnimationSpriteComponent(this);
-  std::vector<SDL_Texture *> textures = {
-	  game->GetTexture("assets/Ship01.png"),
-	  game->GetTexture("assets/Ship02.png"),
-	  game->GetTexture("assets/Ship03.png"),
-	  game->GetTexture("assets/Ship04.png")
+Ship::Ship(class Game *Game) : Actor(Game), RightSpeed(0), DownSpeed(0) {
+  auto Animation = new AnimationSpriteComponent(this);
+  std::vector<SDL_Texture *> Textures = {
+	  Game->getTexture("assets/Ship01.png"),
+	  Game->getTexture("assets/Ship02.png"),
+	  Game->getTexture("assets/Ship03.png"),
+	  Game->getTexture("assets/Ship04.png")
   };
 
-  animation->SetAnimationTextures(textures);
+  Animation->setAnimationTextures(Textures);
 }
 
-void Ship::UpdateActor(float deltaTime) {
-  Actor::UpdateActor(deltaTime);
-  auto position = GetPosition();
-  Vector2 v{_rightSpeed, _downSpeed};
-  position += v * deltaTime;
-  position.x = std::min(maxX, std::max(position.x, minX));
-  position.y = std::min(maxY, std::max(position.y, minY));
-  SetPosition(position);
+void Ship::updateActor(float DeltaTime) {
+  Actor::updateActor(DeltaTime);
+  auto Position = getPosition();
+  Vector2 V{RightSpeed, DownSpeed};
+  Position += V * DeltaTime;
+  Position.X = std::min(MaxX, std::max(Position.X, MinX));
+  Position.Y = std::min(MaxY, std::max(Position.Y, MinY));
+  setPosition(Position);
 }
 
-void Ship::ProcessKeyboard(const uint8_t *state) {
-  _rightSpeed = 0;
-  _downSpeed = 0;
+void Ship::processKeyboard(const uint8_t *State) {
+  RightSpeed = 0;
+  DownSpeed = 0;
 
-  if (state[SDL_SCANCODE_D])
-	_rightSpeed += rightVelocity;
-  if (state[SDL_SCANCODE_A])
-	_rightSpeed -= rightVelocity;
-  if (state[SDL_SCANCODE_S])
-	_downSpeed += downVelocity;
-  if (state[SDL_SCANCODE_W])
-	_downSpeed -= downVelocity;
+  if (State[SDL_SCANCODE_D])
+	RightSpeed += RightVelocity;
+  if (State[SDL_SCANCODE_A])
+	RightSpeed -= RightVelocity;
+  if (State[SDL_SCANCODE_S])
+	DownSpeed += DownVelocity;
+  if (State[SDL_SCANCODE_W])
+	DownSpeed -= DownVelocity;
 }
-
-} // namespace gpcpp::c02

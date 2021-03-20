@@ -1,47 +1,47 @@
 #include "actor.hpp"
 #include "game.hpp"
 
-namespace gpcpp::c02 {
+using namespace gpcpp::c02;
 
-Actor::Actor(struct Game *game) : _state(Active), _scale(1), _rotation(0), _game(game) {
-  _game->AddActor(this);
+Actor::Actor(struct Game *Game) : State(Active), Scale(1), Position({}), Rotation(0), Game(Game) {
+  Game->addActor(this);
 }
 Actor::~Actor() {
-  _game->RemoveActor(this);
-  while (!_components.empty())
-	delete _components.back();
-}
-
-void Actor::Update(float deltaTime) {
-  if (_state == Active) {
-	UpdateComponents(deltaTime);
-	UpdateActor(deltaTime);
+  Game->removeActor(this);
+  while (!Component.empty()) {
+	delete Component.back();
   }
 }
 
-void Actor::UpdateComponents(float deltaTime) {
-  for (auto component : _components) {
-	component->Update(deltaTime);
+void Actor::update(float DeltaTime) {
+  if (State == Active) {
+	updateComponents(DeltaTime);
+	updateActor(DeltaTime);
   }
 }
 
-void Actor::UpdateActor(float deltaTime) {
-
+void Actor::updateComponents(float DeltaTime) {
+  for (auto component : Component) {
+	component->update(DeltaTime);
+  }
 }
 
-void Actor::AddComponent(struct Component *component) {
-  auto order = component->GetUpdateOrder();
-  auto iter = _components.begin();
-  for (; iter != _components.end(); iter++) {
-	if (order < (*iter)->GetUpdateOrder())
+void Actor::updateActor(float DeltaTime) {
+}
+
+void Actor::addComponent(struct Component *C) {
+  auto Order = C->getUpdateOrder();
+  auto I = Component.begin();
+  auto E = Component.end();
+  for (; I != E; ++I) {
+	if (Order < (*I)->getUpdateOrder())
 	  break;
   }
-  _components.insert(iter, component);
+  Component.insert(I, C);
 }
-void Actor::RemoveComponent(struct Component *component) {
-  auto iter = std::find(_components.begin(), _components.end(), component);
-  if (iter != _components.end())
-	_components.erase(iter);
+void Actor::removeComponent(struct Component *C) {
+  auto E = Component.end();
+  auto I = std::find(Component.begin(), E, C);
+  if (I != E)
+	Component.erase(I);
 }
-
-} // namespace gpcpp::c02

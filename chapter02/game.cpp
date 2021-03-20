@@ -3,221 +3,219 @@
 #include "game.hpp"
 #include "backgroundSpriteComponent.hpp"
 
-using namespace gpcpp::utils;
-
-namespace gpcpp::c02 {
+using namespace gpcpp::c02;
 
 const int Height = 768;
 const int Width = 1024;
-const int Fps = 60;
-const int DeltaCount = 1000 / Fps;
+const int FPS = 60;
+const int DeltaCount = 1000 / FPS;
 
-Game::Game() : _window(nullptr), _renderer(nullptr), _isRunning(true) {
+Game::Game() : Window(nullptr), Renderer(nullptr), IsRunning(true) {
 }
 
-bool Game::Initialize() {
-  int sdlResult = SDL_Init(SDL_INIT_VIDEO);
-  if (sdlResult != 0) {
+bool Game::initialize() {
+  int SDLResult = SDL_Init(SDL_INIT_VIDEO);
+  if (SDLResult != 0) {
 	SDL_Log("Failed to initialize SDL: %s", SDL_GetError());
 	return false;
   }
 
-  _window = SDL_CreateWindow("Game Programming in C++ (Chapter 01)", 100, 100, Width, Height, 0);
-  if (!_window) {
+  Window = SDL_CreateWindow("Game Programming in C++ (Chapter 01)", 100, 100, Width, Height, 0);
+  if (!Window) {
 	SDL_Log("Failed to create window: %s", SDL_GetError());
 	return false;
   }
 
-  _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-  if (!_renderer) {
+  Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  if (!Renderer) {
 	SDL_Log("Failed to create renderer: %s", SDL_GetError());
 	return false;
   }
 
-  int imgResult = IMG_Init(IMG_INIT_PNG);
-  if (imgResult == 0) {
+  int IMGResult = IMG_Init(IMG_INIT_PNG);
+  if (IMGResult == 0) {
 	SDL_Log("Failed to initialize SDL_Image: %s", IMG_GetError());
 	return false;
   }
 
-  LoadData();
-  _ticksCount = SDL_GetTicks();
+  loadData();
+  TicksCount = SDL_GetTicks();
 
   return true;
 }
 
-void Game::RunLoop() {
-  while (_isRunning) {
-	ProcessInput();
-	UpdateGame();
-	GenerateOutput();
+void Game::runLoop() {
+  while (IsRunning) {
+	processInput();
+	updateGame();
+	generateOutput();
   }
 }
 
-void Game::Shutdown() {
-  UnloadData();
+void Game::shutdown() {
+  unloadData();
   IMG_Quit();
-  SDL_DestroyRenderer(_renderer);
-  SDL_DestroyWindow(_window);
+  SDL_DestroyRenderer(Renderer);
+  SDL_DestroyWindow(Window);
   SDL_Quit();
 }
 
-void Game::AddActor(Actor *actor) {
-  if (_updatingActors)
-	_pendingActors.emplace_back(actor);
+void Game::addActor(Actor *A) {
+  if (UpdatingActors)
+	PendingActors.emplace_back(A);
   else
-	_actors.emplace_back(actor);
+	Actors.emplace_back(A);
 }
 
-void Game::RemoveActor(Actor *actor) {
-  auto iter = std::find(_pendingActors.begin(), _pendingActors.end(), actor);
-  if (iter != _pendingActors.end()) {
-	std::iter_swap(iter, _pendingActors.end() - 1);
-	_pendingActors.pop_back();
+void Game::removeActor(Actor *A) {
+  auto E = PendingActors.end();
+  auto I = std::find(PendingActors.begin(), E, A);
+  if (I != E) {
+	std::iter_swap(I, E - 1);
+	PendingActors.pop_back();
   }
 
-  iter = std::find(_actors.begin(), _actors.end(), actor);
-  if (iter != _actors.end()) {
-	std::iter_swap(iter, _actors.end() - 1);
-	_actors.pop_back();
+  E = Actors.end();
+  I = std::find(Actors.begin(), E, A);
+  if (I != E) {
+	std::iter_swap(I, E - 1);
+	Actors.pop_back();
   }
 }
 
-void Game::AddSprite(SpriteComponent *sprite) {
-  auto order = sprite->GetDrawOrder();
-  auto iter = _sprites.begin();
-  for (; iter != _sprites.end(); iter++) {
-	if (order < (*iter)->GetDrawOrder()) {
+void Game::addSprite(SpriteComponent *SC) {
+  auto Order = SC->getDrawOrder();
+  auto I = Sprites.begin();
+  for (; I != Sprites.end(); ++I) {
+	if (Order < (*I)->getDrawOrder()) {
 	  break;
 	}
   }
-  _sprites.insert(iter, sprite);
+  Sprites.insert(I, SC);
 }
 
-void Game::RemoveSprite(SpriteComponent *sprite) {
-  auto iter = std::find(_sprites.begin(), _sprites.end(), sprite);
-  _sprites.erase(iter);
+void Game::removeSprite(SpriteComponent *SC) {
+  auto I = std::find(Sprites.begin(), Sprites.end(), SC);
+  Sprites.erase(I);
 }
 
-SDL_Texture *Game::GetTexture(const std::string &fileName) {
-  SDL_Texture *texture = nullptr;
-  auto iter = _textures.find(fileName);
-  if (iter != _textures.end()) {
-	texture = iter->second;
-	return texture;
+SDL_Texture *Game::getTexture(const std::string &FileName) {
+  SDL_Texture *Texture = nullptr;
+  auto I = Textures.find(FileName);
+  if (I != Textures.end()) {
+	Texture = I->second;
+	return Texture;
   }
 
-  SDL_Surface *surface = IMG_Load(fileName.c_str());
-  if (!surface) {
-	SDL_Log("Failed to load texture file %s", fileName.c_str());
+  SDL_Surface *Surface = IMG_Load(FileName.c_str());
+  if (!Surface) {
+	SDL_Log("Failed to load Texture file %s", FileName.c_str());
 	return nullptr;
   }
 
-  texture = SDL_CreateTextureFromSurface(_renderer, surface);
-  SDL_FreeSurface(surface);
-  if (!texture) {
-	SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
+  Texture = SDL_CreateTextureFromSurface(Renderer, Surface);
+  SDL_FreeSurface(Surface);
+  if (!Texture) {
+	SDL_Log("Failed to convert Surface to Texture for %s", FileName.c_str());
 	return nullptr;
   }
 
-  _textures.emplace(fileName.c_str(), texture);
-  return texture;
+  Textures.emplace(FileName.c_str(), Texture);
+  return Texture;
 }
 
-void Game::ProcessInput() {
-  SDL_Event event;
-  while (SDL_PollEvent(&event)) {
-	switch (event.type) {
-	case SDL_QUIT: _isRunning = false;
+void Game::processInput() {
+  SDL_Event Event;
+  while (SDL_PollEvent(&Event)) {
+	switch (Event.type) {
+	case SDL_QUIT: IsRunning = false;
 	  break;
 	}
   }
 
-  const Uint8 *state = SDL_GetKeyboardState(nullptr);
-  if (state[SDL_SCANCODE_ESCAPE])
-	_isRunning = false;
+  const Uint8 *State = SDL_GetKeyboardState(nullptr);
+  if (State[SDL_SCANCODE_ESCAPE])
+	IsRunning = false;
 
-  _ship->ProcessKeyboard(state);
+  Ship->processKeyboard(State);
 }
 
-void Game::UpdateGame() {
+void Game::updateGame() {
   // Calculate delta time
-  while (!SDL_TICKS_PASSED(SDL_GetTicks(), _ticksCount + DeltaCount));
-  Uint32 ct = SDL_GetTicks();
-  float dt = std::min((float)(ct - _ticksCount) / 1000, 0.05f);
-  _ticksCount = ct;
+  while (!SDL_TICKS_PASSED(SDL_GetTicks(), TicksCount + DeltaCount));
+  Uint32 CurrentTicks = SDL_GetTicks();
+  float DeltaTime = std::min(static_cast<float>(CurrentTicks - TicksCount) / 1000, 0.05f);
+  TicksCount = CurrentTicks;
 
-  // Update actors
-  _updatingActors = true;
-  for (auto actor : _actors) {
-	actor->Update(dt);
+  // update actors
+  UpdatingActors = true;
+  for (auto Actor : Actors) {
+	Actor->update(DeltaTime);
   }
-  _updatingActors = false;
+  UpdatingActors = false;
 
   // Resolve pending
-  for (auto actor : _pendingActors) {
-	_actors.emplace_back(actor);
+  for (auto Actor : PendingActors) {
+	Actors.emplace_back(Actor);
   }
-  _pendingActors.clear();
+  PendingActors.clear();
 
-  std::vector<Actor *> deadActors;
-  for (auto actor: _actors) {
-	if (actor->GetState() == Actor::Dead)
-	  deadActors.emplace_back(actor);
+  std::vector<Actor *> DeadActors;
+  for (auto Actor: Actors) {
+	if (Actor->getState() == Actor::Dead)
+	  DeadActors.emplace_back(Actor);
   }
 
-  for (auto actor : deadActors) {
-	delete actor;
+  for (auto Actor : DeadActors) {
+	delete Actor;
   }
 }
 
-void Game::GenerateOutput() {
-  SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-  SDL_RenderClear(_renderer);
+void Game::generateOutput() {
+  SDL_SetRenderDrawColor(Renderer, 0, 0, 0, 255);
+  SDL_RenderClear(Renderer);
 
-  for (auto sprite : _sprites)
-	sprite->Draw(_renderer);
+  for (auto Sprite : Sprites)
+	Sprite->draw(Renderer);
 
-  SDL_RenderPresent(_renderer);
+  SDL_RenderPresent(Renderer);
 }
 
-void Game::LoadData() {
+void Game::loadData() {
   // ship
-  _ship = new Ship(this);
-  _ship->SetPosition({100, 384});
-  _ship->SetScale(1.5f);
+  Ship = new class Ship(this);
+  Ship->setPosition({100, 384});
+  Ship->setScale(1.5f);
 
-  Actor *tmp = new Actor(this);
-  tmp->SetPosition({512, 384});
+  auto *TmpActor = new Actor(this);
+  TmpActor->setPosition({512, 384});
 
-  // background
-  auto background = new BackgroundSpriteComponent(tmp);
-  background->SetScreenSize({Width, Height});
-  std::vector<SDL_Texture *> textures = {
-	  GetTexture("assets/Farback01.png"),
-	  GetTexture("assets/Farback02.png")
+  // Background
+  auto Background = new BackgroundSpriteComponent(TmpActor);
+  Background->setScreenSize({Width, Height});
+  std::vector<SDL_Texture *> BackgroundTextures = {
+	  getTexture("assets/Farback01.png"),
+	  getTexture("assets/Farback02.png")
   };
-  background->SetBackgroundTextures(textures);
-  background->SetScrollSpeed(-100);
+  Background->setBackgroundTextures(BackgroundTextures);
+  Background->setScrollSpeed(-100);
 
   // stars
-  background = new BackgroundSpriteComponent(tmp, 50);
-  background->SetScreenSize({Width, Height});
-  textures = {
-	  GetTexture("assets/Stars.png"),
-	  GetTexture("assets/Stars.png")
+  Background = new BackgroundSpriteComponent(TmpActor, 50);
+  Background->setScreenSize({Width, Height});
+  BackgroundTextures = {
+	  getTexture("assets/Stars.png"),
+	  getTexture("assets/Stars.png")
   };
-  background->SetBackgroundTextures(textures);
-  background->SetScrollSpeed(-200);
+  Background->setBackgroundTextures(BackgroundTextures);
+  Background->setScrollSpeed(-200);
 }
 
-void Game::UnloadData() {
-  while (!_actors.empty())
-	delete _actors.back();
+void Game::unloadData() {
+  while (!Actors.empty())
+	delete Actors.back();
 
-  for (const auto &x : _textures)
-	SDL_DestroyTexture(x.second);
-  _textures.clear();
+  for (const auto &Texture : Textures)
+	SDL_DestroyTexture(Texture.second);
+  Textures.clear();
 }
-
-} // namespace gpcpp::c02

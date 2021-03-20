@@ -1,18 +1,16 @@
 #include "component.hpp"
 #include "actor.hpp"
 
-namespace gpcpp::c02 {
+using namespace gpcpp::c02;
 
-Component::Component(class Actor *owner, int updateOrder) : _owner(owner), _updateOrder(updateOrder) {
-  owner->AddComponent(this);
+Component::Component(class Actor *Owner, int UpdateOrder) : Owner(Owner), UpdateOrder(UpdateOrder) {
+  Owner->addComponent(this);
 }
 
 Component::~Component() {
-  _owner->RemoveComponent(this);
+  Owner->removeComponent(this);
 }
 
-void Component::Update(float deltaTime) {
+void Component::update(float DeltaTime) {
 
 }
-
-} // namespace gpcpp::c02

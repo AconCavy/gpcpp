@@ -16,34 +16,34 @@ namespace gpcpp::c02 {
 class Game {
 public:
   Game();
-  bool Initialize();
-  void RunLoop();
-  void Shutdown();
-  void AddActor(Actor *actor);
-  void RemoveActor(Actor *actor);
-  void AddSprite(SpriteComponent *sprite);
-  void RemoveSprite(SpriteComponent *sprite);
-  SDL_Texture *GetTexture(const std::string &fileName);
+  bool initialize();
+  void runLoop();
+  void shutdown();
+  void addActor(Actor *A);
+  void removeActor(Actor *A);
+  void addSprite(SpriteComponent *SC);
+  void removeSprite(SpriteComponent *SC);
+  SDL_Texture *getTexture(const std::string &FileName);
 
 private:
-  void ProcessInput();
-  void UpdateGame();
-  void GenerateOutput();
-  void LoadData();
-  void UnloadData();
+  void processInput();
+  void updateGame();
+  void generateOutput();
+  void loadData();
+  void unloadData();
 
-  SDL_Window *_window;
-  SDL_Renderer *_renderer;
-  bool _isRunning;
-  Uint32 _ticksCount;
+  SDL_Window *Window;
+  SDL_Renderer *Renderer;
+  bool IsRunning;
+  Uint32 TicksCount;
 
-  bool _updatingActors;
-  std::vector<class Actor *> _actors;
-  std::vector<class Actor *> _pendingActors;
-  std::vector<class SpriteComponent *> _sprites;
-  std::unordered_map<std::string, SDL_Texture *> _textures;
+  bool UpdatingActors;
+  std::vector<class Actor *> Actors;
+  std::vector<class Actor *> PendingActors;
+  std::vector<class SpriteComponent *> Sprites;
+  std::unordered_map<std::string, SDL_Texture *> Textures;
 
-  class Ship *_ship;
+  class Ship *Ship;
 };
 
 } // namespace gpcpp::c02

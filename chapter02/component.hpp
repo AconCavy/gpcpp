@@ -5,14 +5,14 @@ namespace gpcpp::c02 {
 
 class Component {
 public:
-  Component(class Actor *owner, int updateOrder = 100);
+  explicit Component(class Actor *Owner, int UpdateOrder = 100);
   virtual ~Component();
-  virtual void Update(float deltaTime);
-  int GetUpdateOrder() const { return _updateOrder; }
+  virtual void update(float DeltaTime);
+  [[nodiscard]] int getUpdateOrder() const { return UpdateOrder; }
 
 protected:
-  class Actor *_owner;
-  int _updateOrder;
+  class Actor *Owner;
+  int UpdateOrder;
 };
 
 } // namespace gpcpp::c02

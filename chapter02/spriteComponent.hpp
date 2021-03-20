@@ -8,19 +8,19 @@ namespace gpcpp::c02 {
 
 class SpriteComponent : public Component {
 public:
-  SpriteComponent(class Actor *owner, int drawOrder = 100);
-  ~SpriteComponent();
-  virtual void Draw(SDL_Renderer *renderer);
-  virtual void SetTexture(SDL_Texture *texture);
-  int GetDrawOrder() const { return _drawOrder; }
-  int GetTextureWidth() const { return _textureWidth; }
-  int GetTextureHeight() const { return _textureHeight; }
+  explicit SpriteComponent(class Actor *Owner, int DrawOrder = 100);
+  ~SpriteComponent() override;
+  virtual void draw(SDL_Renderer *R);
+  virtual void setTexture(SDL_Texture *T);
+  [[nodiscard]] int getDrawOrder() const { return DrawOrder; }
+  [[nodiscard]] int getTextureWidth() const { return TextureWidth; }
+  [[nodiscard]] int getTextureHeight() const { return TextureHeight; }
 
 protected:
-  SDL_Texture *_texture;
-  int _drawOrder;
-  int _textureWidth;
-  int _textureHeight;
+  SDL_Texture *Texture;
+  int DrawOrder;
+  int TextureWidth;
+  int TextureHeight;
 };
 
 } // namespace gpcpp::c02
