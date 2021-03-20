@@ -21,14 +21,14 @@ SpriteComponent::~SpriteComponent() {
 void SpriteComponent::draw(SDL_Renderer *R) {
   if (!Texture)
 	return;
-  SDL_Rect r;
-  r.w = static_cast<int>(static_cast<float>(TextureWidth) * Owner->getScale());
-  r.h = static_cast<int>(static_cast<float>(TextureHeight) * Owner->getScale());
-  r.x = static_cast<int>(Owner->getPosition().X - static_cast<float>(r.w) / 2);
-  r.y = static_cast<int>(Owner->getPosition().Y - static_cast<float>(r.h) / 2);
+  SDL_Rect Rect;
+  Rect.w = static_cast<int>(static_cast<float>(TextureWidth) * Owner->getScale());
+  Rect.h = static_cast<int>(static_cast<float>(TextureHeight) * Owner->getScale());
+  Rect.x = static_cast<int>(Owner->getPosition().X - static_cast<float>(Rect.w) / 2);
+  Rect.y = static_cast<int>(Owner->getPosition().Y - static_cast<float>(Rect.h) / 2);
 
   float Degree = -ToDegree(Owner->getRotation());
-  SDL_RenderCopyEx(R, Texture, nullptr, &r, Degree, nullptr, SDL_FLIP_NONE);
+  SDL_RenderCopyEx(R, Texture, nullptr, &Rect, Degree, nullptr, SDL_FLIP_NONE);
 }
 
 void SpriteComponent::setTexture(SDL_Texture *T) {

@@ -21,13 +21,13 @@ void BackgroundSpriteComponent::update(float DeltaTime) {
 void BackgroundSpriteComponent::draw(SDL_Renderer *R) {
   SpriteComponent::draw(R);
   for (auto &Background : BackgroundTextures) {
-	SDL_Rect R;
-	R.w = static_cast<int>(ScreenSize.X);
-	R.h = static_cast<int>(ScreenSize.Y);
-	R.x = static_cast<int>(Owner->getPosition().X - static_cast<float>(R.w) / 2 + Background.Offset.X);
-	R.x = static_cast<int>(Owner->getPosition().Y - static_cast<float>(R.h) / 2 + Background.Offset.Y);
+	SDL_Rect Rect;
+	Rect.w = static_cast<int>(ScreenSize.X);
+	Rect.h = static_cast<int>(ScreenSize.Y);
+	Rect.x = static_cast<int>(Owner->getPosition().X - static_cast<float>(Rect.w) / 2 + Background.Offset.X);
+	Rect.x = static_cast<int>(Owner->getPosition().Y - static_cast<float>(Rect.h) / 2 + Background.Offset.Y);
 
-	SDL_RenderCopy(R, Background.Texture, nullptr, &R);
+	SDL_RenderCopy(R, Background.Texture, nullptr, &Rect);
   }
 }
 
