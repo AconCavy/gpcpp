@@ -5,7 +5,8 @@ add_executable(${PROJECT_NAME}
         game.cpp game.hpp
         actor.cpp actor.hpp
         component.cpp component.hpp
-        spriteComponent.cpp spriteComponent.hpp)
+        spriteComponent.cpp spriteComponent.hpp
+        moveComponent.cpp moveComponent.hpp)
 
 # copy assets
 #file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
