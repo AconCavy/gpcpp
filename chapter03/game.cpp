@@ -4,11 +4,6 @@
 
 using namespace gpcpp::c03;
 
-const int Height = 768;
-const int Width = 1024;
-const int FPS = 60;
-const int DeltaCount = 1000 / FPS;
-
 Game::Game()
 	: Window(nullptr),
 	  Renderer(nullptr),
