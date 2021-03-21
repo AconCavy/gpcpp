@@ -25,7 +25,7 @@ void BackgroundSpriteComponent::draw(SDL_Renderer *R) {
 	Rect.w = static_cast<int>(ScreenSize.x);
 	Rect.h = static_cast<int>(ScreenSize.y);
 	Rect.x = static_cast<int>(Owner->getPosition().x - static_cast<float>(Rect.w) / 2 + Background.Offset.x);
-	Rect.x = static_cast<int>(Owner->getPosition().y - static_cast<float>(Rect.h) / 2 + Background.Offset.y);
+	Rect.y = static_cast<int>(Owner->getPosition().y - static_cast<float>(Rect.h) / 2 + Background.Offset.y);
 
 	SDL_RenderCopy(R, Background.Texture, nullptr, &Rect);
   }
