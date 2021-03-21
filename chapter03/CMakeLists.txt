@@ -6,10 +6,11 @@ add_executable(${PROJECT_NAME}
         actor.cpp actor.hpp
         component.cpp component.hpp
         spriteComponent.cpp spriteComponent.hpp
-        moveComponent.cpp moveComponent.hpp)
+        moveComponent.cpp moveComponent.hpp
+        asteroid.cpp asteroid.hpp)
 
 # copy assets
-#file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
+file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
 
 # include utils
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/utils)
