@@ -2,6 +2,7 @@
 #define GPCPP_CHAPTER02_ANIMATIONSPRITECOMPONENT_HPP
 
 #include <vector>
+
 #include "spriteComponent.hpp"
 
 namespace gpcpp::c02 {
@@ -11,8 +12,10 @@ public:
   explicit AnimationSpriteComponent(class Actor *Owner, int DrawOrder = 100);
 
   void update(float DeltaTime) override;
-  void setAnimationTextures(const std::vector<SDL_Texture *> &Textures);
+
   [[nodiscard]] float getAnimationFPS() const { return AnimationFPS; }
+
+  void setAnimationTextures(const std::vector<SDL_Texture *> &Textures);
 
 private:
   std::vector<SDL_Texture *> AnimationTextures;

@@ -1,4 +1,5 @@
 #include "animationSpriteComponent.hpp"
+
 #include <cmath>
 
 using namespace gpcpp::c02;

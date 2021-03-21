@@ -25,6 +25,11 @@ public:
   void removeSprite(SpriteComponent *SC);
   SDL_Texture *getTexture(const std::string &FileName);
 
+  const int Height = 768;
+  const int Width = 1024;
+  const int FPS = 60;
+  const int DeltaCount = 1000 / FPS;
+
 private:
   void processInput();
   void updateGame();

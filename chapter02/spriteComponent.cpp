@@ -1,4 +1,5 @@
 #include "spriteComponent.hpp"
+
 #include "actor.hpp"
 #include "math.hpp"
 #include "game.hpp"

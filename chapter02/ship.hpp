@@ -8,6 +8,7 @@ namespace gpcpp::c02 {
 class Ship : public Actor {
 public:
   explicit Ship(class Game *Game);
+
   void updateActor(float DeltaTime) override;
   void processKeyboard(const uint8_t *State);
 

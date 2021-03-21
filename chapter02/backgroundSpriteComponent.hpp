@@ -13,10 +13,12 @@ public:
 
   void update(float DeltaTime) override;
   void draw(SDL_Renderer *R) override;
+
+  [[nodiscard]] float getScrollSpeed() const { return ScrollSpeed; }
+
   void setBackgroundTextures(std::vector<SDL_Texture *> &Textures);
   void setScreenSize(const glm::vec2 &Size) { ScreenSize = Size; }
   void setScrollSpeed(float Speed) { ScrollSpeed = Speed; }
-  [[nodiscard]] float getScrollSpeed() const { return ScrollSpeed; }
 
 private:
   struct BackgroundTexture {

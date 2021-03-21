@@ -1,4 +1,5 @@
 #include "component.hpp"
+
 #include "actor.hpp"
 
 using namespace gpcpp::c02;

@@ -1,14 +1,10 @@
+#include "game.hpp"
+
 #include <SDL2/SDL_image.h>
 
-#include "game.hpp"
 #include "backgroundSpriteComponent.hpp"
 
 using namespace gpcpp::c02;
-
-const int Height = 768;
-const int Width = 1024;
-const int FPS = 60;
-const int DeltaCount = 1000 / FPS;
 
 Game::Game() : Window(nullptr), Renderer(nullptr), IsRunning(true) {
 }

@@ -8,6 +8,7 @@ public:
   explicit Component(class Actor *Owner, int UpdateOrder = 100);
   virtual ~Component();
   virtual void update(float DeltaTime);
+
   [[nodiscard]] int getUpdateOrder() const { return UpdateOrder; }
 
 protected:

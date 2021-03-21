@@ -2,6 +2,7 @@
 #define GPCPP_CHAPTER02_SPRITECOMPONENT_HPP
 
 #include <SDL.h>
+
 #include "component.hpp"
 
 namespace gpcpp::c02 {
@@ -12,6 +13,7 @@ public:
   ~SpriteComponent() override;
   virtual void draw(SDL_Renderer *R);
   virtual void setTexture(SDL_Texture *T);
+
   [[nodiscard]] int getDrawOrder() const { return DrawOrder; }
   [[nodiscard]] int getTextureWidth() const { return TextureWidth; }
   [[nodiscard]] int getTextureHeight() const { return TextureHeight; }
