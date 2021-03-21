@@ -130,9 +130,15 @@ void Game::processInput() {
 	}
   }
 
-  const Uint8 *State = SDL_GetKeyboardState(nullptr);
+  const uint8_t *State = SDL_GetKeyboardState(nullptr);
   if (State[SDL_SCANCODE_ESCAPE])
 	IsRunning = false;
+
+  UpdatingActors = true;
+  for (auto Actor : Actors) {
+	Actor->processInput(State);
+  }
+  UpdatingActors = false;
 }
 void Game::updateGame() {
   while (!SDL_TICKS_PASSED(SDL_GetTicks(), TicksCount + DeltaCount));
