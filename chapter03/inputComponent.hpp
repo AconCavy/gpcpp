@@ -9,6 +9,8 @@ class InputComponent : public MoveComponent {
 public:
   explicit InputComponent(class Actor *Owner);
 
+  void processInput(const uint8_t *KeyState) override;
+
   [[nodiscard]] float getMaxAngularSpeed() const { return MaxAngularSpeed; }
   [[nodiscard]] float getMaxForward() const { return MaxForwardSpeed; }
   [[nodiscard]] int getForwardKey() const { return ForwardKey; }
@@ -22,8 +24,6 @@ public:
   void setBackKey(int Key) { ForwardKey = Key; }
   void setClockwiseKey(int Key) { ClockwiseKey = Key; }
   void setCounterClockwiseKey(int Key) { CounterClockwiseKey = Key; }
-
-  void processInput(const uint8_t *KeyState) override;
 
 private:
   float MaxAngularSpeed;
