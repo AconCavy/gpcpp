@@ -1,6 +1,8 @@
 #ifndef GPCPP_UTILS_MATH_HPP
 #define GPCPP_UTILS_MATH_HPP
 
+#include <random>
+
 namespace gpcpp {
 
 const double PI = 3.14159;
