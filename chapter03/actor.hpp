@@ -32,13 +32,15 @@ public:
   virtual void updateActor(float DeltaTime);
   void addComponent(class Component *C);
   void removeComponent(class Component *C);
+  void processInput(const uint8_t *KeyState);
+  virtual void ActorInput(const uint8_t *KeyState);
 
 private:
   State State;
   glm::vec2 Position;
   float Rotation;
   float Scale;
-  std::vector<class Component *> Component;
+  std::vector<class Component *> Components;
   class Game *Game;
 };
 

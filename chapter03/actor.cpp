@@ -14,8 +14,8 @@ Actor::Actor(struct Game *Game)
 }
 Actor::~Actor() {
   Game->removeActor(this);
-  while (!Component.empty()) {
-	delete Component.back();
+  while (!Components.empty()) {
+	delete Components.back();
   }
 }
 
@@ -27,7 +27,7 @@ void Actor::update(float DeltaTime) {
 }
 
 void Actor::updateComponents(float DeltaTime) {
-  for (auto component : Component) {
+  for (auto component : Components) {
 	component->update(DeltaTime);
   }
 }
@@ -37,8 +37,8 @@ void Actor::updateActor(float DeltaTime) {
 
 void Actor::addComponent(struct Component *C) {
   auto Order = C->getUpdateOrder();
-  auto I = Component.begin();
-  auto E = Component.end();
+  auto I = Components.begin();
+  auto E = Components.end();
   for (; I != E; ++I) {
 	if (Order < (*I)->getUpdateOrder())
 	  break;
@@ -46,8 +46,23 @@ void Actor::addComponent(struct Component *C) {
   Component.insert(I, C);
 }
 void Actor::removeComponent(struct Component *C) {
-  auto E = Component.end();
-  auto I = std::find(Component.begin(), E, C);
+  auto E = Components.end();
+  auto I = std::find(Components.begin(), E, C);
   if (I != E)
-	Component.erase(I);
+	Components.erase(I);
+}
+
+void Actor::processInput(const uint8_t *KeyState) {
+  if (State != Active)
+	return;
+
+  for (auto C : Components) {
+	C->processInput(KeyState);
+  }
+
+  ActorInput(KeyState);
+}
+
+void Actor::ActorInput(const uint8_t *KeyState) {
+
 }
