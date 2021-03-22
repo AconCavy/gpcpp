@@ -43,7 +43,7 @@ void Actor::addComponent(struct Component *C) {
 	if (Order < (*I)->getUpdateOrder())
 	  break;
   }
-  Component.insert(I, C);
+  Components.insert(I, C);
 }
 void Actor::removeComponent(struct Component *C) {
   auto E = Components.end();
