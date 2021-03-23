@@ -10,10 +10,10 @@ public:
   explicit Asteroid(class Game *Game);
   ~Asteroid() override;
 
-  class CircleComponent *getCircle() { return Circle; }
+  class CollisionComponent *getCollision() { return Collision; }
 
 private:
-  class CircleComponent *Circle;
+  class CollisionComponent *Collision;
 };
 
 } // namespace gpcpp::c03

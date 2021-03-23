@@ -1,7 +1,7 @@
 #include "laser.hpp"
 
 #include "asteroid.hpp"
-#include "circleComponent.hpp"
+#include "collisionComponent.hpp"
 #include "game.hpp"
 #include "moveComponent.hpp"
 #include "spriteComponent.hpp"
@@ -17,8 +17,8 @@ Laser::Laser(class Game *Game)
   auto MC = new MoveComponent(this);
   MC->setForwardSpeed(800);
 
-  Circle = new CircleComponent(this);
-  Circle->setRadius(11);
+  Collision = new CollisionComponent(this);
+  Collision->setRadius(11);
 }
 
 void Laser::updateActor(float DeltaTime) {
@@ -30,7 +30,7 @@ void Laser::updateActor(float DeltaTime) {
 
   auto Asteroids = getGame()->getAsteroids();
   for (auto A : Asteroids) {
-	if (intersect(*Circle, *(A->getCircle()))) {
+	if (intersect(*Collision, *(A->getCollision()))) {
 	  setState(Dead);
 	  A->setState(Dead);
 	  break;

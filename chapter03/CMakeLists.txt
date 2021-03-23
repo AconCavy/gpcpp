@@ -11,7 +11,7 @@ add_executable(${PROJECT_NAME}
         inputComponent.cpp inputComponent.hpp
         ship.cpp ship.hpp
         positionWrapComponent.cpp positionWrapComponent.hpp
-        circleComponent.cpp circleComponent.hpp
+        collisionComponent.cpp collisionComponent.hpp
         laser.cpp laser.hpp)
 
 # copy assets

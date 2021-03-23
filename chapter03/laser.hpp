@@ -12,7 +12,7 @@ public:
   void updateActor(float DeltaTime) override;
 
 private:
-  class CircleComponent *Circle;
+  class CollisionComponent *Collision;
   float DeathTimer;
 };
 

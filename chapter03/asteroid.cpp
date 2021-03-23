@@ -2,7 +2,7 @@
 
 #include <random>
 
-#include "circleComponent.hpp"
+#include "collisionComponent.hpp"
 #include "game.hpp"
 #include "math.hpp"
 #include "moveComponent.hpp"
@@ -28,8 +28,8 @@ Asteroid::Asteroid(class Game *Game) : Actor(Game) {
   PWC->setHeight(static_cast<float>(Game->Height));
   PWC->setMargin(static_cast<float>(25));
 
-  Circle = new CircleComponent(this);
-  Circle->setRadius(40);
+  Collision = new CollisionComponent(this);
+  Collision->setRadius(40);
 
   Game->addAsteroid(this);
 }
