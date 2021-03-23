@@ -22,7 +22,7 @@ bool Game::initialize() {
 	return false;
   }
 
-  Window = SDL_CreateWindow("Game Programming in C++ (Chapter 03)", 100, 100, Width, Height, 0);
+  Window = SDL_CreateWindow("Game Programming in C++ (Chapter 04)", 100, 100, Width, Height, 0);
   if (!Window) {
 	SDL_Log("Failed to create window: %s", SDL_GetError());
 	return false;

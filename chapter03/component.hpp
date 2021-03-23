@@ -24,6 +24,6 @@ protected:
   bool IsEnabled;
 };
 
-} // namespace gpcpp::c02
+} // namespace gpcpp::c03
 
 #endif //GPCPP_CHAPTER02_COMPONENT_HPP
