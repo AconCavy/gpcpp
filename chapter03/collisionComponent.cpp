@@ -17,10 +17,13 @@ float CollisionComponent::getRadius() const {
   return Owner->getScale() * Radius;
 }
 
-bool gpcpp::c03::intersect(const CollisionComponent &a, const CollisionComponent &b) {
-  auto Diff = a.getCenter() - b.getCenter();
+bool CollisionComponent::IsColliding(const CollisionComponent &other) const {
+  if (!IsEnabled)
+	return false;
+
+  auto Diff = getCenter() - other.getCenter();
   auto D2 = Diff.x * Diff.x + Diff.y * Diff.y;
-  auto R = a.getRadius() + b.getRadius();
+  auto R = getRadius() + other.getRadius();
 
   return D2 <= R * R;
 }
