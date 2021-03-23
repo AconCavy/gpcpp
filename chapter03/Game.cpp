@@ -4,7 +4,7 @@
 
 #include "Actor.hpp"
 #include "Asteroid.hpp"
-#include "math.hpp"
+#include "Math.hpp"
 #include "SpriteComponent.hpp"
 #include "Ship.hpp"
 

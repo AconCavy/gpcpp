@@ -4,7 +4,7 @@
 
 #include "CollisionComponent.hpp"
 #include "Game.hpp"
-#include "math.hpp"
+#include "Math.hpp"
 #include "MoveComponent.hpp"
 #include "PositionWrapComponent.hpp"
 #include "SpriteComponent.hpp"

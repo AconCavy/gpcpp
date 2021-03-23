@@ -5,7 +5,7 @@
 #include "Game.hpp"
 #include "InputComponent.hpp"
 #include "Laser.hpp"
-#include "math.hpp"
+#include "Math.hpp"
 #include "PositionWrapComponent.hpp"
 #include "SpriteComponent.hpp"
 

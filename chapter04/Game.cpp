@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 
 #include "Actor.hpp"
-#include "math.hpp"
+#include "Math.hpp"
 #include "SpriteComponent.hpp"
 
 using namespace gpcpp::c04;

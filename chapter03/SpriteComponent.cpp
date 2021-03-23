@@ -2,7 +2,7 @@
 
 #include "Actor.hpp"
 #include "Game.hpp"
-#include "math.hpp"
+#include "Math.hpp"
 
 using namespace gpcpp::c03;
 
