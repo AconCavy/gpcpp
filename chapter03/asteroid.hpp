@@ -8,6 +8,7 @@ namespace gpcpp::c03 {
 class Asteroid : public Actor {
 public:
   explicit Asteroid(class Game *Game);
+  ~Asteroid() override;
 };
 
 } // namespace gpcpp::c03
