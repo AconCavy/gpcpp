@@ -28,6 +28,7 @@ public:
   [[nodiscard]] State getState() const { return State; }
   [[nodiscard]] const glm::vec2 &getPosition() const { return Position; }
   [[nodiscard]] float getRotation() const { return Rotation; }
+  [[nodiscard]] glm::vec2 getForward() const { return {glm::cos(Rotation), -glm::sin(Rotation)}; }
   [[nodiscard]] float getScale() const { return Scale; }
   class Game *getGame() { return Game; }
 

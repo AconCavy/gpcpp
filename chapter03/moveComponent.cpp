@@ -22,7 +22,7 @@ void MoveComponent::update(float DeltaTime) {
 
   if (!isNearZero(ForwardSpeed, EPS)) {
 	auto P = Owner->getPosition();
-	P += ForwardSpeed * DeltaTime;
+	P += Owner->getForward() * ForwardSpeed * DeltaTime;
 	Owner->setPosition(P);
   }
 }
