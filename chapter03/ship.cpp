@@ -1,5 +1,7 @@
 #include "ship.hpp"
 
+#include "asteroid.hpp"
+#include "collisionComponent.hpp"
 #include "game.hpp"
 #include "inputComponent.hpp"
 #include "laser.hpp"
@@ -10,7 +12,10 @@
 using namespace gpcpp::c03;
 
 Ship::Ship(class Game *Game)
-	: Actor(Game) {
+	: Actor(Game),
+	  DefaultPosition(Game->Width / 2, Game->Height / 2),
+	  DefaultRotation(0),
+	  LaserCoolDown(0) {
   auto SC = new SpriteComponent(this, 150);
   SC->setTexture(Game->getTexture("assets/Ship.png"));
 
@@ -26,10 +31,22 @@ Ship::Ship(class Game *Game)
   PWC->setWidth(static_cast<float>(Game->Width));
   PWC->setHeight(static_cast<float>(Game->Height));
   PWC->setMargin(static_cast<float>(25));
+
+  Collision = new CollisionComponent(this);
+  Collision->setRadius(40);
 }
 
 void Ship::updateActor(float DeltaTime) {
   LaserCoolDown = std::max(0.0f, LaserCoolDown - DeltaTime);
+
+  auto Asteroids = getGame()->getAsteroids();
+  for (auto A : Asteroids) {
+	if (intersect(*Collision, *(A->getCollision()))) {
+	  setPosition(DefaultPosition);
+	  setRotation(DefaultRotation);
+	  break;
+	}
+  }
 }
 
 void Ship::ActorInput(const uint8_t *KeyState) {
