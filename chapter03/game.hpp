@@ -47,8 +47,8 @@ private:
   std::vector<class Actor *> PendingActors;
   std::vector<class SpriteComponent *> Sprites;
   std::unordered_map<std::string, SDL_Texture *> Textures;
-//
-//  class Ship *Ship;
+
+  class Ship *Ship;
 };
 
 } // namespace gpcpp::c03

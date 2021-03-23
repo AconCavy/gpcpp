@@ -2,7 +2,13 @@
 
 #include <SDL_image.h>
 
+#include "asteroid.hpp"
+#include "ship.hpp"
+#include "math.hpp"
+
 using namespace gpcpp::c03;
+
+const int NumberOfAsteroid = 20;
 
 Game::Game()
 	: Window(nullptr),
@@ -177,6 +183,13 @@ void Game::generateOutput() {
   SDL_RenderPresent(Renderer);
 }
 void Game::loadData() {
+  Ship = new class Ship(this);
+  Ship->setPosition({Width / 2, Height / 2});
+  Ship->setRotation(static_cast<float>(gpcpp::PI / 2));
+
+  for (int I = 0; I < NumberOfAsteroid; ++I) {
+	new Asteroid(this);
+  }
 
 }
 void Game::unloadData() {
