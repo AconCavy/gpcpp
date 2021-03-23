@@ -2,6 +2,7 @@
 
 #include "game.hpp"
 #include "inputComponent.hpp"
+#include "laser.hpp"
 #include "math.hpp"
 #include "positionWrapComponent.hpp"
 #include "spriteComponent.hpp"
@@ -28,7 +29,14 @@ Ship::Ship(class Game *Game)
 }
 
 void Ship::updateActor(float DeltaTime) {
+  LaserCoolDown = std::max(0.0f, LaserCoolDown - DeltaTime);
 }
 
 void Ship::ActorInput(const uint8_t *KeyState) {
+  if (KeyState[SDL_SCANCODE_SPACE] && LaserCoolDown == 0) {
+	auto L = new Laser(getGame());
+	L->setPosition(getPosition());
+	L->setRotation(getRotation());
+	LaserCoolDown = 0.5f;
+  }
 }
