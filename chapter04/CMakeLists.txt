@@ -1,12 +1,12 @@
-project(c04)
+project(Chapter04)
 
 add_executable(${PROJECT_NAME}
-        main.cpp
-        game.cpp game.hpp
-        actor.cpp actor.hpp
-        component.cpp component.hpp
-        moveComponent.cpp moveComponent.hpp
-        spriteComponent.cpp spriteComponent.hpp
+        Main.cpp
+        Game.cpp Game.hpp
+        Actor.cpp Actor.hpp
+        Component.cpp Component.hpp
+        MoveComponent.cpp MoveComponent.hpp
+        SpriteComponent.cpp SpriteComponent.hpp
         )
 
 # copy assets

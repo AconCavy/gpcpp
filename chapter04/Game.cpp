@@ -1,10 +1,10 @@
-#include "game.hpp"
+#include "Game.hpp"
 
 #include <SDL_image.h>
 
-#include "actor.hpp"
+#include "Actor.hpp"
 #include "math.hpp"
-#include "spriteComponent.hpp"
+#include "SpriteComponent.hpp"
 
 using namespace gpcpp::c04;
 
