@@ -1,7 +1,7 @@
 #ifndef GPCPP_CHAPTER02_BACKGROUNDSPRITECOMPONENT_HPP
 #define GPCPP_CHAPTER02_BACKGROUNDSPRITECOMPONENT_HPP
 
-#include "spriteComponent.hpp"
+#include "SpriteComponent.hpp"
 #include <vector>
 #include <glm/glm.hpp>
 

@@ -1,8 +1,8 @@
-#include "game.hpp"
+#include "Game.hpp"
 
 #include <SDL2/SDL_image.h>
 
-#include "backgroundSpriteComponent.hpp"
+#include "BackgroundSpriteComponent.hpp"
 
 using namespace gpcpp::c02;
 

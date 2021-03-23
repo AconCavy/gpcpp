@@ -1,6 +1,6 @@
-#include "backgroundSpriteComponent.hpp"
+#include "BackgroundSpriteComponent.hpp"
 
-#include "actor.hpp"
+#include "Actor.hpp"
 
 using namespace gpcpp::c02;
 

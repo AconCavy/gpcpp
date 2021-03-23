@@ -1,14 +1,14 @@
-project(c02)
+project(Chapter02)
 
 add_executable(${PROJECT_NAME}
-        main.cpp
-        game.cpp game.hpp
-        actor.cpp actor.hpp
-        component.cpp component.hpp
-        spriteComponent.cpp spriteComponent.hpp
-        animationSpriteComponent.cpp animationSpriteComponent.hpp
-        backgroundSpriteComponent.cpp backgroundSpriteComponent.hpp
-        ship.cpp ship.hpp)
+        Main.cpp
+        Game.cpp Game.hpp
+        Actor.cpp Actor.hpp
+        Component.cpp Component.hpp
+        SpriteComponent.cpp SpriteComponent.hpp
+        AnimationSpriteComponent.cpp AnimationSpriteComponent.hpp
+        BackgroundSpriteComponent.cpp BackgroundSpriteComponent.hpp
+        Ship.cpp Ship.hpp)
 
 # copy assets
 file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)

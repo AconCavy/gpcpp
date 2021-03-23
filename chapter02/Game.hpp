@@ -7,9 +7,9 @@
 #include <vector>
 #include <SDL2/SDL.h>
 
-#include "actor.hpp"
-#include "spriteComponent.hpp"
-#include "ship.hpp"
+#include "Actor.hpp"
+#include "SpriteComponent.hpp"
+#include "Ship.hpp"
 
 namespace gpcpp::c02 {
 

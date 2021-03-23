@@ -1,4 +1,4 @@
-#include "animationSpriteComponent.hpp"
+#include "AnimationSpriteComponent.hpp"
 
 #include <cmath>
 

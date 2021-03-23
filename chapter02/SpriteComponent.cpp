@@ -1,8 +1,8 @@
-#include "spriteComponent.hpp"
+#include "SpriteComponent.hpp"
 
-#include "actor.hpp"
+#include "Actor.hpp"
 #include "math.hpp"
-#include "game.hpp"
+#include "Game.hpp"
 
 using namespace gpcpp::c02;
 

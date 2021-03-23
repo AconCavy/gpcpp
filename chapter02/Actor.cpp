@@ -1,6 +1,6 @@
-#include "actor.hpp"
+#include "Actor.hpp"
 
-#include "game.hpp"
+#include "Game.hpp"
 
 using namespace gpcpp::c02;
 

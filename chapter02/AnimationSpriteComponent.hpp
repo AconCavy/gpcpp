@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "spriteComponent.hpp"
+#include "SpriteComponent.hpp"
 
 namespace gpcpp::c02 {
 

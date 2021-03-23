@@ -1,7 +1,7 @@
-#include "ship.hpp"
+#include "Ship.hpp"
 
-#include "animationSpriteComponent.hpp"
-#include "game.hpp"
+#include "AnimationSpriteComponent.hpp"
+#include "Game.hpp"
 
 using namespace gpcpp::c02;
 
