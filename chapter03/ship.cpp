@@ -2,6 +2,7 @@
 
 #include "game.hpp"
 #include "inputComponent.hpp"
+#include "positionWrapComponent.hpp"
 #include "math.hpp"
 
 using namespace gpcpp::c03;
@@ -18,6 +19,11 @@ Ship::Ship(class Game *Game)
   IC->setCounterClockwiseKey(SDL_SCANCODE_D);
   IC->setMaxAngularSpeed(static_cast<float>(gpcpp::PI * 2));
   IC->setMaxForwardSpeed(300);
+
+  auto PWC = new PositionWrapComponent(this);
+  PWC->setWidth(static_cast<float>(Game->Width));
+  PWC->setHeight(static_cast<float>(Game->Height));
+  PWC->setMargin(static_cast<float>(25));
 }
 
 void Ship::updateActor(float DeltaTime) {
