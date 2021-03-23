@@ -22,6 +22,7 @@ public:
   void removeSprite(class SpriteComponent *SC);
   void addAsteroid(class Asteroid *A);
   void removeAsteroid(class Asteroid *A);
+  std::vector<class Asteroid *> getAsteroids() { return Asteroids; }
   SDL_Texture *getTexture(const std::string &FileName);
 
   const int Height = 768;
