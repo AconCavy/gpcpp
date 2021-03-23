@@ -17,8 +17,8 @@ Laser::Laser(class Game *Game)
   auto MC = new MoveComponent(this);
   MC->setForwardSpeed(800);
 
-  auto CC = new CircleComponent(this);
-  CC->setRadius(11);
+  Circle = new CircleComponent(this);
+  Circle->setRadius(11);
 }
 
 void Laser::updateActor(float DeltaTime) {
