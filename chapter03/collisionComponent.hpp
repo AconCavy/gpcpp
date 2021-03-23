@@ -11,7 +11,7 @@ class CollisionComponent : public Component {
 public:
   explicit CollisionComponent(Actor *Owner);
 
-  [[nodiscard]] bool IsColliding(const CollisionComponent &other) const;
+  [[nodiscard]] bool isColliding(const CollisionComponent &other) const;
 
   [[nodiscard]] const glm::vec2 &getCenter() const;
   [[nodiscard]] float getRadius() const;

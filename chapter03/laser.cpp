@@ -30,7 +30,7 @@ void Laser::updateActor(float DeltaTime) {
 
   auto Asteroids = getGame()->getAsteroids();
   for (auto A : Asteroids) {
-	if (Collision->IsColliding(*(A->getCollision()))) {
+	if (Collision->isColliding(*(A->getCollision()))) {
 	  setState(Dead);
 	  A->setState(Dead);
 	  break;

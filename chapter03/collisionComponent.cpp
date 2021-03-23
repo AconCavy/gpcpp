@@ -17,7 +17,7 @@ float CollisionComponent::getRadius() const {
   return Owner->getScale() * Radius;
 }
 
-bool CollisionComponent::IsColliding(const CollisionComponent &other) const {
+bool CollisionComponent::isColliding(const CollisionComponent &other) const {
   if (!IsEnabled)
 	return false;
 

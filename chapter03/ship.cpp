@@ -46,7 +46,7 @@ void Ship::updateActor(float DeltaTime) {
   if (IsActive) {
 	auto Asteroids = getGame()->getAsteroids();
 	for (auto A : Asteroids) {
-	  if (Collision->IsColliding(*(A->getCollision()))) {
+	  if (Collision->isColliding(*(A->getCollision()))) {
 		setPosition(DefaultPosition);
 		setRotation(DefaultRotation);
 		setActive(false);
