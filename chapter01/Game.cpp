@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <random>
 
-#include "game.hpp"
+#include "Game.hpp"
 
 using namespace gpcpp::c01;
 

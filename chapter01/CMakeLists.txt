@@ -1,8 +1,8 @@
-project(c01)
+project(Chapter01)
 
 add_executable(${PROJECT_NAME}
-        main.cpp
-        game.hpp game.cpp)
+        Main.cpp
+        Game.hpp Game.cpp)
 
 # include external libraries
 find_package(SDL2 CONFIG REQUIRED)
