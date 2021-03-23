@@ -1,6 +1,6 @@
-#include "collisionComponent.hpp"
+#include "CollisionComponent.hpp"
 
-#include "actor.hpp"
+#include "Actor.hpp"
 
 using namespace gpcpp::c03;
 

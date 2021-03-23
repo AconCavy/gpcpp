@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-#include "component.hpp"
+#include "Component.hpp"
 
 namespace gpcpp::c03 {
 

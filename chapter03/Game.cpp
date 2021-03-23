@@ -1,12 +1,12 @@
-#include "game.hpp"
+#include "Game.hpp"
 
 #include <SDL_image.h>
 
-#include "actor.hpp"
-#include "asteroid.hpp"
+#include "Actor.hpp"
+#include "Asteroid.hpp"
 #include "math.hpp"
-#include "spriteComponent.hpp"
-#include "ship.hpp"
+#include "SpriteComponent.hpp"
+#include "Ship.hpp"
 
 using namespace gpcpp::c03;
 

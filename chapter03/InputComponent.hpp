@@ -1,7 +1,7 @@
 #ifndef GPCPP_CHAPTER03_INPUTCOMPONENT_HPP
 #define GPCPP_CHAPTER03_INPUTCOMPONENT_HPP
 
-#include "moveComponent.hpp"
+#include "MoveComponent.hpp"
 
 namespace gpcpp::c03 {
 

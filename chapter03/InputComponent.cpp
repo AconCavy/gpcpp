@@ -1,4 +1,4 @@
-#include "inputComponent.hpp"
+#include "InputComponent.hpp"
 
 using namespace gpcpp::c03;
 

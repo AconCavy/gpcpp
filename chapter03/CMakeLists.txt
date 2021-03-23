@@ -1,18 +1,18 @@
-project(c03)
+project(Chapter03)
 
 add_executable(${PROJECT_NAME}
-        main.cpp
-        game.cpp game.hpp
-        actor.cpp actor.hpp
-        component.cpp component.hpp
-        spriteComponent.cpp spriteComponent.hpp
-        moveComponent.cpp moveComponent.hpp
-        asteroid.cpp asteroid.hpp
-        inputComponent.cpp inputComponent.hpp
-        ship.cpp ship.hpp
-        positionWrapComponent.cpp positionWrapComponent.hpp
-        collisionComponent.cpp collisionComponent.hpp
-        laser.cpp laser.hpp)
+        Main.cpp
+        Game.cpp Game.hpp
+        Actor.cpp Actor.hpp
+        Component.cpp Component.hpp
+        SpriteComponent.cpp SpriteComponent.hpp
+        MoveComponent.cpp MoveComponent.hpp
+        Asteroid.cpp Asteroid.hpp
+        InputComponent.cpp InputComponent.hpp
+        Ship.cpp Ship.hpp
+        PositionWrapComponent.cpp PositionWrapComponent.hpp
+        CollisionComponent.cpp CollisionComponent.hpp
+        Laser.cpp Laser.hpp)
 
 # copy assets
 file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)

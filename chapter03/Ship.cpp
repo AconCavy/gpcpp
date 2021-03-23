@@ -1,13 +1,13 @@
-#include "ship.hpp"
+#include "Ship.hpp"
 
-#include "asteroid.hpp"
-#include "collisionComponent.hpp"
-#include "game.hpp"
-#include "inputComponent.hpp"
-#include "laser.hpp"
+#include "Asteroid.hpp"
+#include "CollisionComponent.hpp"
+#include "Game.hpp"
+#include "InputComponent.hpp"
+#include "Laser.hpp"
 #include "math.hpp"
-#include "positionWrapComponent.hpp"
-#include "spriteComponent.hpp"
+#include "PositionWrapComponent.hpp"
+#include "SpriteComponent.hpp"
 
 using namespace gpcpp::c03;
 

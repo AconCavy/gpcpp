@@ -1,7 +1,7 @@
 #ifndef GPCPP_CHAPTER03_ASTEROID_HPP
 #define GPCPP_CHAPTER03_ASTEROID_HPP
 
-#include "actor.hpp"
+#include "Actor.hpp"
 
 namespace gpcpp::c03 {
 

@@ -1,6 +1,6 @@
-#include "positionWrapComponent.hpp"
+#include "PositionWrapComponent.hpp"
 
-#include "actor.hpp"
+#include "Actor.hpp"
 
 using namespace gpcpp::c03;
 

@@ -1,13 +1,13 @@
-#include "asteroid.hpp"
+#include "Asteroid.hpp"
 
 #include <random>
 
-#include "collisionComponent.hpp"
-#include "game.hpp"
+#include "CollisionComponent.hpp"
+#include "Game.hpp"
 #include "math.hpp"
-#include "moveComponent.hpp"
-#include "positionWrapComponent.hpp"
-#include "spriteComponent.hpp"
+#include "MoveComponent.hpp"
+#include "PositionWrapComponent.hpp"
+#include "SpriteComponent.hpp"
 
 using namespace gpcpp::c03;
 

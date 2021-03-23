@@ -1,10 +1,10 @@
-#include "laser.hpp"
+#include "Laser.hpp"
 
-#include "asteroid.hpp"
-#include "collisionComponent.hpp"
-#include "game.hpp"
-#include "moveComponent.hpp"
-#include "spriteComponent.hpp"
+#include "Asteroid.hpp"
+#include "CollisionComponent.hpp"
+#include "Game.hpp"
+#include "MoveComponent.hpp"
+#include "SpriteComponent.hpp"
 
 using namespace gpcpp::c03;
 

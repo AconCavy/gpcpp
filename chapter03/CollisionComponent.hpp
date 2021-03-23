@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-#include "component.hpp"
+#include "Component.hpp"
 
 namespace gpcpp::c03 {
 

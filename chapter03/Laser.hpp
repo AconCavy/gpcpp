@@ -1,7 +1,7 @@
 #ifndef GPCPP_CHAPTER03_LASER_HPP
 #define GPCPP_CHAPTER03_LASER_HPP
 
-#include "actor.hpp"
+#include "Actor.hpp"
 
 namespace gpcpp::c03 {
 

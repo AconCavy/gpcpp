@@ -1,6 +1,6 @@
-#include "moveComponent.hpp"
+#include "MoveComponent.hpp"
 
-#include "actor.hpp"
+#include "Actor.hpp"
 #include "math.hpp"
 
 using namespace gpcpp::c03;

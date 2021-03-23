@@ -1,7 +1,7 @@
-#include "actor.hpp"
+#include "Actor.hpp"
 
-#include "component.hpp"
-#include "game.hpp"
+#include "Component.hpp"
+#include "Game.hpp"
 
 using namespace gpcpp::c03;
 

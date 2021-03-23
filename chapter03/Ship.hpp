@@ -1,7 +1,7 @@
 #ifndef GPCPP_CHAPTER02_SHIP_HPP
 #define GPCPP_CHAPTER02_SHIP_HPP
 
-#include "actor.hpp"
+#include "Actor.hpp"
 
 namespace gpcpp::c03 {
 
