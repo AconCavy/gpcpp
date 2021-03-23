@@ -1,5 +1,6 @@
 #include "actor.hpp"
 
+#include "component.hpp"
 #include "game.hpp"
 
 using namespace gpcpp::c03;

@@ -2,8 +2,9 @@
 
 #include "game.hpp"
 #include "inputComponent.hpp"
-#include "positionWrapComponent.hpp"
 #include "math.hpp"
+#include "positionWrapComponent.hpp"
+#include "spriteComponent.hpp"
 
 using namespace gpcpp::c03;
 
