@@ -11,7 +11,8 @@ add_executable(${PROJECT_NAME}
         inputComponent.cpp inputComponent.hpp
         ship.cpp ship.hpp
         positionWrapComponent.cpp positionWrapComponent.hpp
-        circleComponent.cpp circleComponent.hpp)
+        circleComponent.cpp circleComponent.hpp
+        laser.cpp laser.hpp)
 
 # copy assets
 file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
