@@ -6,13 +6,12 @@
 namespace gpcpp {
 
 const double PI = 3.14159;
-const double EPS = 1e-6;
 
 static inline float toDegree(float Radian) {
   return static_cast<float>(Radian * 180.0f / PI);
 }
 
-static inline float isNearZero(float Value) {
+static inline bool isNearZero(double Value, double EPS) {
   return abs(Value) < EPS;
 }
 

@@ -5,6 +5,8 @@
 
 using namespace gpcpp::c03;
 
+const double EPS = 1e-6;
+
 MoveComponent::MoveComponent(class Actor *Owner, int UpdateOrder)
 	: Component(Owner, UpdateOrder),
 	  AngularSpeed(0),
@@ -12,13 +14,13 @@ MoveComponent::MoveComponent(class Actor *Owner, int UpdateOrder)
 }
 
 void MoveComponent::update(float DeltaTime) {
-  if (!isNearZero(AngularSpeed)) {
+  if (!isNearZero(AngularSpeed, EPS)) {
 	auto R = Owner->getRotation();
 	R += AngularSpeed * DeltaTime;
 	Owner->setRotation(R);
   }
 
-  if (!isNearZero(ForwardSpeed)) {
+  if (!isNearZero(ForwardSpeed, EPS)) {
 	auto P = Owner->getPosition();
 	P += ForwardSpeed * DeltaTime;
 	Owner->setPosition(P);
