@@ -1,15 +1,15 @@
 #ifndef GPCPP_CHAPTER02_GAME_HPP
 #define GPCPP_CHAPTER02_GAME_HPP
 
-#include <algorithm>
-#include <unordered_map>
-#include <string>
-#include <vector>
 #include <SDL2/SDL.h>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 #include "Actor.hpp"
-#include "SpriteComponent.hpp"
 #include "Ship.hpp"
+#include "SpriteComponent.hpp"
 
 namespace gpcpp::c02 {
 
@@ -53,4 +53,4 @@ private:
 
 } // namespace gpcpp::c02
 
-#endif //GPCPP_CHAPTER02_GAME_HPP
+#endif // GPCPP_CHAPTER02_GAME_HPP

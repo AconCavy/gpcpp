@@ -18,4 +18,4 @@ private:
 
 } // namespace gpcpp::c03
 
-#endif //GPCPP_CHAPTER03_LASER_HPP
+#endif // GPCPP_CHAPTER03_LASER_HPP

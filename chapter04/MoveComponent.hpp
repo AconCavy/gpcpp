@@ -24,4 +24,4 @@ private:
 
 } // namespace gpcpp::c04
 
-#endif //GPCPP_CHAPTER03_MOVECOMPONENT_HPP
+#endif // GPCPP_CHAPTER03_MOVECOMPONENT_HPP

@@ -4,14 +4,11 @@
 
 using namespace gpcpp::c02;
 
-Component::Component(class Actor *Owner, int UpdateOrder) : Owner(Owner), UpdateOrder(UpdateOrder) {
+Component::Component(class Actor *Owner, int UpdateOrder)
+    : Owner(Owner), UpdateOrder(UpdateOrder) {
   Owner->addComponent(this);
 }
 
-Component::~Component() {
-  Owner->removeComponent(this);
-}
+Component::~Component() { Owner->removeComponent(this); }
 
-void Component::update(float DeltaTime) {
-
-}
+void Component::update(float DeltaTime) {}

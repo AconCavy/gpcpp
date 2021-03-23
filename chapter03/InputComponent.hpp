@@ -16,7 +16,9 @@ public:
   [[nodiscard]] int getForwardKey() const { return ForwardKey; }
   [[nodiscard]] int getBackKey() const { return BackKey; }
   [[nodiscard]] int getClockwiseKey() const { return ClockwiseKey; }
-  [[nodiscard]] int getCounterClockwiseKey() const { return CounterClockwiseKey; }
+  [[nodiscard]] int getCounterClockwiseKey() const {
+    return CounterClockwiseKey;
+  }
 
   void setMaxAngularSpeed(float Speed) { MaxAngularSpeed = Speed; }
   void setMaxForwardSpeed(float Speed) { MaxForwardSpeed = Speed; }
@@ -36,4 +38,4 @@ private:
 
 } // namespace gpcpp::c03
 
-#endif //GPCPP_CHAPTER03_INPUTCOMPONENT_HPP
+#endif // GPCPP_CHAPTER03_INPUTCOMPONENT_HPP

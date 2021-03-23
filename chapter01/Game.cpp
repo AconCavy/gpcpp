@@ -22,29 +22,31 @@ Game::Game() : Window(nullptr), Renderer(nullptr), IsRunning(true) {
   std::mt19937 MT32(Rnd());
   std::uniform_int_distribution<int> RndRange(-VelocityLimit, VelocityLimit);
   for (int i = 0; i < BallCount; ++i) {
-	float Vx = RndRange(MT32);
-	float Vy = RndRange(MT32);
-	Balls.push_back({{Width / 2, Height / 2}, {Vx, Vy}});
+    float Vx = RndRange(MT32);
+    float Vy = RndRange(MT32);
+    Balls.push_back({{Width / 2, Height / 2}, {Vx, Vy}});
   }
 }
 
 bool Game::initialize() {
   int SDLResult = SDL_Init(SDL_INIT_VIDEO);
   if (SDLResult != 0) {
-	SDL_Log("Failed to initialize SDL: %s", SDL_GetError());
-	return false;
+    SDL_Log("Failed to initialize SDL: %s", SDL_GetError());
+    return false;
   }
 
-  Window = SDL_CreateWindow("Game Programming in C++ (Chapter 01)", 100, 100, Width, Height, 0);
+  Window = SDL_CreateWindow("Game Programming in C++ (Chapter 01)", 100, 100,
+                            Width, Height, 0);
   if (!Window) {
-	SDL_Log("Failed to create window: %s", SDL_GetError());
-	return false;
+    SDL_Log("Failed to create window: %s", SDL_GetError());
+    return false;
   }
 
-  Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  Renderer = SDL_CreateRenderer(
+      Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (!Renderer) {
-	SDL_Log("Failed to create renderer: %s", SDL_GetError());
-	return false;
+    SDL_Log("Failed to create renderer: %s", SDL_GetError());
+    return false;
   }
 
   return true;
@@ -52,9 +54,9 @@ bool Game::initialize() {
 
 void Game::runLoop() {
   while (IsRunning) {
-	processInput();
-	updateGame();
-	generateOutput();
+    processInput();
+    updateGame();
+    generateOutput();
   }
 }
 
@@ -67,32 +69,36 @@ void Game::shutdown() {
 void Game::processInput() {
   SDL_Event Event;
   while (SDL_PollEvent(&Event)) {
-	switch (Event.type) {
-	case SDL_QUIT: IsRunning = false;
-	  break;
-	}
+    switch (Event.type) {
+    case SDL_QUIT:
+      IsRunning = false;
+      break;
+    }
   }
 
   const Uint8 *State = SDL_GetKeyboardState(nullptr);
   if (State[SDL_SCANCODE_ESCAPE])
-	IsRunning = false;
+    IsRunning = false;
 
   if (State[SDL_SCANCODE_W])
-	Players[0].Direction--;
+    Players[0].Direction--;
   if (State[SDL_SCANCODE_S])
-	Players[0].Direction++;
+    Players[0].Direction++;
 
   if (State[SDL_SCANCODE_I])
-	Players[1].Direction--;
+    Players[1].Direction--;
   if (State[SDL_SCANCODE_K])
-	Players[1].Direction++;
+    Players[1].Direction++;
 
-  Players[0].Direction = std::max(-SpeedLimit, std::min(SpeedLimit, Players[0].Direction));
-  Players[1].Direction = std::max(-SpeedLimit, std::min(SpeedLimit, Players[1].Direction));
+  Players[0].Direction =
+      std::max(-SpeedLimit, std::min(SpeedLimit, Players[0].Direction));
+  Players[1].Direction =
+      std::max(-SpeedLimit, std::min(SpeedLimit, Players[1].Direction));
 }
 
 void Game::updateGame() {
-  while (!SDL_TICKS_PASSED(SDL_GetTicks(), TicksCount + 16));
+  while (!SDL_TICKS_PASSED(SDL_GetTicks(), TicksCount + 16))
+    ;
 
   Uint32 CurrentTicks = SDL_GetTicks();
   float DeltaTime = (float)(CurrentTicks - TicksCount) / 1000;
@@ -101,36 +107,37 @@ void Game::updateGame() {
   DeltaTime = std::min(DeltaTime, 0.05f);
 
   for (auto &Player : Players) {
-	if (Player.Direction == 0)
-	  continue;
-	float Y = Player.Position.y + static_cast<float>(Player.Direction) * 300.0f * DeltaTime;
-	float H = static_cast<float>(PaddleHeight) / 2 + Thickness;
-	Y = std::max((float)H, Y);
-	Y = std::min((float)Height - H, Y);
-	Player.Position.y = Y;
+    if (Player.Direction == 0)
+      continue;
+    float Y = Player.Position.y +
+              static_cast<float>(Player.Direction) * 300.0f * DeltaTime;
+    float H = static_cast<float>(PaddleHeight) / 2 + Thickness;
+    Y = std::max((float)H, Y);
+    Y = std::min((float)Height - H, Y);
+    Player.Position.y = Y;
   }
 
   for (auto &Ball : Balls) {
-	Ball.Position += Ball.Velocity * DeltaTime;
+    Ball.Position += Ball.Velocity * DeltaTime;
 
-	if (Ball.Position.x >= Width - Thickness && Ball.Velocity.x > 0)
-	  Ball.Velocity.x = -Ball.Velocity.x;
+    if (Ball.Position.x >= Width - Thickness && Ball.Velocity.x > 0)
+      Ball.Velocity.x = -Ball.Velocity.x;
 
-	if (Ball.Position.y <= Thickness && Ball.Velocity.y < 0 ||
-		Ball.Position.y >= Height - Thickness && Ball.Velocity.y > 0)
-	  Ball.Velocity.y = -Ball.Velocity.y;
+    if (Ball.Position.y <= Thickness && Ball.Velocity.y < 0 ||
+        Ball.Position.y >= Height - Thickness && Ball.Velocity.y > 0)
+      Ball.Velocity.y = -Ball.Velocity.y;
 
-	for (Paddle player : Players) {
-	  float Dx = abs(player.Position.x - Ball.Position.x);
-	  float Dy = abs(player.Position.y - Ball.Position.y);
-	  if (Dx <= Thickness && Dy <= static_cast<float>(PaddleHeight) / 2)
-		Ball.Velocity.x = -Ball.Velocity.x;
-	}
+    for (Paddle player : Players) {
+      float Dx = abs(player.Position.x - Ball.Position.x);
+      float Dy = abs(player.Position.y - Ball.Position.y);
+      if (Dx <= Thickness && Dy <= static_cast<float>(PaddleHeight) / 2)
+        Ball.Velocity.x = -Ball.Velocity.x;
+    }
 
-	if (Ball.Position.x <= 0 || Width <= Ball.Position.x) {
-	  Ball.Position.x = static_cast<float>(Width) / 2;
-	  Ball.Position.y = static_cast<float>(Height) / 2;
-	}
+    if (Ball.Position.x <= 0 || Width <= Ball.Position.x) {
+      Ball.Position.x = static_cast<float>(Width) / 2;
+      Ball.Position.y = static_cast<float>(Height) / 2;
+    }
   }
 }
 
@@ -150,23 +157,20 @@ void Game::generateOutput() {
 
   // players
   for (auto Player : Players) {
-	SDL_Rect Rect{
-		static_cast<int>(Player.Position.x - static_cast<float>(Thickness) / 2),
-		static_cast<int>(Player.Position.y - static_cast<float>(PaddleHeight) / 2),
-		Thickness,
-		PaddleHeight};
-	SDL_RenderFillRect(Renderer, &Rect);
+    SDL_Rect Rect{
+        static_cast<int>(Player.Position.x - static_cast<float>(Thickness) / 2),
+        static_cast<int>(Player.Position.y -
+                         static_cast<float>(PaddleHeight) / 2),
+        Thickness, PaddleHeight};
+    SDL_RenderFillRect(Renderer, &Rect);
   }
 
   // balls
   for (auto Ball : Balls) {
-	float Tmp = static_cast<float>(Thickness) / 2;
-	SDL_Rect Rect{
-		(int)(Ball.Position.x - Tmp),
-		(int)(Ball.Position.y - Tmp),
-		Thickness,
-		Thickness};
-	SDL_RenderFillRect(Renderer, &Rect);
+    float Tmp = static_cast<float>(Thickness) / 2;
+    SDL_Rect Rect{(int)(Ball.Position.x - Tmp), (int)(Ball.Position.y - Tmp),
+                  Thickness, Thickness};
+    SDL_RenderFillRect(Renderer, &Rect);
   }
 
   SDL_RenderPresent(Renderer);

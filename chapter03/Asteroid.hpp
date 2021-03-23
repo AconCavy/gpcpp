@@ -10,7 +10,9 @@ public:
   explicit Asteroid(class Game *Game);
   ~Asteroid() override;
 
-  class CollisionComponent *getCollision() { return Collision; }
+  class CollisionComponent *getCollision() {
+    return Collision;
+  }
 
 private:
   class CollisionComponent *Collision;
@@ -18,4 +20,4 @@ private:
 
 } // namespace gpcpp::c03
 
-#endif //GPCPP_CHAPTER03_ASTEROID_HPP
+#endif // GPCPP_CHAPTER03_ASTEROID_HPP

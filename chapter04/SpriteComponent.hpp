@@ -28,4 +28,4 @@ protected:
 
 } // namespace gpcpp::c04
 
-#endif //GPCPP_CHAPTER02_SPRITECOMPONENT_HPP
+#endif // GPCPP_CHAPTER02_SPRITECOMPONENT_HPP

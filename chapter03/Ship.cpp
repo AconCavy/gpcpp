@@ -14,12 +14,9 @@ using namespace gpcpp::c03;
 const float ResurrectionTime = 1;
 
 Ship::Ship(class Game *Game)
-	: Actor(Game),
-	  DefaultPosition(Game->Width / 2, Game->Height / 2),
-	  DefaultRotation(0),
-	  LaserCoolDown(0),
-	  ResurrectionCoolDown(ResurrectionTime),
-	  IsActive(true) {
+    : Actor(Game), DefaultPosition(Game->Width / 2, Game->Height / 2),
+      DefaultRotation(0), LaserCoolDown(0),
+      ResurrectionCoolDown(ResurrectionTime), IsActive(true) {
   Sprite = new SpriteComponent(this, 150);
   Sprite->setTexture(Game->getTexture("assets/Ship.png"));
 
@@ -45,33 +42,33 @@ void Ship::updateActor(float DeltaTime) {
   ResurrectionCoolDown = std::max(0.0f, ResurrectionCoolDown - DeltaTime);
 
   if (IsActive) {
-	auto Asteroids = getGame()->getAsteroids();
-	for (auto A : Asteroids) {
-	  if (Collision->isColliding(*(A->getCollision()))) {
-		setPosition(DefaultPosition);
-		setRotation(DefaultRotation);
-		setActive(false);
+    auto Asteroids = getGame()->getAsteroids();
+    for (auto A : Asteroids) {
+      if (Collision->isColliding(*(A->getCollision()))) {
+        setPosition(DefaultPosition);
+        setRotation(DefaultRotation);
+        setActive(false);
 
-		return;
-	  }
-	}
+        return;
+      }
+    }
   }
 
   if (ResurrectionCoolDown == 0) {
-	setActive(true);
-	ResurrectionCoolDown = ResurrectionTime;
+    setActive(true);
+    ResurrectionCoolDown = ResurrectionTime;
   }
 }
 
 void Ship::ActorInput(const uint8_t *KeyState) {
   if (!IsActive)
-	return;
+    return;
 
   if (KeyState[SDL_SCANCODE_SPACE] && LaserCoolDown == 0) {
-	auto L = new Laser(getGame());
-	L->setPosition(getPosition());
-	L->setRotation(getRotation());
-	LaserCoolDown = 0.5f;
+    auto L = new Laser(getGame());
+    L->setPosition(getPosition());
+    L->setRotation(getRotation());
+    LaserCoolDown = 0.5f;
   }
 }
 

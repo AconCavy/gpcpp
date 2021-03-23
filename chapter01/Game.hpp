@@ -2,8 +2,8 @@
 #define GPCPP_CHAPTER01_GAME_HPP_
 
 #include <SDL2/SDL.h>
-#include <vector>
 #include <glm/glm.hpp>
+#include <vector>
 
 namespace gpcpp::c01 {
 
@@ -41,4 +41,4 @@ private:
 
 } // namespace gpcpp::c01
 
-#endif //GPCPP_CHAPTER01_GAME_HPP_
+#endif // GPCPP_CHAPTER01_GAME_HPP_

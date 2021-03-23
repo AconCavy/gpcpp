@@ -27,4 +27,4 @@ protected:
 
 } // namespace gpcpp::c02
 
-#endif //GPCPP_CHAPTER02_SPRITECOMPONENT_HPP
+#endif // GPCPP_CHAPTER02_SPRITECOMPONENT_HPP

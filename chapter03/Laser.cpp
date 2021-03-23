@@ -8,9 +8,7 @@
 
 using namespace gpcpp::c03;
 
-Laser::Laser(class Game *Game)
-	: Actor(Game),
-	  DeathTimer(1) {
+Laser::Laser(class Game *Game) : Actor(Game), DeathTimer(1) {
   auto SC = new SpriteComponent(this);
   SC->setTexture(Game->getTexture("assets/Laser.png"));
 
@@ -24,16 +22,16 @@ Laser::Laser(class Game *Game)
 void Laser::updateActor(float DeltaTime) {
   DeathTimer -= DeltaTime;
   if (DeathTimer <= 0) {
-	setState(Dead);
-	return;
+    setState(Dead);
+    return;
   }
 
   auto Asteroids = getGame()->getAsteroids();
   for (auto A : Asteroids) {
-	if (Collision->isColliding(*(A->getCollision()))) {
-	  setState(Dead);
-	  A->setState(Dead);
-	  break;
-	}
+    if (Collision->isColliding(*(A->getCollision()))) {
+      setState(Dead);
+      A->setState(Dead);
+      break;
+    }
   }
 }

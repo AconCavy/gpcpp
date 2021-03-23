@@ -26,4 +26,4 @@ protected:
 
 } // namespace gpcpp::c04
 
-#endif //GPCPP_CHAPTER02_COMPONENT_HPP
+#endif // GPCPP_CHAPTER02_COMPONENT_HPP

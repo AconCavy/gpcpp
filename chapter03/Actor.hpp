@@ -1,18 +1,14 @@
 #ifndef GPCPP_CHAPTER03_ACTOR_HPP
 #define GPCPP_CHAPTER03_ACTOR_HPP
 
-#include <vector>
 #include <glm/glm.hpp>
+#include <vector>
 
 namespace gpcpp::c03 {
 
 class Actor {
 public:
-  enum State {
-	Active,
-	Paused,
-	Dead
-  };
+  enum State { Active, Paused, Dead };
 
   explicit Actor(class Game *Game);
   virtual ~Actor();
@@ -28,9 +24,13 @@ public:
   [[nodiscard]] State getState() const { return State; }
   [[nodiscard]] const glm::vec2 &getPosition() const { return Position; }
   [[nodiscard]] float getRotation() const { return Rotation; }
-  [[nodiscard]] glm::vec2 getForward() const { return {glm::cos(Rotation), -glm::sin(Rotation)}; }
+  [[nodiscard]] glm::vec2 getForward() const {
+    return {glm::cos(Rotation), -glm::sin(Rotation)};
+  }
   [[nodiscard]] float getScale() const { return Scale; }
-  class Game *getGame() { return Game; }
+  class Game *getGame() {
+    return Game;
+  }
 
   void setState(State S) { State = S; }
   void setPosition(const glm::vec2 &P) { Position = P; }
@@ -48,4 +48,4 @@ private:
 
 } // namespace gpcpp::c03
 
-#endif //GPCPP_CHAPTER03_ACTOR_HPP
+#endif // GPCPP_CHAPTER03_ACTOR_HPP

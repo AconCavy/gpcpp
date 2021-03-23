@@ -2,8 +2,8 @@
 #define GPCPP_CHAPTER02_BACKGROUNDSPRITECOMPONENT_HPP
 
 #include "SpriteComponent.hpp"
-#include <vector>
 #include <glm/glm.hpp>
+#include <vector>
 
 namespace gpcpp::c02 {
 
@@ -22,8 +22,8 @@ public:
 
 private:
   struct BackgroundTexture {
-	SDL_Texture *Texture;
-	glm::vec2 Offset;
+    SDL_Texture *Texture;
+    glm::vec2 Offset;
   };
 
   std::vector<BackgroundTexture> BackgroundTextures;
@@ -33,4 +33,4 @@ private:
 
 } // namespace gpcpp::c02
 
-#endif //GPCPP_CHAPTER02_BACKGROUNDSPRITECOMPONENT_HPP
+#endif // GPCPP_CHAPTER02_BACKGROUNDSPRITECOMPONENT_HPP

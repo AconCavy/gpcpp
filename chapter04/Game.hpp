@@ -1,11 +1,11 @@
 #ifndef GPCPP_CHAPTER03_GAME_HPP
 #define GPCPP_CHAPTER03_GAME_HPP
 
+#include <SDL.h>
 #include <algorithm>
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <SDL.h>
 
 namespace gpcpp::c04 {
 
@@ -48,4 +48,4 @@ private:
 
 } // namespace gpcpp::c04
 
-#endif //GPCPP_CHAPTER03_GAME_HPP
+#endif // GPCPP_CHAPTER03_GAME_HPP

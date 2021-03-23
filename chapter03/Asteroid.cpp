@@ -13,7 +13,7 @@ using namespace gpcpp::c03;
 
 Asteroid::Asteroid(class Game *Game) : Actor(Game) {
   setPosition({gpcpp::getRandomRealRange(0, Game->Width),
-				  gpcpp::getRandomRealRange(0, Game->Height)});
+               gpcpp::getRandomRealRange(0, Game->Height)});
 
   setRotation(static_cast<float>(gpcpp::getRandomRealRange(0, gpcpp::PI * 2)));
 
@@ -33,7 +33,4 @@ Asteroid::Asteroid(class Game *Game) : Actor(Game) {
 
   Game->addAsteroid(this);
 }
-Asteroid::~Asteroid() {
-  getGame()->removeAsteroid(this);
-}
-
+Asteroid::~Asteroid() { getGame()->removeAsteroid(this); }

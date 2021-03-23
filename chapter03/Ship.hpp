@@ -33,4 +33,4 @@ private:
 
 } // namespace gpcpp::c03
 
-#endif //GPCPP_CHAPTER02_SHIP_HPP
+#endif // GPCPP_CHAPTER02_SHIP_HPP

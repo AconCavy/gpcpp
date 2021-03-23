@@ -25,4 +25,4 @@ private:
 
 } // namespace gpcpp::c03
 
-#endif //GPCPP_CHAPTER03_COLLISIONCOMPONENT_HPP
+#endif // GPCPP_CHAPTER03_COLLISIONCOMPONENT_HPP

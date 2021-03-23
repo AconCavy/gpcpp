@@ -31,4 +31,4 @@ static inline double getRandomRealRange(double Min, double Max) {
 
 } // namespace gpcpp
 
-#endif //GPCPP_UTILS_MATH_HPP
+#endif // GPCPP_UTILS_MATH_HPP
