@@ -17,12 +17,14 @@ public:
 
   void setDefaultPosition(const glm::vec2 &P) { DefaultPosition = P; }
   void setDefaultRotation(float R) { DefaultRotation = R; }
+  void setActive(bool Flag);
 
 private:
   float LaserCoolDown;
   float ResurrectionCoolDown;
   glm::vec2 DefaultPosition;
   float DefaultRotation;
+  bool IsActive;
 
   class SpriteComponent *Sprite;
   class InputComponent *Input;

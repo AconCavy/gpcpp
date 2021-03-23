@@ -43,15 +43,13 @@ void Ship::updateActor(float DeltaTime) {
   LaserCoolDown = std::max(0.0f, LaserCoolDown - DeltaTime);
   ResurrectionCoolDown = std::max(0.0f, ResurrectionCoolDown - DeltaTime);
 
-  if (Sprite->IsActive()) {
+  if (IsActive) {
 	auto Asteroids = getGame()->getAsteroids();
 	for (auto A : Asteroids) {
 	  if (Collision->IsColliding(*(A->getCollision()))) {
 		setPosition(DefaultPosition);
 		setRotation(DefaultRotation);
-		Sprite->setActive(false);
-		Input->setActive(false);
-		Collision->setActive(false);
+		setActive(false);
 
 		return;
 	  }
@@ -59,18 +57,26 @@ void Ship::updateActor(float DeltaTime) {
   }
 
   if (ResurrectionCoolDown == 0) {
-	Sprite->setActive(true);
-	Input->setActive(true);
-	Collision->setActive(true);
+	setActive(true);
 	ResurrectionCoolDown = ResurrectionTime;
   }
 }
 
 void Ship::ActorInput(const uint8_t *KeyState) {
+  if (!IsActive)
+	return;
+
   if (KeyState[SDL_SCANCODE_SPACE] && LaserCoolDown == 0) {
 	auto L = new Laser(getGame());
 	L->setPosition(getPosition());
 	L->setRotation(getRotation());
 	LaserCoolDown = 0.5f;
   }
+}
+
+void Ship::setActive(bool Flag) {
+  IsActive = Flag;
+  Sprite->setActive(Flag);
+  Input->setActive(Flag);
+  Collision->setActive(Flag);
 }
