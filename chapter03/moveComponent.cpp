@@ -14,6 +14,9 @@ MoveComponent::MoveComponent(class Actor *Owner, int UpdateOrder)
 }
 
 void MoveComponent::update(float DeltaTime) {
+  if (!IsEnabled)
+	return;
+
   if (!isNearZero(AngularSpeed, EPS)) {
 	auto R = Owner->getRotation();
 	R += AngularSpeed * DeltaTime;

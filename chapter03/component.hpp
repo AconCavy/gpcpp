@@ -14,10 +14,14 @@ public:
   virtual void processInput(const uint8_t *KeyState);
 
   [[nodiscard]] int getUpdateOrder() const { return UpdateOrder; }
+  [[nodiscard]] bool IsActive() const { return IsEnabled; }
+
+  void setActive(bool Flag) { IsEnabled = Flag; }
 
 protected:
   class Actor *Owner;
   int UpdateOrder;
+  bool IsEnabled;
 };
 
 } // namespace gpcpp::c02

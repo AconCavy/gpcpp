@@ -6,7 +6,8 @@ using namespace gpcpp::c03;
 
 Component::Component(class Actor *Owner, int UpdateOrder)
 	: Owner(Owner),
-	  UpdateOrder(UpdateOrder) {
+	  UpdateOrder(UpdateOrder),
+	  IsEnabled(true) {
   Owner->addComponent(this);
 }
 

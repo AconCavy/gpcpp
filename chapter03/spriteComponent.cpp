@@ -20,8 +20,9 @@ SpriteComponent::~SpriteComponent() {
 }
 
 void SpriteComponent::draw(SDL_Renderer *R) {
-  if (!Texture)
+  if (!IsEnabled || !Texture)
 	return;
+
   SDL_Rect Rect;
   Rect.w = static_cast<int>(static_cast<float>(TextureWidth) * Owner->getScale());
   Rect.h = static_cast<int>(static_cast<float>(TextureHeight) * Owner->getScale());

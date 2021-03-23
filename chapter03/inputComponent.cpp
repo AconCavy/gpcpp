@@ -12,6 +12,9 @@ InputComponent::InputComponent(class Actor *Owner)
 	  CounterClockwiseKey(0) {
 }
 void InputComponent::processInput(const uint8_t *KeyState) {
+  if (!IsEnabled)
+	return;
+
   auto ForwardSpeed = 0.0f;
   if (KeyState[ForwardKey])
 	ForwardSpeed += MaxForwardSpeed;
