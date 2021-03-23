@@ -7,9 +7,6 @@
 #include <vector>
 #include <SDL.h>
 
-#include "actor.hpp"
-#include "spriteComponent.hpp"
-
 namespace gpcpp::c03 {
 
 class Game {
@@ -19,10 +16,12 @@ public:
   void runLoop();
   void shutdown();
 
-  void addActor(Actor *A);
-  void removeActor(Actor *A);
-  void addSprite(SpriteComponent *SC);
-  void removeSprite(SpriteComponent *SC);
+  void addActor(class Actor *A);
+  void removeActor(class Actor *A);
+  void addSprite(class SpriteComponent *SC);
+  void removeSprite(class SpriteComponent *SC);
+  void addAsteroid(class Asteroid *A);
+  void removeAsteroid(class Asteroid *A);
   SDL_Texture *getTexture(const std::string &FileName);
 
   const int Height = 768;
@@ -49,6 +48,7 @@ private:
   std::unordered_map<std::string, SDL_Texture *> Textures;
 
   class Ship *Ship;
+  std::vector<class Asteroid *> Asteroids;
 };
 
 } // namespace gpcpp::c03

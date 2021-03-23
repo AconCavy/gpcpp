@@ -2,9 +2,11 @@
 
 #include <SDL_image.h>
 
+#include "actor.hpp"
 #include "asteroid.hpp"
-#include "ship.hpp"
 #include "math.hpp"
+#include "spriteComponent.hpp"
+#include "ship.hpp"
 
 using namespace gpcpp::c03;
 
@@ -98,8 +100,21 @@ void Game::addSprite(SpriteComponent *SC) {
 }
 
 void Game::removeSprite(SpriteComponent *SC) {
+  auto E = Sprites.end();
   auto I = std::find(Sprites.begin(), Sprites.end(), SC);
-  Sprites.erase(I);
+  if (I != E)
+	Sprites.erase(I);
+}
+
+void Game::addAsteroid(struct Asteroid *A) {
+  Asteroids.emplace_back(A);
+}
+
+void Game::removeAsteroid(struct Asteroid *A) {
+  auto E = Asteroids.end();
+  auto I = std::find(Asteroids.begin(), E, A);
+  if (I != E)
+	Asteroids.erase(I);
 }
 
 SDL_Texture *Game::getTexture(const std::string &FileName) {
