@@ -20,8 +20,12 @@ public:
 
 private:
   float LaserCoolDown;
+  float ResurrectionCoolDown;
   glm::vec2 DefaultPosition;
   float DefaultRotation;
+
+  class SpriteComponent *Sprite;
+  class InputComponent *Input;
   class CollisionComponent *Collision;
 };
 

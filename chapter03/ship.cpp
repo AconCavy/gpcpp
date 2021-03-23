@@ -11,21 +11,24 @@
 
 using namespace gpcpp::c03;
 
+const float ResurrectionTime = 1;
+
 Ship::Ship(class Game *Game)
 	: Actor(Game),
 	  DefaultPosition(Game->Width / 2, Game->Height / 2),
 	  DefaultRotation(0),
-	  LaserCoolDown(0) {
-  auto SC = new SpriteComponent(this, 150);
-  SC->setTexture(Game->getTexture("assets/Ship.png"));
+	  LaserCoolDown(0),
+	  ResurrectionCoolDown(ResurrectionTime) {
+  Sprite = new SpriteComponent(this, 150);
+  Sprite->setTexture(Game->getTexture("assets/Ship.png"));
 
-  auto IC = new InputComponent(this);
-  IC->setForwardKey(SDL_SCANCODE_W);
-  IC->setBackKey(SDL_SCANCODE_S);
-  IC->setClockwiseKey(SDL_SCANCODE_A);
-  IC->setCounterClockwiseKey(SDL_SCANCODE_D);
-  IC->setMaxAngularSpeed(static_cast<float>(gpcpp::PI * 2));
-  IC->setMaxForwardSpeed(300);
+  Input = new InputComponent(this);
+  Input->setForwardKey(SDL_SCANCODE_W);
+  Input->setBackKey(SDL_SCANCODE_S);
+  Input->setClockwiseKey(SDL_SCANCODE_A);
+  Input->setCounterClockwiseKey(SDL_SCANCODE_D);
+  Input->setMaxAngularSpeed(static_cast<float>(gpcpp::PI * 2));
+  Input->setMaxForwardSpeed(300);
 
   auto PWC = new PositionWrapComponent(this);
   PWC->setWidth(static_cast<float>(Game->Width));
@@ -38,14 +41,28 @@ Ship::Ship(class Game *Game)
 
 void Ship::updateActor(float DeltaTime) {
   LaserCoolDown = std::max(0.0f, LaserCoolDown - DeltaTime);
+  ResurrectionCoolDown = std::max(0.0f, ResurrectionCoolDown - DeltaTime);
 
-  auto Asteroids = getGame()->getAsteroids();
-  for (auto A : Asteroids) {
-	if (intersect(*Collision, *(A->getCollision()))) {
-	  setPosition(DefaultPosition);
-	  setRotation(DefaultRotation);
-	  break;
+  if (Sprite->IsActive()) {
+	auto Asteroids = getGame()->getAsteroids();
+	for (auto A : Asteroids) {
+	  if (Collision->IsColliding(*(A->getCollision()))) {
+		setPosition(DefaultPosition);
+		setRotation(DefaultRotation);
+		Sprite->setActive(false);
+		Input->setActive(false);
+		Collision->setActive(false);
+
+		return;
+	  }
 	}
+  }
+
+  if (ResurrectionCoolDown == 0) {
+	Sprite->setActive(true);
+	Input->setActive(true);
+	Collision->setActive(true);
+	ResurrectionCoolDown = ResurrectionTime;
   }
 }
 
