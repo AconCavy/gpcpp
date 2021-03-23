@@ -17,7 +17,7 @@ float CircleComponent::getRadius() const {
   return Owner->getScale() * Radius;
 }
 
-bool intersect(const CircleComponent &a, const CircleComponent &b) {
+bool gpcpp::c03::intersect(const CircleComponent &a, const CircleComponent &b) {
   auto Diff = a.getCenter() - b.getCenter();
   auto D2 = Diff.x * Diff.x + Diff.y * Diff.y;
   auto R = a.getRadius() + b.getRadius();
