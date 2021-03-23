@@ -28,8 +28,8 @@ Asteroid::Asteroid(class Game *Game) : Actor(Game) {
   PWC->setHeight(static_cast<float>(Game->Height));
   PWC->setMargin(static_cast<float>(25));
 
-  auto CC = new CircleComponent(this);
-  CC->setRadius(40);
+  Circle = new CircleComponent(this);
+  Circle->setRadius(40);
 
   Game->addAsteroid(this);
 }

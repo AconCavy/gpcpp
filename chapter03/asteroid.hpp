@@ -9,6 +9,11 @@ class Asteroid : public Actor {
 public:
   explicit Asteroid(class Game *Game);
   ~Asteroid() override;
+
+  class CircleComponent *getCircle() { return Circle; }
+
+private:
+  class CircleComponent *Circle;
 };
 
 } // namespace gpcpp::c03
