@@ -8,7 +8,8 @@ add_executable(${PROJECT_NAME}
         MoveComponent.cpp MoveComponent.hpp
         SpriteComponent.cpp SpriteComponent.hpp
         AIState.cpp AIState.hpp
-        AIComponent.cpp AIComponent.hpp)
+        AIComponent.cpp AIComponent.hpp
+        NavComponent.cpp NavComponent.hpp)
 
 # copy assets
 #file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
