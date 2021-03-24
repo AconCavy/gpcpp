@@ -1,36 +1,9 @@
-#include <queue>
-#include <unordered_map>
-#include <vector>
+#include "Search.hpp"
 
-namespace gpcpp {
+using namespace gpcpp;
 
-struct GraphNode {
-  std::vector<GraphNode *> Adjacent;
-};
-
-struct Graph {
-  std::vector<GraphNode *> Nodes;
-};
-
-struct WeightedEdge {
-  struct WeightedGraphNode *From;
-  struct WeightedGraphNode *To;
-  float Weight;
-};
-
-struct WeightedGraphNode {
-  std::vector<WeightedEdge *> Edges;
-};
-
-struct WeightedGraph {
-  std::vector<WeightedGraphNode *> Nodes;
-};
-
-using NodeToParentMap =
-    std::unordered_map<const GraphNode *, const GraphNode *>;
-
-bool BFS(const Graph &Graph, const GraphNode *Start, const GraphNode *Goal,
-         NodeToParentMap &OutMap) {
+bool gpcpp::doBFS(const Graph &Graph, const GraphNode *Start,
+                  const GraphNode *Goal, NodeToParentMap &OutMap) {
   bool Result = false;
   std::queue<const GraphNode *> Q;
   Q.emplace(Start);
@@ -55,21 +28,13 @@ bool BFS(const Graph &Graph, const GraphNode *Start, const GraphNode *Goal,
   return Result;
 }
 
-float ComputeHeuristic(const WeightedGraphNode *A, const WeightedGraphNode *B) {
+float gpcpp::computeHeuristic(const WeightedGraphNode *A,
+                              const WeightedGraphNode *B) {
   return 0.0f;
 }
 
-struct GBFSScratch {
-  const WeightedEdge *ParentEdge = nullptr;
-  float Heuristic = 0.0f;
-  bool IsInOpenSet = false;
-  bool IsInClosedSet = false;
-};
-
-using GBFSMap = std::unordered_map<const WeightedGraphNode *, GBFSScratch>;
-
-bool GBFS(const WeightedGraph &Graph, const WeightedGraphNode *Start,
-          const WeightedGraphNode *Goal, GBFSMap &OutMap) {
+bool gpcpp::doGBFS(const WeightedGraph &Graph, const WeightedGraphNode *Start,
+                   const WeightedGraphNode *Goal, GBFSMap &OutMap) {
   std::vector<const WeightedGraphNode *> OpenSet;
   const WeightedGraphNode *Current = Start;
   OutMap[Current].IsInClosedSet = true;
@@ -85,7 +50,7 @@ bool GBFS(const WeightedGraph &Graph, const WeightedGraphNode *Start,
       if (Data.IsInOpenSet)
         continue;
 
-      Data.Heuristic = ComputeHeuristic(Neighbor, Goal);
+      Data.Heuristic = computeHeuristic(Neighbor, Goal);
       Data.IsInOpenSet = true;
       OpenSet.emplace_back(Neighbor);
     }
@@ -108,18 +73,8 @@ bool GBFS(const WeightedGraph &Graph, const WeightedGraphNode *Start,
   return Current == Goal;
 }
 
-struct AStarScratch {
-  const WeightedEdge *ParentEdge = nullptr;
-  float Heuristic = 0.0f;
-  float Cost = 0.0f;
-  bool IsInOpenSet = false;
-  bool IsInClosedSet = false;
-};
-
-using AStarMap = std::unordered_map<const WeightedGraphNode *, AStarScratch>;
-
-bool AStar(const WeightedGraph &Graph, const WeightedGraphNode *Start,
-           const WeightedGraphNode *Goal, AStarMap &OutMap) {
+bool gpcpp::doAStar(const WeightedGraph &Graph, const WeightedGraphNode *Start,
+                    const WeightedGraphNode *Goal, AStarMap &OutMap) {
   std::vector<const WeightedGraphNode *> OpenSet;
   const WeightedGraphNode *Current = Start;
   OutMap[Current].IsInClosedSet = true;
@@ -140,7 +95,7 @@ bool AStar(const WeightedGraph &Graph, const WeightedGraphNode *Start,
         }
       } else {
         Data.ParentEdge = Edge;
-        Data.Heuristic = ComputeHeuristic(Neighbor, Goal);
+        Data.Heuristic = computeHeuristic(Neighbor, Goal);
         Data.Cost = OutMap[Current].Cost + Edge->Weight;
         Data.IsInOpenSet = true;
         OpenSet.emplace_back(Neighbor);
@@ -167,4 +122,121 @@ bool AStar(const WeightedGraph &Graph, const WeightedGraphNode *Start,
   return Current == Goal;
 }
 
-} // namespace gpcpp
+float gpcpp::computeScore(const GameState &State) {
+  bool IsSame = true;
+
+  for (int I = 0; I < 3; ++I) {
+    auto V = State.Board[I][0];
+    for (int J = 1; J < 3; ++J) {
+      IsSame &= State.Board[I][J] != V;
+    }
+
+    if (IsSame) {
+      return V == GameState::X ? 1.0f : -1.0f;
+    }
+  }
+
+  for (int J = 0; J < 3; ++J) {
+    auto V = State.Board[0][J];
+    for (int I = 1; I < 3; ++I) {
+      IsSame &= State.Board[I][J] != V;
+    }
+
+    if (IsSame) {
+      return V == GameState::X ? 1.0f : -1.0f;
+    }
+  }
+
+  auto Center = State.Board[1][1];
+  if (State.Board[0][0] == Center && Center && State.Board[2][2] ||
+      State.Board[2][0] == Center && Center && State.Board[0][2]) {
+    return Center == GameState::X ? 1.0f : -1.0f;
+  }
+
+  return 0;
+}
+
+float gpcpp::computeMaxScore(const GameTreeNode *Node) {
+  if (Node->Children.empty())
+    return computeScore(Node->State);
+
+  float Score = -std::numeric_limits<float>::infinity();
+  for (const auto Child : Node->Children) {
+    Score = std::max(Score, computeMinScore(Child));
+  }
+
+  return Score;
+}
+
+float gpcpp::computeMinScore(const GameTreeNode *Node) {
+  if (Node->Children.empty())
+    return computeScore(Node->State);
+
+  float Score = std::numeric_limits<float>::infinity();
+  for (const auto Child : Node->Children) {
+    Score = std::min(Score, computeMaxScore(Child));
+  }
+
+  return Score;
+}
+
+const GameTreeNode *gpcpp::doMinimaxDecide(const GameTreeNode *Root) {
+  const GameTreeNode *Result = nullptr;
+  float Max = -std::numeric_limits<float>::infinity();
+  for (const auto Child : Root->Children) {
+    auto V = computeMinScore(Child);
+    if (V > Max) {
+      Max = V;
+      Result = Child;
+    }
+  }
+
+  return Result;
+}
+
+float gpcpp::computeAlphaBetaMaxScore(const GameTreeNode *Node, float alpha,
+                                      float beta) {
+  if (Node->Children.empty())
+    return computeScore(Node->State);
+
+  float Score = -std::numeric_limits<float>::infinity();
+  for (const auto Child : Node->Children) {
+    Score = std::max(Score, computeAlphaBetaMinScore(Child, alpha, beta));
+    if (Score >= beta)
+      return Score;
+    alpha = std::max(Score, alpha);
+  }
+
+  return Score;
+}
+
+float gpcpp::computeAlphaBetaMinScore(const GameTreeNode *Node, float alpha,
+                                      float beta) {
+  if (Node->Children.empty())
+    return computeScore(Node->State);
+
+  float Score = std::numeric_limits<float>::infinity();
+  for (const auto Child : Node->Children) {
+    Score = std::min(Score, computeAlphaBetaMaxScore(Child, alpha, beta));
+    if (Score <= alpha)
+      return Score;
+    beta = std::max(Score, beta);
+  }
+
+  return Score;
+}
+
+const GameTreeNode *gpcpp::doAlphaBetaDecide(const GameTreeNode *Root) {
+  const GameTreeNode *Result = nullptr;
+  float Max = -std::numeric_limits<float>::infinity();
+  float beta = std::numeric_limits<float>::infinity();
+  for (const auto Child : Root->Children) {
+    auto V = computeAlphaBetaMinScore(Child, Max, beta);
+    if (V > Max) {
+      Max = V;
+      Result = Child;
+    }
+  }
+
+  return Result;
+}
