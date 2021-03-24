@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME}
 
 # include utils
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/utils)
+target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/utils)
 
 # include external libraries
 find_package(SDL2 CONFIG REQUIRED)
