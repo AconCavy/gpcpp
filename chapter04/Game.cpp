@@ -5,6 +5,7 @@
 
 #include "Actor.hpp"
 #include "Enemy.hpp"
+#include "Grid.hpp"
 #include "Math.hpp"
 #include "SpriteComponent.hpp"
 
@@ -142,6 +143,15 @@ void Game::processInput() {
   if (State[SDL_SCANCODE_ESCAPE])
     IsRunning = false;
 
+  if (State[SDL_SCANCODE_B])
+    Grid->buildTower();
+
+  int x;
+  int y;
+  auto Buttons = SDL_GetMouseState(&x, &y);
+  if (SDL_BUTTON(Buttons) & SDL_BUTTON_LEFT)
+    Grid->processClick(x, y);
+
   UpdatingActors = true;
   for (auto Actor : Actors) {
     Actor->processInput(State);
@@ -188,7 +198,7 @@ void Game::generateOutput() {
   SDL_RenderPresent(Renderer);
 }
 
-void Game::loadData() {}
+void Game::loadData() { Grid = new class Grid(this); }
 
 void Game::unloadData() {
   while (!Actors.empty())
