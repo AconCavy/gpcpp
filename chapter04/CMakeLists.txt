@@ -11,7 +11,8 @@ add_executable(${PROJECT_NAME}
         AIComponent.cpp AIComponent.hpp
         NavComponent.cpp NavComponent.hpp
         Tile.cpp Tile.hpp
-        Grid.cpp Grid.hpp)
+        Grid.cpp Grid.hpp
+        CollisionComponent.cpp CollisionComponent.hpp)
 
 # copy assets
 #file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
