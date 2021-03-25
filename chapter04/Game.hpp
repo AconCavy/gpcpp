@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <algorithm>
+#include <glm/glm.hpp>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -21,6 +22,13 @@ public:
   void addSprite(class SpriteComponent *SC);
   void removeSprite(class SpriteComponent *SC);
   SDL_Texture *getTexture(const std::string &FileName);
+
+  class Grid *getGrid() {
+    return Grid;
+  }
+
+  std::vector<class Enemy *> &getEnemies() { return Enemies; }
+  class Enemy *getNearestEnemy(const glm::vec2 &Position);
 
   const int Height = 768;
   const int Width = 1024;
@@ -44,6 +52,10 @@ private:
   std::vector<class Actor *> PendingActors;
   std::vector<class SpriteComponent *> Sprites;
   std::unordered_map<std::string, SDL_Texture *> Textures;
+
+  std::vector<class Enemy *> Enemies;
+  class Grid *Grid;
+  float NextEnemy;
 };
 
 } // namespace gpcpp::c04

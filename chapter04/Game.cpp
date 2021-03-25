@@ -1,8 +1,10 @@
 #include "Game.hpp"
 
 #include <SDL_image.h>
+#include <algorithm>
 
 #include "Actor.hpp"
+#include "Enemy.hpp"
 #include "Math.hpp"
 #include "SpriteComponent.hpp"
 
@@ -195,4 +197,17 @@ void Game::unloadData() {
   for (const auto &Texture : Textures)
     SDL_DestroyTexture(Texture.second);
   Textures.clear();
+}
+
+Enemy *Game::getNearestEnemy(const glm::vec2 &Position) {
+  Enemy *Result = nullptr;
+  if (Enemies.empty())
+    return Result;
+
+  auto I = std::min_element(Enemies.begin(), Enemies.end(),
+                            [&Position](Enemy *A, Enemy *B) {
+                              return glm::distance(Position, A->getPosition()) <
+                                     glm::distance(Position, B->getPosition());
+                            });
+  return *I;
 }
