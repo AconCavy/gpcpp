@@ -7,6 +7,7 @@ namespace gpcpp::c04 {
 
 class Tile : public Actor {
 public:
+  friend class Grid;
   enum TileState { Default, Path, Start, Base };
 
   explicit Tile(class Game *Game);
@@ -20,9 +21,12 @@ public:
 
 private:
   void updateTexture();
+  [[nodiscard]] float F() const { Heuristic + Cost; }
 
   std::vector<Tile *> Adjacent;
   Tile *Parent;
+  float Heuristic;
+  float Cost;
   bool IsInOpenSet;
   bool IsInClosedSet;
   bool IsBlocked;
