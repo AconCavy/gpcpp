@@ -13,7 +13,8 @@ add_executable(${PROJECT_NAME}
         Tile.cpp Tile.hpp
         Grid.cpp Grid.hpp
         CollisionComponent.cpp CollisionComponent.hpp
-        Enemy.cpp Enemy.hpp)
+        Enemy.cpp Enemy.hpp
+        Bullet.cpp Bullet.hpp)
 
 # copy assets
 #file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
