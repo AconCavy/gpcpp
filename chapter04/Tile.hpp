@@ -21,7 +21,7 @@ public:
 
 private:
   void updateTexture();
-  [[nodiscard]] float F() const { Heuristic + Cost; }
+  [[nodiscard]] float F() const { return Heuristic + Cost; }
 
   std::vector<Tile *> Adjacent;
   Tile *Parent;
