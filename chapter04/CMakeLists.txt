@@ -18,7 +18,7 @@ add_executable(${PROJECT_NAME}
         Tower.cpp Tower.hpp)
 
 # copy assets
-#file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
+file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
 
 # include utils
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/utils)
