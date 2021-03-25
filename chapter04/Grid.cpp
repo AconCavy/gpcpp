@@ -2,7 +2,9 @@
 
 #include <algorithm>
 
+#include "Enemy.hpp"
 #include "Tile.hpp"
+#include "Tower.hpp"
 
 using namespace gpcpp::c04;
 Grid::Grid(class Game *Game) : Actor(Game), SelectedTile(nullptr) {
@@ -13,7 +15,7 @@ Grid::Grid(class Game *Game) : Actor(Game), SelectedTile(nullptr) {
 
   for (int I = 0; I < NumbersOfRow; ++I) {
     for (int J = 0; J < NumbersOfColumn; ++J) {
-      Tiles[I][J] = new Tile(getGame());
+      Tiles[I][J] = new Tile(Game);
       Tiles[I][J]->setPosition(
           {TileSize / 2.0f + static_cast<float>(J) * TileSize,
            StartY + static_cast<float>(I) * TileSize});
@@ -46,7 +48,7 @@ void Grid::updateActor(float DeltaTime) {
   Actor::updateActor(DeltaTime);
   NextEnemy -= DeltaTime;
   if (NextEnemy <= 0) {
-    //  new Enemy(getGame());
+    new Enemy(getGame());
     NextEnemy += EnemyTime;
   }
 }
@@ -71,29 +73,29 @@ bool Grid::findPath(struct Tile *Start, struct Tile *Goal) {
   }
 
   std::vector<Tile *> OpenSet;
-  auto Current = Start;
+  auto *Current = Start;
   Current->IsInClosedSet = true;
 
-  auto GoalPosition = Goal->getPosition();
+  const auto GoalPosition = Goal->getPosition();
 
   do {
-    for (auto Neighbor : Current->Adjacent) {
+    for (auto *Neighbor : Current->Adjacent) {
       if (Neighbor->IsBlocked || Neighbor->IsInClosedSet)
         continue;
 
       auto NewCost = Current->Cost + TileSize;
       if (Neighbor->IsInOpenSet) {
+        if (NewCost < Neighbor->Cost) {
+          Neighbor->Parent = Current;
+          Neighbor->Cost = NewCost;
+        }
+      } else {
         Neighbor->Parent = Current;
         Neighbor->Heuristic =
             glm::distance(Neighbor->getPosition(), GoalPosition);
         Neighbor->Cost = NewCost;
         OpenSet.emplace_back(Neighbor);
         Neighbor->IsInOpenSet = true;
-      } else {
-        if (NewCost < Neighbor->Cost) {
-          Neighbor->Parent = Current;
-          Neighbor->Cost = NewCost;
-        }
       }
     }
 
@@ -118,12 +120,13 @@ void Grid::buildTower() {
 
   SelectedTile->IsBlocked = true;
   if (findPath(getGoalTile(), getStartTile())) {
-    //    auto Tower = new Tower(getGame());
-    //    Tower->setPosition(SelectedTile->getPosition());
+    auto Tower = new class Tower(getGame());
+    Tower->setPosition(SelectedTile->getPosition());
   } else {
     SelectedTile->IsBlocked = false;
     findPath(getGoalTile(), getStartTile());
   }
+
   updatePathTiles(getStartTile());
 }
 
@@ -157,7 +160,7 @@ void Grid::updatePathTiles(struct Tile *Start) {
   }
 
   auto Current = Start->Parent;
-  auto E = getGoalTile();
+  const auto E = getGoalTile();
   while (Current != E) {
     Current->setTileState(Tile::Path);
     Current = Current->Parent;
