@@ -9,15 +9,15 @@ namespace gpcpp::c04 {
 
 class NavComponent : public MoveComponent {
 public:
-  NavComponent(class Actor *Owner, int UpdateOrder);
+  explicit NavComponent(class Actor *Owner, int UpdateOrder = 10);
 
   void update(float DeltaTime) override;
-  void TurnTo(const glm::vec2 &Position);
 
-  void setNextPoint(const glm::vec2 &Position) { NextPosition = Position; }
+  void setStart(const class Tile *Start);
+  void turnTo(const glm::vec2 &Position);
 
 private:
-  glm::vec2 NextPosition;
+  const class Tile *NextNode;
 };
 
 } // namespace gpcpp::c04
