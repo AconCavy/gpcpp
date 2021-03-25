@@ -9,7 +9,8 @@ using namespace gpcpp::c04;
 
 Tile::Tile(class Game *Game)
     : Actor(Game), Parent(nullptr), IsBlocked(false), Sprite(nullptr),
-      CurrentState(Default), IsSelected(false) {
+      CurrentState(Default), IsSelected(false), IsInClosedSet(false),
+      IsInOpenSet(false), Heuristic(0), Cost(0) {
   Sprite = new SpriteComponent(this);
   updateTexture();
 }
