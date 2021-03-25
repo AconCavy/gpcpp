@@ -3,6 +3,7 @@
 #include "CollisionComponent.hpp"
 #include "Game.hpp"
 #include "Grid.hpp"
+#include "Math.hpp"
 #include "NavComponent.hpp"
 #include "SpriteComponent.hpp"
 #include "Tile.hpp"
@@ -25,9 +26,16 @@ Enemy::Enemy(class Game *Game) : Actor(Game) {
 }
 
 Enemy::~Enemy() {
-  auto Enemies = getGame()->getEnemies();
+  auto &Enemies = getGame()->getEnemies();
   auto I = std::find(Enemies.begin(), Enemies.end(), this);
   Enemies.erase(I);
 }
 
-void Enemy::updateActor(float DeltaTime) { Actor::updateActor(DeltaTime); }
+void Enemy::updateActor(float DeltaTime) {
+  Actor::updateActor(DeltaTime);
+  auto D = glm::distance(getPosition(),
+                         getGame()->getGrid()->getGoalTile()->getPosition());
+  const float EPS = 10;
+  if (isNearZero(D, EPS))
+    setState(Dead);
+}
