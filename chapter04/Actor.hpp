@@ -1,5 +1,5 @@
-#ifndef GPCPP_CHAPTER03_ACTOR_HPP
-#define GPCPP_CHAPTER03_ACTOR_HPP
+#ifndef GPCPP_CHAPTER04_ACTOR_HPP
+#define GPCPP_CHAPTER04_ACTOR_HPP
 
 #include <glm/glm.hpp>
 #include <vector>
@@ -48,4 +48,4 @@ private:
 
 } // namespace gpcpp::c04
 
-#endif // GPCPP_CHAPTER03_ACTOR_HPP
+#endif // GPCPP_CHAPTER04_ACTOR_HPP

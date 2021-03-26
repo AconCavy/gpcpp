@@ -1,5 +1,5 @@
-#ifndef GPCPP_CHAPTER02_SHIP_HPP
-#define GPCPP_CHAPTER02_SHIP_HPP
+#ifndef GPCPP_CHAPTER03_SHIP_HPP
+#define GPCPP_CHAPTER03_SHIP_HPP
 
 #include "Actor.hpp"
 
@@ -33,4 +33,4 @@ private:
 
 } // namespace gpcpp::c03
 
-#endif // GPCPP_CHAPTER02_SHIP_HPP
+#endif // GPCPP_CHAPTER03_SHIP_HPP

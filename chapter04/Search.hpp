@@ -1,5 +1,5 @@
-#ifndef GPCPP_UTILS_SEARCH_HPP
-#define GPCPP_UTILS_SEARCH_HPP
+#ifndef GPCPP_CHAPTER04_SEARCH_HPP
+#define GPCPP_CHAPTER04_SEARCH_HPP
 
 #include <queue>
 #include <unordered_map>
@@ -87,4 +87,4 @@ const GameTreeNode *doAlphaBetaDecide(const GameTreeNode *Root);
 
 } // namespace gpcpp::c04
 
-#endif // GPCPP_UTILS_SEARCH_HPP
+#endif // GPCPP_CHAPTER04_SEARCH_HPP

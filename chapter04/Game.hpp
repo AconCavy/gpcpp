@@ -1,5 +1,5 @@
-#ifndef GPCPP_CHAPTER03_GAME_HPP
-#define GPCPP_CHAPTER03_GAME_HPP
+#ifndef GPCPP_CHAPTER04_GAME_HPP
+#define GPCPP_CHAPTER04_GAME_HPP
 
 #include <SDL.h>
 #include <algorithm>
@@ -60,4 +60,4 @@ private:
 
 } // namespace gpcpp::c04
 
-#endif // GPCPP_CHAPTER03_GAME_HPP
+#endif // GPCPP_CHAPTER04_GAME_HPP
