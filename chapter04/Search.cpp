@@ -1,9 +1,9 @@
 #include "Search.hpp"
 
-using namespace gpcpp;
+using namespace gpcpp::c04;
 
-bool gpcpp::doBFS(const Graph &Graph, const GraphNode *Start,
-                  const GraphNode *Goal, NodeToParentMap &OutMap) {
+bool gpcpp::c04::doBFS(const Graph &Graph, const GraphNode *Start,
+                       const GraphNode *Goal, NodeToParentMap &OutMap) {
   bool Result = false;
   std::queue<const GraphNode *> Q;
   Q.emplace(Start);
@@ -28,13 +28,14 @@ bool gpcpp::doBFS(const Graph &Graph, const GraphNode *Start,
   return Result;
 }
 
-float gpcpp::computeHeuristic(const WeightedGraphNode *A,
-                              const WeightedGraphNode *B) {
+float gpcpp::c04::computeHeuristic(const WeightedGraphNode *A,
+                                   const WeightedGraphNode *B) {
   return 0.0f;
 }
 
-bool gpcpp::doGBFS(const WeightedGraph &Graph, const WeightedGraphNode *Start,
-                   const WeightedGraphNode *Goal, GBFSMap &OutMap) {
+bool gpcpp::c04::doGBFS(const WeightedGraph &Graph,
+                        const WeightedGraphNode *Start,
+                        const WeightedGraphNode *Goal, GBFSMap &OutMap) {
   std::vector<const WeightedGraphNode *> OpenSet;
   const WeightedGraphNode *Current = Start;
   OutMap[Current].IsInClosedSet = true;
@@ -73,8 +74,9 @@ bool gpcpp::doGBFS(const WeightedGraph &Graph, const WeightedGraphNode *Start,
   return Current == Goal;
 }
 
-bool gpcpp::doAStar(const WeightedGraph &Graph, const WeightedGraphNode *Start,
-                    const WeightedGraphNode *Goal, AStarMap &OutMap) {
+bool gpcpp::c04::doAStar(const WeightedGraph &Graph,
+                         const WeightedGraphNode *Start,
+                         const WeightedGraphNode *Goal, AStarMap &OutMap) {
   std::vector<const WeightedGraphNode *> OpenSet;
   const WeightedGraphNode *Current = Start;
   OutMap[Current].IsInClosedSet = true;
@@ -122,7 +124,7 @@ bool gpcpp::doAStar(const WeightedGraph &Graph, const WeightedGraphNode *Start,
   return Current == Goal;
 }
 
-float gpcpp::computeScore(const GameState &State) {
+float gpcpp::c04::computeScore(const GameState &State) {
   bool IsSame = true;
 
   for (int I = 0; I < 3; ++I) {
@@ -156,7 +158,7 @@ float gpcpp::computeScore(const GameState &State) {
   return 0;
 }
 
-float gpcpp::computeMaxScore(const GameTreeNode *Node) {
+float gpcpp::c04::computeMaxScore(const GameTreeNode *Node) {
   if (Node->Children.empty())
     return computeScore(Node->State);
 
@@ -168,7 +170,7 @@ float gpcpp::computeMaxScore(const GameTreeNode *Node) {
   return Score;
 }
 
-float gpcpp::computeMinScore(const GameTreeNode *Node) {
+float gpcpp::c04::computeMinScore(const GameTreeNode *Node) {
   if (Node->Children.empty())
     return computeScore(Node->State);
 
@@ -180,7 +182,7 @@ float gpcpp::computeMinScore(const GameTreeNode *Node) {
   return Score;
 }
 
-const GameTreeNode *gpcpp::doMinimaxDecide(const GameTreeNode *Root) {
+const GameTreeNode *gpcpp::c04::doMinimaxDecide(const GameTreeNode *Root) {
   const GameTreeNode *Result = nullptr;
   float Max = -std::numeric_limits<float>::infinity();
   for (const auto Child : Root->Children) {
@@ -194,8 +196,8 @@ const GameTreeNode *gpcpp::doMinimaxDecide(const GameTreeNode *Root) {
   return Result;
 }
 
-float gpcpp::computeAlphaBetaMaxScore(const GameTreeNode *Node, float alpha,
-                                      float beta) {
+float gpcpp::c04::computeAlphaBetaMaxScore(const GameTreeNode *Node,
+                                           float alpha, float beta) {
   if (Node->Children.empty())
     return computeScore(Node->State);
 
@@ -210,8 +212,8 @@ float gpcpp::computeAlphaBetaMaxScore(const GameTreeNode *Node, float alpha,
   return Score;
 }
 
-float gpcpp::computeAlphaBetaMinScore(const GameTreeNode *Node, float alpha,
-                                      float beta) {
+float gpcpp::c04::computeAlphaBetaMinScore(const GameTreeNode *Node,
+                                           float alpha, float beta) {
   if (Node->Children.empty())
     return computeScore(Node->State);
 
@@ -226,7 +228,7 @@ float gpcpp::computeAlphaBetaMinScore(const GameTreeNode *Node, float alpha,
   return Score;
 }
 
-const GameTreeNode *gpcpp::doAlphaBetaDecide(const GameTreeNode *Root) {
+const GameTreeNode *gpcpp::c04::doAlphaBetaDecide(const GameTreeNode *Root) {
   const GameTreeNode *Result = nullptr;
   float Max = -std::numeric_limits<float>::infinity();
   float beta = std::numeric_limits<float>::infinity();

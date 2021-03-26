@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace gpcpp {
+namespace gpcpp::c04 {
 
 struct GraphNode {
   std::vector<GraphNode *> Adjacent;
@@ -85,6 +85,6 @@ float computeAlphaBetaMinScore(const GameTreeNode *Node, float alpha,
 
 const GameTreeNode *doAlphaBetaDecide(const GameTreeNode *Root);
 
-} // namespace gpcpp
+} // namespace gpcpp::c04
 
 #endif // GPCPP_UTILS_SEARCH_HPP
