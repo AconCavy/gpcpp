@@ -13,10 +13,12 @@ add_executable(${PROJECT_NAME}
         PositionWrapComponent.cpp PositionWrapComponent.hpp
         CollisionComponent.cpp CollisionComponent.hpp
         Laser.cpp Laser.hpp
-        VertexArray.cpp VertexArray.hpp)
+        VertexArray.cpp VertexArray.hpp
+        Shader.cpp Shader.hpp)
 
 # copy assets
 file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
+file(COPY shaders/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shaders/)
 
 # include utils
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/utils)
