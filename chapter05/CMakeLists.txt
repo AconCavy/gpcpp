@@ -12,7 +12,8 @@ add_executable(${PROJECT_NAME}
         Ship.cpp Ship.hpp
         PositionWrapComponent.cpp PositionWrapComponent.hpp
         CollisionComponent.cpp CollisionComponent.hpp
-        Laser.cpp Laser.hpp)
+        Laser.cpp Laser.hpp
+        VertexArray.cpp VertexArray.hpp)
 
 # copy assets
 file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
@@ -26,6 +27,12 @@ target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main)
 
 find_package(sdl2-image CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2_image)
+
+find_package(OpenGL REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE GL)
+
+find_package(GLEW REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE GLEW::GLEW)
 
 find_package(glm CONFIG REQUIRED)
 if (WIN32)
