@@ -35,6 +35,7 @@ private:
   void updateGame();
   void generateOutput();
   bool loadShaders();
+  void createSpriteVertices();
   void loadData();
   void unloadData();
 
@@ -50,6 +51,7 @@ private:
   std::unordered_map<std::string, SDL_Texture *> Textures;
 
   class Shader *SpriteShader;
+  class VertexArray *SpriteVertexArray;
 
   class Ship *Ship;
   std::vector<class Asteroid *> Asteroids;

@@ -12,7 +12,7 @@ public:
   explicit SpriteComponent(class Actor *Owner, int DrawOrder = 100);
   ~SpriteComponent() override;
 
-  virtual void draw(SDL_Renderer *R);
+  virtual void draw(class Shader *S);
   virtual void setTexture(SDL_Texture *T);
 
   [[nodiscard]] int getDrawOrder() const { return DrawOrder; }

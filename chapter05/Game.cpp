@@ -8,6 +8,7 @@
 #include "Shader.hpp"
 #include "Ship.hpp"
 #include "SpriteComponent.hpp"
+#include "VertexArray.hpp"
 
 using namespace gpcpp::c05;
 
@@ -61,6 +62,8 @@ bool Game::initialize() {
     return false;
   }
 
+  createSpriteVertices();
+
   loadData();
   TicksCount = SDL_GetTicks();
 
@@ -76,6 +79,9 @@ void Game::runLoop() {
 }
 void Game::shutdown() {
   unloadData();
+  delete SpriteVertexArray;
+  SpriteShader->unload();
+  delete SpriteShader;
   IMG_Quit();
   SDL_GL_DeleteContext(Context);
   SDL_DestroyWindow(Window);
@@ -140,13 +146,7 @@ SDL_Texture *Game::getTexture(const std::string &FileName) {
     return Texture;
   }
 
-  SDL_Surface *Surface = IMG_Load(FileName.c_str());
-  if (!Surface) {
-    SDL_Log("Failed to load Texture file %s", FileName.c_str());
-    return nullptr;
-  }
-
-  Textures.emplace(FileName.c_str(), Texture);
+  //  Textures.emplace(FileName.c_str(), Texture);
   return Texture;
 }
 
@@ -205,6 +205,11 @@ void Game::generateOutput() {
   glClearColor(0.86f, 0.86f, 0.86f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
+  SpriteShader->setActive();
+  SpriteVertexArray->setActive();
+  for (auto Sprite : Sprites)
+    Sprite->draw(SpriteShader);
+
   SDL_GL_SwapWindow(Window);
 }
 
@@ -215,6 +220,20 @@ bool Game::loadShaders() {
 
   SpriteShader->setActive();
   return true;
+}
+
+void Game::createSpriteVertices() {
+
+  float vertices[] = {
+      -0.5f, 0.5f,  0.0f, 0.0f, 0.0f, // v0
+      0.5f,  0.5f,  0.0f, 1.0f, 0.0f, // v1
+      0.5f,  -0.5f, 0.0f, 1.0f, 1.0f, // v2
+      -0.5f, -0.5f, 0.0f, 0.0f, 1.0f  // v3
+  };
+
+  unsigned int indices[] = {0, 1, 2, 2, 3, 0};
+
+  SpriteVertexArray = new VertexArray(vertices, 4, indices, 6);
 }
 
 void Game::loadData() {
