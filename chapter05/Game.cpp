@@ -1,5 +1,6 @@
 #include "Game.hpp"
 
+#include "GL/glew.h"
 #include <SDL_image.h>
 
 #include "Actor.hpp"
@@ -13,8 +14,8 @@ using namespace gpcpp::c05;
 const int NumberOfAsteroid = 20;
 
 Game::Game()
-    : Window(nullptr), Renderer(nullptr), IsRunning(true),
-      UpdatingActors(false) {}
+    : Window(nullptr), Context(nullptr), IsRunning(true), UpdatingActors(false),
+      TicksCount(0), Ship(nullptr) {}
 
 bool Game::initialize() {
   int SDLResult = SDL_Init(SDL_INIT_VIDEO);
@@ -23,19 +24,31 @@ bool Game::initialize() {
     return false;
   }
 
-  Window = SDL_CreateWindow("Game Programming in C++ (Chapter 03)", 100, 100,
-                            Width, Height, 0);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
+  SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+  SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+
+  Window = SDL_CreateWindow("Game Programming in C++ (Chapter 05)", 100, 100,
+                            Width, Height, SDL_WINDOW_OPENGL);
   if (!Window) {
     SDL_Log("Failed to create window: %s", SDL_GetError());
     return false;
   }
 
-  Renderer = SDL_CreateRenderer(
-      Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-  if (!Renderer) {
-    SDL_Log("Failed to create renderer: %s", SDL_GetError());
+  Context = SDL_GL_CreateContext(Window);
+  glewExperimental = GL_TRUE;
+  if (glewInit() != GLEW_OK) {
+    SDL_Log("Failed to initialize GLEW");
     return false;
   }
+
+  glGetError();
 
   int IMGResult = IMG_Init(IMG_INIT_PNG);
   if (IMGResult == 0) {
@@ -59,7 +72,7 @@ void Game::runLoop() {
 void Game::shutdown() {
   unloadData();
   IMG_Quit();
-  SDL_DestroyRenderer(Renderer);
+  SDL_GL_DeleteContext(Context);
   SDL_DestroyWindow(Window);
   SDL_Quit();
 }
@@ -128,13 +141,6 @@ SDL_Texture *Game::getTexture(const std::string &FileName) {
     return nullptr;
   }
 
-  Texture = SDL_CreateTextureFromSurface(Renderer, Surface);
-  SDL_FreeSurface(Surface);
-  if (!Texture) {
-    SDL_Log("Failed to convert Surface to Texture for %s", FileName.c_str());
-    return nullptr;
-  }
-
   Textures.emplace(FileName.c_str(), Texture);
   return Texture;
 }
@@ -189,13 +195,10 @@ void Game::updateGame() {
   }
 }
 void Game::generateOutput() {
-  SDL_SetRenderDrawColor(Renderer, 0, 0, 0, 255);
-  SDL_RenderClear(Renderer);
+  glClearColor(0.86f, 0.86f, 0.86f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT);
 
-  for (auto Sprite : Sprites)
-    Sprite->draw(Renderer);
-
-  SDL_RenderPresent(Renderer);
+  SDL_GL_SwapWindow(Window);
 }
 void Game::loadData() {
   Ship = new class Ship(this);

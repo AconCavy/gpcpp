@@ -38,7 +38,7 @@ private:
   void unloadData();
 
   SDL_Window *Window;
-  SDL_Renderer *Renderer;
+  SDL_GLContext Context;
   bool IsRunning;
   Uint32 TicksCount;
 
