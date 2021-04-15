@@ -34,6 +34,7 @@ private:
   void processInput();
   void updateGame();
   void generateOutput();
+  bool loadShaders();
   void loadData();
   void unloadData();
 
@@ -47,6 +48,8 @@ private:
   std::vector<class Actor *> PendingActors;
   std::vector<class SpriteComponent *> Sprites;
   std::unordered_map<std::string, SDL_Texture *> Textures;
+
+  class Shader *SpriteShader;
 
   class Ship *Ship;
   std::vector<class Asteroid *> Asteroids;

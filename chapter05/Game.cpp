@@ -1,11 +1,11 @@
 #include "Game.hpp"
 
-#include "GL/glew.h"
 #include <SDL_image.h>
 
 #include "Actor.hpp"
 #include "Asteroid.hpp"
 #include "Math.hpp"
+#include "Shader.hpp"
 #include "Ship.hpp"
 #include "SpriteComponent.hpp"
 
@@ -53,6 +53,11 @@ bool Game::initialize() {
   int IMGResult = IMG_Init(IMG_INIT_PNG);
   if (IMGResult == 0) {
     SDL_Log("Failed to initialize SDL_Image: %s", IMG_GetError());
+    return false;
+  }
+
+  if (!loadShaders()) {
+    SDL_Log("Failed to load shaders");
     return false;
   }
 
@@ -165,6 +170,7 @@ void Game::processInput() {
   }
   UpdatingActors = false;
 }
+
 void Game::updateGame() {
   while (!SDL_TICKS_PASSED(SDL_GetTicks(), TicksCount + DeltaCount))
     ;
@@ -194,12 +200,23 @@ void Game::updateGame() {
     delete Actor;
   }
 }
+
 void Game::generateOutput() {
   glClearColor(0.86f, 0.86f, 0.86f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
   SDL_GL_SwapWindow(Window);
 }
+
+bool Game::loadShaders() {
+  SpriteShader = new Shader();
+  if (!SpriteShader->load("shaders/Basic.vert", "shaders/Basic.frag"))
+    return false;
+
+  SpriteShader->setActive();
+  return true;
+}
+
 void Game::loadData() {
   Ship = new class Ship(this);
   Ship->setPosition({Width / 2, Height / 2});
@@ -209,6 +226,7 @@ void Game::loadData() {
     new Asteroid(this);
   }
 }
+
 void Game::unloadData() {
   while (!Actors.empty())
     delete Actors.back();
