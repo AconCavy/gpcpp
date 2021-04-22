@@ -204,6 +204,9 @@ void Game::generateOutput() {
   glClearColor(0.86f, 0.86f, 0.86f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   SpriteShader->setActive();
   SpriteVertexArray->setActive();
   for (auto S : Sprites) {
@@ -215,7 +218,7 @@ void Game::generateOutput() {
 
 bool Game::loadShaders() {
   SpriteShader = new Shader();
-  if (!SpriteShader->load("shaders/Transform.vert", "shaders/Basic.frag"))
+  if (!SpriteShader->load("shaders/Sprite.vert", "shaders/Sprite.frag"))
     return false;
 
   SpriteShader->setActive();
