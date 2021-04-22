@@ -27,8 +27,8 @@ void Actor::update(float DeltaTime) {
 }
 
 void Actor::updateComponents(float DeltaTime) {
-  for (auto component : Components) {
-    component->update(DeltaTime);
+  for (auto C : Components) {
+    C->update(DeltaTime);
   }
 }
 

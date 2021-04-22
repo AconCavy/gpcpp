@@ -10,8 +10,8 @@ Texture::Texture() : TextureID(0), Width(0), Height(0) {}
 
 bool Texture::load(const std::string &FileName) {
   int Channels = 0;
-  auto *Image = SOIL_load_image(FileName.c_str(), &Width, &Height, &Channels,
-                                SOIL_LOAD_AUTO);
+  auto Image = SOIL_load_image(FileName.c_str(), &Width, &Height, &Channels,
+                               SOIL_LOAD_AUTO);
 
   if (Image == nullptr) {
     SDL_Log("SOIL failed to load image %s: %s", FileName.c_str(),

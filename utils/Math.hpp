@@ -50,10 +50,10 @@ static glm::mat4x4 createScale(const glm::vec3 &Scale) {
 static glm::mat4x4 createRotationX(float Theta) {
   glm::mat4x4 Matrix;
   Matrix[0][0] = 1;
-  Matrix[1][1] = cos(Theta);
-  Matrix[1][2] = sin(Theta);
-  Matrix[2][1] = -sin(Theta);
-  Matrix[2][2] = cos(Theta);
+  Matrix[1][1] = glm::cos(Theta);
+  Matrix[1][2] = glm::sin(Theta);
+  Matrix[2][1] = -glm::sin(Theta);
+  Matrix[2][2] = glm::cos(Theta);
   Matrix[3][3] = 1;
   return Matrix;
 }
@@ -61,10 +61,10 @@ static glm::mat4x4 createRotationX(float Theta) {
 static glm::mat4x4 createRotationY(float Theta) {
   glm::mat4x4 Matrix;
   Matrix[1][1] = 1;
-  Matrix[0][0] = cos(Theta);
-  Matrix[0][2] = -sin(Theta);
-  Matrix[2][0] = sin(Theta);
-  Matrix[2][2] = cos(Theta);
+  Matrix[0][0] = glm::cos(Theta);
+  Matrix[0][2] = -glm::sin(Theta);
+  Matrix[2][0] = glm::sin(Theta);
+  Matrix[2][2] = glm::cos(Theta);
   Matrix[3][3] = 1;
   return Matrix;
 }
@@ -72,10 +72,10 @@ static glm::mat4x4 createRotationY(float Theta) {
 static glm::mat4x4 createRotationZ(float Theta) {
   glm::mat4x4 Matrix;
   Matrix[2][2] = 1;
-  Matrix[0][0] = cos(Theta);
-  Matrix[0][1] = sin(Theta);
-  Matrix[1][0] = -sin(Theta);
-  Matrix[1][1] = cos(Theta);
+  Matrix[0][0] = glm::cos(Theta);
+  Matrix[0][1] = glm::sin(Theta);
+  Matrix[1][0] = -glm::sin(Theta);
+  Matrix[1][1] = glm::cos(Theta);
   Matrix[3][3] = 1;
   return Matrix;
 }
