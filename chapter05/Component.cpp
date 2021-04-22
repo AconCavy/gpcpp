@@ -10,7 +10,3 @@ Component::Component(class Actor *Owner, int UpdateOrder)
 }
 
 Component::~Component() { Owner->removeComponent(this); }
-
-void Component::update(float DeltaTime) {}
-
-void Component::processInput(const uint8_t *KeyState) {}

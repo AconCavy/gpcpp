@@ -2,6 +2,7 @@
 
 #include "Component.hpp"
 #include "Game.hpp"
+#include "Math.hpp"
 
 using namespace gpcpp::c05;
 
@@ -18,8 +19,10 @@ Actor::~Actor() {
 
 void Actor::update(float DeltaTime) {
   if (State == Active) {
+    computeWorldTransform();
     updateComponents(DeltaTime);
     updateActor(DeltaTime);
+    computeWorldTransform();
   }
 }
 
@@ -60,3 +63,17 @@ void Actor::processInput(const uint8_t *KeyState) {
 }
 
 void Actor::ActorInput(const uint8_t *KeyState) {}
+
+void Actor::computeWorldTransform() {
+  if (!RecomputeWorldTransform)
+    return;
+
+  RecomputeWorldTransform = false;
+  WorldTransform = createScale(Scale);
+  WorldTransform *= createRotationZ(Rotation);
+  WorldTransform *= createTranslation(Position.x, Position.y, 0);
+
+  for (auto C : Components) {
+    C->onUpdateWorldTransform();
+  }
+}

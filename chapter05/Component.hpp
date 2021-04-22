@@ -10,8 +10,9 @@ public:
   explicit Component(class Actor *Owner, int UpdateOrder = 100);
   virtual ~Component();
 
-  virtual void update(float DeltaTime);
-  virtual void processInput(const uint8_t *KeyState);
+  virtual void update(float DeltaTime) {}
+  virtual void processInput(const uint8_t *KeyState) {}
+  virtual void onUpdateWorldTransform() {}
 
   [[nodiscard]] int getUpdateOrder() const { return UpdateOrder; }
   [[nodiscard]] bool IsActive() const { return IsEnabled; }

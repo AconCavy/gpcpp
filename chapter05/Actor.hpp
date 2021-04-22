@@ -19,6 +19,7 @@ public:
   void addComponent(class Component *C);
   void removeComponent(class Component *C);
   void processInput(const uint8_t *KeyState);
+  void computeWorldTransform();
   virtual void ActorInput(const uint8_t *KeyState);
 
   [[nodiscard]] State getState() const { return State; }
@@ -39,6 +40,10 @@ public:
 
 private:
   State State;
+
+  glm::mat4x4 WorldTransform;
+  bool RecomputeWorldTransform;
+
   glm::vec2 Position;
   float Rotation;
   float Scale;

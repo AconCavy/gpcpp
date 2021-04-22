@@ -1,6 +1,7 @@
 #ifndef GPCPP_UTILS_MATH_HPP
 #define GPCPP_UTILS_MATH_HPP
 
+#include <glm/glm.hpp>
 #include <random>
 
 namespace gpcpp {
@@ -27,6 +28,69 @@ static inline double getRandomRealRange(double Min, double Max) {
   std::mt19937 MT32(Rnd());
   std::uniform_real_distribution<double> Range(Min, Max);
   return Range(MT32);
+}
+
+static glm::mat4x4 createScale(float X, float Y, float Z) {
+  glm::mat4x4 Matrix;
+  Matrix[0][0] = X;
+  Matrix[1][1] = Y;
+  Matrix[2][2] = Z;
+  Matrix[3][3] = 1;
+  return Matrix;
+}
+
+static glm::mat4x4 createScale(float Scale) {
+  return createScale(Scale, Scale, Scale);
+}
+
+static glm::mat4x4 createScale(const glm::vec3 &Scale) {
+  return createScale(Scale.x, Scale.y, Scale.z);
+}
+
+static glm::mat4x4 createRotationX(float Theta) {
+  glm::mat4x4 Matrix;
+  Matrix[0][0] = 1;
+  Matrix[1][1] = cos(Theta);
+  Matrix[1][2] = sin(Theta);
+  Matrix[2][1] = -sin(Theta);
+  Matrix[2][2] = cos(Theta);
+  Matrix[3][3] = 1;
+  return Matrix;
+}
+
+static glm::mat4x4 createRotationY(float Theta) {
+  glm::mat4x4 Matrix;
+  Matrix[1][1] = 1;
+  Matrix[0][0] = cos(Theta);
+  Matrix[0][2] = -sin(Theta);
+  Matrix[2][0] = sin(Theta);
+  Matrix[2][2] = cos(Theta);
+  Matrix[3][3] = 1;
+  return Matrix;
+}
+
+static glm::mat4x4 createRotationZ(float Theta) {
+  glm::mat4x4 Matrix;
+  Matrix[2][2] = 1;
+  Matrix[0][0] = cos(Theta);
+  Matrix[0][1] = sin(Theta);
+  Matrix[1][0] = -sin(Theta);
+  Matrix[1][1] = cos(Theta);
+  Matrix[3][3] = 1;
+  return Matrix;
+}
+
+static glm::mat4x4 createTranslation(float X, float Y, float Z) {
+  glm::mat4x4 Matrix;
+  Matrix[0][0] = Matrix[1][1] = Matrix[2][2] = Matrix[3][3] = 1;
+  Matrix[3][0] = X;
+  Matrix[3][1] = Y;
+  Matrix[3][2] = Z;
+  return Matrix;
+}
+
+static glm::mat4x4 createTranslation(const glm::vec3 &Translation) {
+  return createTranslation(Translation.x, Translation.y, Translation.z);
 }
 
 } // namespace gpcpp

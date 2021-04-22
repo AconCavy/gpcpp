@@ -186,6 +186,7 @@ void Game::updateGame() {
   UpdatingActors = false;
 
   for (auto Actor : PendingActors) {
+    Actor->computeWorldTransform();
     Actors.emplace_back(Actor);
   }
   PendingActors.clear();
