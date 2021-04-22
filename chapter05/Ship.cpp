@@ -25,7 +25,7 @@ Ship::Ship(class Game *Game)
   Input->setBackKey(SDL_SCANCODE_S);
   Input->setClockwiseKey(SDL_SCANCODE_A);
   Input->setCounterClockwiseKey(SDL_SCANCODE_D);
-  Input->setMaxAngularSpeed(static_cast<float>(gpcpp::PI * 2));
+  Input->setMaxAngularSpeed(glm::pi<float>() * 2);
   Input->setMaxForwardSpeed(300);
 
   auto PWC = new PositionWrapComponent(this);

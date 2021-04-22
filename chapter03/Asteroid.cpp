@@ -15,7 +15,8 @@ Asteroid::Asteroid(class Game *Game) : Actor(Game) {
   setPosition({gpcpp::getRandomRealRange(0, Game->Width),
                gpcpp::getRandomRealRange(0, Game->Height)});
 
-  setRotation(static_cast<float>(gpcpp::getRandomRealRange(0, gpcpp::PI * 2)));
+  setRotation(
+      static_cast<float>(gpcpp::getRandomRealRange(0, glm::pi<float>() * 2)));
 
   auto SC = new SpriteComponent(this);
   SC->setTexture(Game->getTexture("assets/Asteroid.png"));

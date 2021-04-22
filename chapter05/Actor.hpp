@@ -32,7 +32,7 @@ public:
   class Game *getGame() {
     return Game;
   }
-  [[nodiscard]] const glm::mat4x4 &getWorldTransform() const {
+  [[nodiscard]] const glm::mat4 &getWorldTransform() const {
     return WorldTransform;
   }
 
@@ -44,7 +44,7 @@ public:
 private:
   State State;
 
-  glm::mat4x4 WorldTransform;
+  glm::mat4 WorldTransform;
   bool RecomputeWorldTransform;
 
   glm::vec2 Position;

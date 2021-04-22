@@ -16,7 +16,7 @@ public:
   void unload();
 
   void setActive() const;
-  void setMatrixUniform(const char *Name, const glm::mat4x4 &Matrix);
+  void setMatrixUniform(const char *Name, const glm::mat4 &Matrix);
 
 private:
   bool compileShader(const std::string &FileName, GLenum ShaderType,

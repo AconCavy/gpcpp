@@ -7,7 +7,8 @@
 using namespace gpcpp::c05;
 
 Actor::Actor(struct Game *Game)
-    : State(Active), Scale(1), Position({}), Rotation(0), Game(Game) {
+    : State(Active), Scale(1), Position({}), Rotation(0), Game(Game),
+      RecomputeWorldTransform(true) {
   Game->addActor(this);
 }
 Actor::~Actor() {
