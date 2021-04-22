@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <fstream>
+#include <glm/gtc/type_ptr.hpp>
 #include <sstream>
 
 using namespace gpcpp::c05;
@@ -30,6 +31,11 @@ void Shader::unload() {
 }
 
 void Shader::setActive() const { glUseProgram(ShaderProgram); }
+
+void Shader::setMatrixUniform(const char *Name, const glm::mat4x4 &Matrix) {
+  GLuint Location = glGetUniformLocation(ShaderProgram, Name);
+  glUniformMatrix4fv(Location, 1, GL_TRUE, glm::value_ptr(Matrix));
+}
 
 bool Shader::compileShader(const std::string &FileName, GLenum ShaderType,
                            GLuint &OutShader) {

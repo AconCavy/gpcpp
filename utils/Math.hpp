@@ -89,6 +89,15 @@ static glm::mat4x4 createTranslation(float X, float Y, float Z) {
   return Matrix;
 }
 
+static glm::mat4x4 createSimpleViewProjection(float Width, float Height) {
+  glm::mat4x4 Matrix;
+  Matrix[0][0] = 2 / Width;
+  Matrix[1][1] = 2 / Height;
+  Matrix[2][2] = 1;
+  Matrix[3][2] = Matrix[3][3] = 1;
+  return Matrix;
+}
+
 static glm::mat4x4 createTranslation(const glm::vec3 &Translation) {
   return createTranslation(Translation.x, Translation.y, Translation.z);
 }

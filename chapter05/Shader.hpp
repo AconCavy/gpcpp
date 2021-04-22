@@ -2,6 +2,7 @@
 #define GPCPP_CHAPTER05_SHADER_HPP
 
 #include <gl/glew.h>
+#include <glm/glm.hpp>
 #include <string>
 
 namespace gpcpp::c05 {
@@ -15,6 +16,7 @@ public:
   void unload();
 
   void setActive() const;
+  void setMatrixUniform(const char *Name, const glm::mat4x4 &Matrix);
 
 private:
   bool compileShader(const std::string &FileName, GLenum ShaderType,

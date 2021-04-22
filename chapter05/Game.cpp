@@ -146,7 +146,7 @@ SDL_Texture *Game::getTexture(const std::string &FileName) {
     return Texture;
   }
 
-  //  Textures.emplace(FileName.c_str(), Texture);
+  Textures.emplace(FileName.c_str(), Texture);
   return Texture;
 }
 
@@ -216,10 +216,15 @@ void Game::generateOutput() {
 
 bool Game::loadShaders() {
   SpriteShader = new Shader();
-  if (!SpriteShader->load("shaders/Basic.vert", "shaders/Basic.frag"))
+  if (!SpriteShader->load("shaders/Transform.vert", "shaders/Basic.frag"))
     return false;
 
   SpriteShader->setActive();
+
+  auto ViewProjection = createSimpleViewProjection(static_cast<float>(Width),
+                                                   static_cast<float>(Height));
+  SpriteShader->setMatrixUniform("uViewProjection", ViewProjection);
+
   return true;
 }
 
@@ -251,7 +256,7 @@ void Game::unloadData() {
   while (!Actors.empty())
     delete Actors.back();
 
-  for (const auto &Texture : Textures)
-    SDL_DestroyTexture(Texture.second);
+  //  for (const auto &Texture : Textures)
+  //    SDL_DestroyTexture(Texture.second);
   Textures.clear();
 }

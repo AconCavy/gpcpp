@@ -32,6 +32,9 @@ public:
   class Game *getGame() {
     return Game;
   }
+  [[nodiscard]] const glm::mat4x4 &getWorldTransform() const {
+    return WorldTransform;
+  }
 
   void setState(State S) { State = S; }
   void setPosition(const glm::vec2 &P) { Position = P; }
