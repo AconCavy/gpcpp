@@ -14,7 +14,8 @@ add_executable(${PROJECT_NAME}
         CollisionComponent.cpp CollisionComponent.hpp
         Laser.cpp Laser.hpp
         VertexArray.cpp VertexArray.hpp
-        Shader.cpp Shader.hpp)
+        Shader.cpp Shader.hpp
+        Texture.cpp Texture.hpp)
 
 # copy assets
 file(COPY assets/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets/)
@@ -39,3 +40,6 @@ if (WIN32)
 else ()
     target_link_libraries(${PROJECT_NAME} PRIVATE glm)
 endif ()
+
+find_package(soil2 CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE soil2)
