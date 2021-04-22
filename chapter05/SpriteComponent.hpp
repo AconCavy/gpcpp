@@ -13,14 +13,14 @@ public:
   ~SpriteComponent() override;
 
   virtual void draw(class Shader *S);
-  virtual void setTexture(SDL_Texture *T);
+  virtual void setTexture(class Texture *T);
 
   [[nodiscard]] int getDrawOrder() const { return DrawOrder; }
   [[nodiscard]] int getTextureWidth() const { return TextureWidth; }
   [[nodiscard]] int getTextureHeight() const { return TextureHeight; }
 
 protected:
-  SDL_Texture *Texture;
+  class Texture *Texture;
   int DrawOrder;
   int TextureWidth;
   int TextureHeight;

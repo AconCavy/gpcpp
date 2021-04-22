@@ -1,13 +1,12 @@
 #include "Game.hpp"
 
-#include <SDL_image.h>
-
 #include "Actor.hpp"
 #include "Asteroid.hpp"
 #include "Math.hpp"
 #include "Shader.hpp"
 #include "Ship.hpp"
 #include "SpriteComponent.hpp"
+#include "Texture.hpp"
 #include "VertexArray.hpp"
 
 using namespace gpcpp::c05;
@@ -51,12 +50,6 @@ bool Game::initialize() {
 
   glGetError();
 
-  int IMGResult = IMG_Init(IMG_INIT_PNG);
-  if (IMGResult == 0) {
-    SDL_Log("Failed to initialize SDL_Image: %s", IMG_GetError());
-    return false;
-  }
-
   if (!loadShaders()) {
     SDL_Log("Failed to load shaders");
     return false;
@@ -82,7 +75,6 @@ void Game::shutdown() {
   delete SpriteVertexArray;
   SpriteShader->unload();
   delete SpriteShader;
-  IMG_Quit();
   SDL_GL_DeleteContext(Context);
   SDL_DestroyWindow(Window);
   SDL_Quit();
@@ -138,16 +130,22 @@ void Game::removeAsteroid(struct Asteroid *A) {
     Asteroids.erase(I);
 }
 
-SDL_Texture *Game::getTexture(const std::string &FileName) {
-  SDL_Texture *Texture = nullptr;
+Texture *Game::getTexture(const std::string &FileName) {
+  Texture *T = nullptr;
   auto I = Textures.find(FileName);
   if (I != Textures.end()) {
-    Texture = I->second;
-    return Texture;
+    T = I->second;
+    return T;
   }
 
-  Textures.emplace(FileName.c_str(), Texture);
-  return Texture;
+  T = new Texture();
+  if (T->load(FileName)) {
+    Textures.emplace(FileName.c_str(), T);
+  } else {
+    delete T;
+    T = nullptr;
+  }
+  return T;
 }
 
 void Game::processInput() {
@@ -165,8 +163,8 @@ void Game::processInput() {
     IsRunning = false;
 
   UpdatingActors = true;
-  for (auto Actor : Actors) {
-    Actor->processInput(State);
+  for (auto A : Actors) {
+    A->processInput(State);
   }
   UpdatingActors = false;
 }
@@ -180,25 +178,25 @@ void Game::updateGame() {
   TicksCount = CurrentTicks;
 
   UpdatingActors = true;
-  for (auto Actor : Actors) {
-    Actor->update(DeltaTime);
+  for (auto A : Actors) {
+    A->update(DeltaTime);
   }
   UpdatingActors = false;
 
-  for (auto Actor : PendingActors) {
-    Actor->computeWorldTransform();
-    Actors.emplace_back(Actor);
+  for (auto A : PendingActors) {
+    A->computeWorldTransform();
+    Actors.emplace_back(A);
   }
   PendingActors.clear();
 
   std::vector<Actor *> DeadActors;
-  for (auto Actor : Actors) {
-    if (Actor->getState() == Actor::Dead)
-      DeadActors.emplace_back(Actor);
+  for (auto A : Actors) {
+    if (A->getState() == Actor::Dead)
+      DeadActors.emplace_back(A);
   }
 
-  for (auto Actor : DeadActors) {
-    delete Actor;
+  for (auto A : DeadActors) {
+    delete A;
   }
 }
 
@@ -208,8 +206,9 @@ void Game::generateOutput() {
 
   SpriteShader->setActive();
   SpriteVertexArray->setActive();
-  for (auto Sprite : Sprites)
-    Sprite->draw(SpriteShader);
+  for (auto S : Sprites) {
+    S->draw(SpriteShader);
+  }
 
   SDL_GL_SwapWindow(Window);
 }
@@ -253,10 +252,14 @@ void Game::loadData() {
 }
 
 void Game::unloadData() {
-  while (!Actors.empty())
+  while (!Actors.empty()) {
     delete Actors.back();
+  }
 
-  //  for (const auto &Texture : Textures)
-  //    SDL_DestroyTexture(Texture.second);
+  for (const auto &I : Textures) {
+    I.second->unload();
+    delete I.second;
+  }
+
   Textures.clear();
 }

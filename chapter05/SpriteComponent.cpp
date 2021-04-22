@@ -5,6 +5,7 @@
 #include "Actor.hpp"
 #include "Game.hpp"
 #include "Shader.hpp"
+#include "Texture.hpp"
 
 using namespace gpcpp::c05;
 
@@ -24,10 +25,12 @@ void SpriteComponent::draw(Shader *S) {
                            static_cast<float>(TextureHeight), 1);
   auto World = Scale * Owner->getWorldTransform();
   S->setMatrixUniform("uWorldTransform", World);
+  Texture->setActive();
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 
-void SpriteComponent::setTexture(SDL_Texture *T) {
+void SpriteComponent::setTexture(class Texture *T) {
   Texture = T;
-  TextureWidth = TextureHeight = 100;
+  TextureWidth = T->getWidth();
+  TextureHeight = T->getHeight();
 }

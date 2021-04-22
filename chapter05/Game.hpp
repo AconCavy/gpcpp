@@ -23,7 +23,7 @@ public:
   void addAsteroid(class Asteroid *A);
   void removeAsteroid(class Asteroid *A);
   std::vector<class Asteroid *> getAsteroids() { return Asteroids; }
-  SDL_Texture *getTexture(const std::string &FileName);
+  class Texture *getTexture(const std::string &FileName);
 
   const int Height = 768;
   const int Width = 1024;
@@ -48,7 +48,7 @@ private:
   std::vector<class Actor *> Actors;
   std::vector<class Actor *> PendingActors;
   std::vector<class SpriteComponent *> Sprites;
-  std::unordered_map<std::string, SDL_Texture *> Textures;
+  std::unordered_map<std::string, class Texture *> Textures;
 
   class Shader *SpriteShader;
   class VertexArray *SpriteVertexArray;
