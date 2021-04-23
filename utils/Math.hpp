@@ -33,10 +33,6 @@ static inline glm::mat4 createScale(const glm::vec3 &Scale) {
   return glm::scale(glm::mat4(1), Scale);
 }
 
-static inline glm::mat4x4 createScale(float X, float Y, float Z) {
-  return createScale({X, Y, Z});
-}
-
 static inline glm::mat4 createScale(float Scale) { return glm::mat4(Scale); }
 
 static inline glm::mat4 createRotationX(float Theta) {
@@ -52,18 +48,18 @@ static inline glm::mat4 createRotationZ(float Theta) {
 }
 
 static inline glm::mat4 createTranslation(const glm::vec3 &Translation) {
-  return glm::translate(glm::mat4(1), Translation);
-}
-
-static inline glm::mat4 createTranslation(float X, float Y, float Z) {
-  return createTranslation({X, Y, Z});
+  auto Matrix = glm::mat4(1);
+  Matrix[0][3] = Translation.x;
+  Matrix[1][3] = Translation.y;
+  Matrix[2][3] = Translation.z;
+  return Matrix;
 }
 
 static glm::mat4 createSimpleViewProjection(float Width, float Height) {
   auto Matrix = glm::mat4(1);
-  Matrix[0][0] = 2.0f / Width;
-  Matrix[1][1] = 2.0f / Height;
-  Matrix[3][2] = 1;
+  Matrix[0][0] = 2 / Width;
+  Matrix[1][1] = 2 / Height;
+  Matrix[2][3] = 1;
   return Matrix;
 }
 
