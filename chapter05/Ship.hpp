@@ -21,10 +21,11 @@ public:
 
 private:
   float LaserCoolDown;
-  float ResurrectionCoolDown;
+  float SafeTimeCurrent;
   glm::vec2 DefaultPosition;
   float DefaultRotation;
   bool IsActive;
+  bool IsSafeTime;
 
   class SpriteComponent *Sprite;
   class InputComponent *Input;

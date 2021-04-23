@@ -11,11 +11,11 @@
 
 using namespace gpcpp::c05;
 
-const float ResurrectionTime = 1;
+const float DefaultSafeTime = 1;
 
 Ship::Ship(class Game *Game)
     : Actor(Game), DefaultPosition(0, 0), DefaultRotation(0), LaserCoolDown(0),
-      ResurrectionCoolDown(ResurrectionTime), IsActive(true) {
+      SafeTimeCurrent(DefaultSafeTime), IsActive(true), IsSafeTime(true) {
   Sprite = new SpriteComponent(this, 150);
   Sprite->setTexture(Game->getTexture("assets/Ship.png"));
 
@@ -38,24 +38,28 @@ Ship::Ship(class Game *Game)
 
 void Ship::updateActor(float DeltaTime) {
   LaserCoolDown = std::max(0.0f, LaserCoolDown - DeltaTime);
-  ResurrectionCoolDown = std::max(0.0f, ResurrectionCoolDown - DeltaTime);
 
-  if (IsActive) {
-    auto Asteroids = getGame()->getAsteroids();
-    for (auto A : Asteroids) {
-      if (Collision->isColliding(*(A->getCollision()))) {
-        setPosition(DefaultPosition);
-        setRotation(DefaultRotation);
-        setActive(false);
+  if (!IsActive)
+    return;
 
-        return;
-      }
-    }
+  if (IsSafeTime) {
+    SafeTimeCurrent = std::max(0.0f, SafeTimeCurrent - DeltaTime);
+    if (SafeTimeCurrent > 0)
+      return;
+
+    SafeTimeCurrent = DefaultSafeTime;
+    IsSafeTime = false;
   }
 
-  if (ResurrectionCoolDown == 0) {
-    setActive(true);
-    ResurrectionCoolDown = ResurrectionTime;
+  auto Asteroids = getGame()->getAsteroids();
+  for (auto A : Asteroids) {
+    if (Collision->isColliding(*(A->getCollision()))) {
+      setPosition(DefaultPosition);
+      setRotation(DefaultRotation);
+      IsSafeTime = true;
+
+      return;
+    }
   }
 }
 
