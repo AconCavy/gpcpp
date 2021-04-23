@@ -246,7 +246,6 @@ void Game::createSpriteVertices() {
 
 void Game::loadData() {
   Ship = new class Ship(this);
-  Ship->setPosition({Width / 2, Height / 2});
   Ship->setRotation(glm::pi<float>() / 2);
 
   for (int I = 0; I < NumberOfAsteroid; ++I) {

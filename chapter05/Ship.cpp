@@ -14,8 +14,7 @@ using namespace gpcpp::c05;
 const float ResurrectionTime = 1;
 
 Ship::Ship(class Game *Game)
-    : Actor(Game), DefaultPosition(Game->Width / 2, Game->Height / 2),
-      DefaultRotation(0), LaserCoolDown(0),
+    : Actor(Game), DefaultPosition(0, 0), DefaultRotation(0), LaserCoolDown(0),
       ResurrectionCoolDown(ResurrectionTime), IsActive(true) {
   Sprite = new SpriteComponent(this, 150);
   Sprite->setTexture(Game->getTexture("assets/Ship.png"));

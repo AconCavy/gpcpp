@@ -10,15 +10,18 @@ PositionWrapComponent::PositionWrapComponent(class Actor *Owner,
 
 void PositionWrapComponent::update(float DeltaTime) {
   auto P = Owner->getPosition();
-  if (P.x < -Margin)
-    P.x = Width + Margin;
-  else if (P.x > Width + Margin)
-    P.x = -Margin;
+  auto Width2 = Width / 2;
+  auto Height2 = Height / 2;
 
-  if (P.y < -Margin)
-    P.y = Height + Margin;
-  else if (P.y > Height + Margin)
-    P.y = -Margin;
+  if (P.x < -Width2 - Margin)
+    P.x = Width2 + Margin;
+  else if (P.x > Width2 + Margin)
+    P.x = -Width2 - Margin;
+
+  if (P.y < -Height2 - Margin)
+    P.y = Height2 + Margin;
+  else if (P.y > Height2 + Margin)
+    P.y = -Height2 - Margin;
 
   Owner->setPosition(P);
 }

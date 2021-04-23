@@ -36,10 +36,22 @@ public:
     return WorldTransform;
   }
 
-  void setState(State S) { State = S; }
-  void setPosition(const glm::vec2 &P) { Position = P; }
-  void setRotation(float R) { Rotation = R; }
-  void setScale(float S) { Scale = S; }
+  void setState(State S) {
+    State = S;
+    RecomputeWorldTransform = true;
+  }
+  void setPosition(const glm::vec2 &P) {
+    Position = P;
+    RecomputeWorldTransform = true;
+  }
+  void setRotation(float R) {
+    Rotation = R;
+    RecomputeWorldTransform = true;
+  }
+  void setScale(float S) {
+    Scale = S;
+    RecomputeWorldTransform = true;
+  }
 
 private:
   State State;

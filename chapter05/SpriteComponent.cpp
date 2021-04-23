@@ -21,8 +21,8 @@ void SpriteComponent::draw(Shader *S) {
   if (!Texture)
     return;
 
-  auto Scale = createScale(static_cast<float>(TextureWidth),
-                           static_cast<float>(TextureHeight), 1);
+  auto Scale = createScale(
+      {static_cast<float>(TextureWidth), static_cast<float>(TextureHeight), 1});
   auto World = Scale * Owner->getWorldTransform();
   S->setMatrixUniform("uWorldTransform", World);
   Texture->setActive();

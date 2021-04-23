@@ -1,5 +1,9 @@
 #include "Actor.hpp"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
+
 #include "Component.hpp"
 #include "Game.hpp"
 #include "Math.hpp"
@@ -72,7 +76,7 @@ void Actor::computeWorldTransform() {
   RecomputeWorldTransform = false;
   WorldTransform = createScale(Scale);
   WorldTransform *= createRotationZ(Rotation);
-  WorldTransform *= createTranslation(Position.x, Position.y, 0);
+  WorldTransform *= createTranslation({Position.x, Position.y, 0});
 
   for (auto C : Components) {
     C->onUpdateWorldTransform();

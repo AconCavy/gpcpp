@@ -12,8 +12,10 @@
 using namespace gpcpp::c05;
 
 Asteroid::Asteroid(class Game *Game) : Actor(Game) {
-  setPosition({gpcpp::getRandomRealRange(0, Game->Width),
-               gpcpp::getRandomRealRange(0, Game->Height)});
+  auto Width2 = Game->Width / 2;
+  auto Height2 = Game->Height / 2;
+  setPosition({gpcpp::getRandomRealRange(-Width2, Width2),
+               gpcpp::getRandomRealRange(-Height2, Height2)});
 
   setRotation(
       static_cast<float>(gpcpp::getRandomRealRange(0, glm::pi<float>() * 2)));
